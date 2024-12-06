@@ -414,6 +414,12 @@
     <Compile Include="Lancamentos\FrmLancamentoServicos.Designer.cs">
       <DependentUpon>FrmLancamentoServicos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lancamentos\FrmTetr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lancamentos\FrmTetr.Designer.cs">
+      <DependentUpon>FrmTetr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\CategoriaServicoInfo.cs" />
     <Compile Include="Model\LancamentoServicoInfo.cs" />
     <Compile Include="Model\MarcaInfo.cs" />
