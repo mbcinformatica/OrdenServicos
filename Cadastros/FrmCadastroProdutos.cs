@@ -1029,6 +1029,7 @@ namespace ProjetoTeste
                     // Obter o caminho do arquivo selecionado
                     string filePath = openFileDialog.FileName;
                     // Exibir a imagem no PictureBox
+                    //teste
                     imgImagemProduto.Image = Image.FromFile(filePath);
                     imgImagemProduto.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
