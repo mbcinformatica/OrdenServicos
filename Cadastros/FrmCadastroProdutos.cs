@@ -259,6 +259,7 @@ namespace ProjetoTeste
             btnNovo.MouseEnter += Button_MouseEnter;
             btnNovo.MouseLeave += Button_MouseLeave;
 
+
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
             listViewProdutos.Click += ListViewProdutos_Click;
         }
@@ -992,29 +993,87 @@ namespace ProjetoTeste
         {
             using (var form = new Form())
             {
-                form.Text = "Escolha uma opção";
+                // Remover a barra de título
+                form.Size = new Size(380, 186);
+                form.FormBorderStyle = FormBorderStyle.None;
 
+                // Evento de pintura para aplicar o gradiente no formulário
+                form.Paint += new PaintEventHandler(BaseForm_Paint);
+
+                // Centralizar e alinhar componentes
+                int formWidth = form.ClientSize.Width;
+                int formHeight = form.ClientSize.Height;
+
+                // Definindo a Label
+                var labelTitle = new Label
+                {
+                    Text = "Escolha uma opção",
+                    Font = new Font("Times New Roman", 16, FontStyle.Bold),
+                    Size = new Size(230, 26),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BackColor = Color.Transparent, // Definindo fundo transparente
+                    Location = new Point((formWidth - 230) / 2, 26)
+                };
+                form.Controls.Add(labelTitle);
+
+                // Definindo os Botões
                 var btnLocal = new Button
                 {
                     Text = "Local",
-                    Location = new Point(20, 20)
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
                 };
-                btnLocal.Click += BtnLocal_Click;
-                form.Controls.Add(btnLocal);
-
                 var btnWebcam = new Button
                 {
-                    Text = "Webcam",
-                    Location = new Point(100, 20)
+                    Text = "WebCam",
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
                 };
+                var btnFechar = new Button
+                {
+                    Text = "Fechar",
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
+                };
+
+                // Adicionando eventos de mouse aos botões
+                btnLocal.MouseEnter += Button_MouseEnter;
+                btnLocal.MouseLeave += Button_MouseLeave;
+                btnWebcam.MouseEnter += Button_MouseEnter;
+                btnWebcam.MouseLeave += Button_MouseLeave;
+                btnFechar.MouseEnter += Button_MouseEnter;
+                btnFechar.MouseLeave += Button_MouseLeave;
+
+                // Calculando a posição inicial para centralizar os botões
+                int totalButtonWidth = 3 * 98 + 20; // 3 botões de 98px cada e 10px de espaço entre eles
+                int startX = (formWidth - totalButtonWidth) / 2;
+                int buttonY = (formHeight / 2) + 20;
+
+                // Posicionando os botões
+                btnLocal.Location = new Point(startX, buttonY);
+                btnWebcam.Location = new Point(startX + 98 + 10, buttonY); // 10px de espaço entre os botões
+                btnFechar.Location = new Point(startX + 2 * 98 + 20, buttonY); // 20px de espaço entre os botões
+
+                // Adicionando eventos aos botões
+                btnLocal.Click += BtnLocal_Click;
                 btnWebcam.Click += BtnWebcam_Click;
+                btnFechar.Click += (s, ee) => form.Close();
+
+                // Adicionando botões ao formulário
+                form.Controls.Add(btnLocal);
                 form.Controls.Add(btnWebcam);
+                form.Controls.Add(btnFechar);
 
                 form.StartPosition = FormStartPosition.CenterParent;
                 form.ShowDialog(this);
             }
         }
-
         private void BtnLocal_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -1034,7 +1093,6 @@ namespace ProjetoTeste
                 }
             }
         }
-
         private void BtnWebcam_Click(object sender, EventArgs e)
         {
             using (var form = new Form())

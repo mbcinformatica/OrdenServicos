@@ -153,12 +153,16 @@ namespace ProjetoTeste.Forms
                 }
             }
         }
-
         protected void BaseForm_Paint(object sender, PaintEventArgs e)
         {
             try
             {
-                Debug.WriteLine("BaseForm_Paint called");
+                Control control = sender as Control;
+                if (control != null)
+                {
+                    Debug.WriteLine($"BaseForm_Paint called by {control.Name}");
+                }
+
                 // Usar as variáveis gradientStartColor e gradientEndColor carregadas anteriormente
                 using (LinearGradientBrush brush = new LinearGradientBrush(ClientRectangle, gradientStartColor, gradientEndColor, 70F))
                 {

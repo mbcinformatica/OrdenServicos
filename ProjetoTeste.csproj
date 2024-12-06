@@ -402,6 +402,12 @@
     <Compile Include="Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lancamentos\FrmEntradaProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lancamentos\FrmEntradaProdutos.Designer.cs">
+      <DependentUpon>FrmEntradaProdutos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lancamentos\FrmLancamentoServicos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -463,6 +469,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTelaPrincipal.resx">
       <DependentUpon>FrmTelaPrincipal.cs</DependentUpon>

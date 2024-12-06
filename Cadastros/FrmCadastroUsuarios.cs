@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using AForge.Video.DirectShow;
+using Newtonsoft.Json.Linq;
 using ProjetoTeste.BLL;
 using ProjetoTeste.Forms;
 using ProjetoTeste.Model;
@@ -26,16 +27,19 @@ namespace ProjetoTeste
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private (Control, string)[] camposObrigatorios;
         private bool escPressed = false;
+        private VideoCaptureDevice videoSource;
+        private FilterInfoCollection videoDevices;
+
         public frmUsuarios()
         {
             InitializeComponent();
 
             // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
-            Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
+            Paint += new PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlUsuarios); // Chama o método para inicializar o TabControl
 
-            erpProvider = new System.Windows.Forms.ErrorProvider();
+            erpProvider = new ErrorProvider();
             CarregarRegistros();
 
             // Configurar eventos dos TextBoxes para maiúsculas
@@ -45,6 +49,7 @@ namespace ProjetoTeste
         }
         private void InitializeListView()
         {
+
             // Configurar a ListView
             listViewUsuario.View = View.Details;
             listViewUsuario.FullRowSelect = true;
@@ -72,6 +77,8 @@ namespace ProjetoTeste
             listViewUsuario.ColumnClick += new ColumnClickEventHandler(ListViewUsuarios_ColumnClick);
             listViewUsuario.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listViewUsuario.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+
         }
         private void ListViewUsuarios_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -138,6 +145,7 @@ namespace ProjetoTeste
         }
         private void listViewUsuario_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
+
             Color headerBackColor = e.ColumnIndex == sortColumn ? clickedHeaderBackColor : defaultHeaderBackColor;
 
             using (SolidBrush backBrush = new SolidBrush(headerBackColor))
@@ -147,16 +155,20 @@ namespace ProjetoTeste
             using (StringFormat sf = new StringFormat())
             {
                 sf.LineAlignment = StringAlignment.Center;
-                sf.FormatFlags = StringFormatFlags.NoWrap; // Adiciona esta linha para evitar quebra de linha
+                sf.FormatFlags = StringFormatFlags.NoWrap;
 
-                if (e.Header.Text == "ID" || e.Header.Text == "UF" || e.Header.Text == "CEP" ||
-                    e.Header.Text == "NUMERO" || e.Header.Text == "CELULAR" || e.Header.Text == "FIXO")
+                if (e.Header.Text == "ID" 
+                    || e.Header.Text == "UF" 
+                    || e.Header.Text == "CEP" 
+                    || e.Header.Text == "NUMERO" 
+                    || e.Header.Text == "CELULAR" 
+                    || e.Header.Text == "FIXO")
                 {
-                    sf.Alignment = StringAlignment.Center; // Alinhar cabeçalhos numéricos no centro
+                    sf.Alignment = StringAlignment.Center;
                 }
                 else
                 {
-                    sf.Alignment = StringAlignment.Near; // Alinhar cabeçalhos de texto à esquerda
+                    sf.Alignment = StringAlignment.Near;
                 }
                 sf.LineAlignment = StringAlignment.Center;
                 // Definir a fonte em negrito
@@ -165,7 +177,7 @@ namespace ProjetoTeste
                     e.Graphics.DrawString(e.Header.Text, headerFont, Brushes.Black, e.Bounds, sf);
                 }
 
-                using (Pen gridLinePen = new Pen(Color.Black, 2)) // Define a cor e a espessura das linhas do cabeçalho
+                using (Pen gridLinePen = new Pen(Color.Black, 2))
                 {
                     e.Graphics.DrawRectangle(gridLinePen, e.Bounds);
                 }
@@ -774,9 +786,93 @@ namespace ProjetoTeste
         }
         private void btnInserirImagem_Click(object sender, EventArgs e)
         {
+            using (var form = new Form())
+            {
+                // Remover a barra de título
+                form.Size = new Size(380, 186);
+                form.FormBorderStyle = FormBorderStyle.None;
+
+                // Evento de pintura para aplicar o gradiente no formulário
+                form.Paint += new PaintEventHandler(BaseForm_Paint);
+
+                // Centralizar e alinhar componentes
+                int formWidth = form.ClientSize.Width;
+                int formHeight = form.ClientSize.Height;
+
+                // Definindo a Label
+                var labelTitle = new Label
+                {
+                    Text = "Escolha uma opção",
+                    Font = new Font("Times New Roman", 16, FontStyle.Bold),
+                    Size = new Size(230, 26),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BackColor = Color.Transparent, // Definindo fundo transparente
+                    Location = new Point((formWidth - 230) / 2, 26)
+                };
+                form.Controls.Add(labelTitle);
+
+                // Definindo os Botões
+                var btnLocal = new Button
+                {
+                    Text = "Local",
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
+                };
+                var btnWebcam = new Button
+                {
+                    Text = "WebCam",
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
+                };
+                var btnFechar = new Button
+                {
+                    Text = "Fechar",
+                    Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                    Size = new Size(98, 40),
+                    BackColor = buttonBackgroundColor,
+                    ForeColor = buttonFontColor
+                };
+
+                // Adicionando eventos de mouse aos botões
+                btnLocal.MouseEnter += Button_MouseEnter;
+                btnLocal.MouseLeave += Button_MouseLeave;
+                btnWebcam.MouseEnter += Button_MouseEnter;
+                btnWebcam.MouseLeave += Button_MouseLeave;
+                btnFechar.MouseEnter += Button_MouseEnter;
+                btnFechar.MouseLeave += Button_MouseLeave;
+
+                // Calculando a posição inicial para centralizar os botões
+                int totalButtonWidth = 3 * 98 + 20; // 3 botões de 98px cada e 10px de espaço entre eles
+                int startX = (formWidth - totalButtonWidth) / 2;
+                int buttonY = (formHeight / 2) + 20;
+
+                // Posicionando os botões
+                btnLocal.Location = new Point(startX, buttonY);
+                btnWebcam.Location = new Point(startX + 98 + 10, buttonY); // 10px de espaço entre os botões
+                btnFechar.Location = new Point(startX + 2 * 98 + 20, buttonY); // 20px de espaço entre os botões
+
+                // Adicionando eventos aos botões
+                btnLocal.Click += BtnLocal_Click;
+                btnWebcam.Click += BtnWebcam_Click;
+                btnFechar.Click += (s, ee) => form.Close();
+
+                // Adicionando botões ao formulário
+                form.Controls.Add(btnLocal);
+                form.Controls.Add(btnWebcam);
+                form.Controls.Add(btnFechar);
+
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.ShowDialog(this);
+            }
+        }
+        private void BtnLocal_Click(object sender, EventArgs e)
+        {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                // Define o diretório inicial para a pasta de imagens do usuário logado
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                 openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
                 openFileDialog.FilterIndex = 1;
@@ -786,11 +882,81 @@ namespace ProjetoTeste
                 {
                     // Obter o caminho do arquivo selecionado
                     string filePath = openFileDialog.FileName;
-
                     // Exibir a imagem no PictureBox
                     imgImagemUsuario.Image = Image.FromFile(filePath);
                     imgImagemUsuario.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
+            }
+        }
+        private void BtnWebcam_Click(object sender, EventArgs e)
+        {
+            using (var form = new Form())
+            {
+                form.Text = "Webcam";
+                form.Size = new Size(640, 480);
+
+                var pictureBoxWebcam = new PictureBox
+                {
+                    Dock = DockStyle.Fill
+                };
+                form.Controls.Add(pictureBoxWebcam);
+
+                try
+                {
+                    if (videoDevices == null || videoDevices.Count == 0)
+                    {
+                        videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                    }
+
+                    if (videoDevices.Count == 0)
+                    {
+                        MessageBox.Show("Nenhum dispositivo de vídeo encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    videoSource = new VideoCaptureDevice(videoDevices[1].MonikerString);
+                    videoSource.NewFrame += (s, eFrame) =>
+                    {
+                        pictureBoxWebcam.Image = (Bitmap)eFrame.Frame.Clone();
+                    };
+                    videoSource.Start();
+
+                    var btnCapture = new Button
+                    {
+                        Text = "Capturar",
+                        Dock = DockStyle.Bottom
+                    };
+                    btnCapture.Click += (s, eCapture) =>
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            pictureBoxWebcam.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                            byte[] imageBytes = ms.ToArray();
+
+                            using (var pngImage = new MemoryStream(imageBytes))
+                                imgImagemUsuario.Image = Image.FromStream(pngImage);
+                        }
+
+                        imgImagemUsuario.SizeMode = PictureBoxSizeMode.StretchImage;
+                        videoSource.SignalToStop();
+                        form.Close();
+                    };
+                    form.Controls.Add(btnCapture);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao acessar dispositivos de vídeo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.FormClosing += (s, eClosing) =>
+                {
+                    if (videoSource != null && videoSource.IsRunning)
+                    {
+                        videoSource.SignalToStop();
+                    }
+                };
+                form.ShowDialog(this);
             }
         }
         private void btnExcluirImagem_Click(object sender, EventArgs e)
