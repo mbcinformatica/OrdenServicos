@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+
+	<!-- Configurações dos Formulários -->
+	<FormBackgroundColor>FFADD8E6</FormBackgroundColor>
+
+	<!-- Configurações do MenuStrip -->
+	
+  <MenuStripBackgroundColor>FF0080C0</MenuStripBackgroundColor>
+  <GradientMenuEndColor>FF0080C0</GradientMenuEndColor>
+  <MenuStripFontColor>FF000000</MenuStripFontColor>
+
+	<!-- Configurações dos TextBox -->
+	<TextBoxBackgroundColor>FFFFFFFF</TextBoxBackgroundColor>
+	<TextBoxFontColor>FF000000</TextBoxFontColor>
+	<TextBoxBorderStyle>FixedSingle</TextBoxBorderStyle>
+	<TextBoxFontFamily>Times New Roman</TextBoxFontFamily>
+	<TextBoxFontSize>9,75</TextBoxFontSize>
+	<TextBoxFontStyle>Regular</TextBoxFontStyle>
+	<TextBoxMarginLeft>4</TextBoxMarginLeft>
+	<TextBoxMarginTop>3</TextBoxMarginTop>
+	<TextBoxMarginRight>4</TextBoxMarginRight>
+	<TextBoxMarginBottom>3</TextBoxMarginBottom>
+
+	<!-- Configurações dos botões -->
+	<ButtonBackgroundColor>FF4682B4</ButtonBackgroundColor>
+	<ButtonFontColor>FFFFFFFF</ButtonFontColor>
+	<ButtonAutoSize>false</ButtonAutoSize>
+	<ButtonAppearance>
+		<BorderColor>FFFFFFC0</BorderColor>
+		<MouseDownBackColor>FFC0C000</MouseDownBackColor>
+		<MouseOverBackColor>FF008080</MouseOverBackColor>
+	</ButtonAppearance>
+	<ButtonCursor>Hand</ButtonCursor>
+	<ButtonFontFamily>Times New Roman</ButtonFontFamily>
+	<ButtonFontSize>12</ButtonFontSize>
+	<ButtonFontStyle>Bold</ButtonFontStyle>
+
+	<!-- Configurações das Label -->
+	<LabelBackgroundColor>00FFFFFF</LabelBackgroundColor>
+	<LabelFontColor>FF000000</LabelFontColor>
+	<LabelAutoSize>true</LabelAutoSize>
+	<LabelFontFamily>Times New Roman</LabelFontFamily>
+	<LabelFontSize>9,75</LabelFontSize>
+	<LabelFontStyle>Bold</LabelFontStyle>
+	<LabelMarginLeft>4</LabelMarginLeft>
+	<LabelMarginTop>0</LabelMarginTop>
+	<LabelMarginRight>4</LabelMarginRight>
+	<LabelMarginBottom>0</LabelMarginBottom>
+
+	<!-- Configurações dos Panel -->
+	<PanelBackgroundColor>00FFFFFF</PanelBackgroundColor>
+
+	<!-- Configurações das Cores Degrade -->
+	<GradientStartColor>FF008B8B</GradientStartColor>
+	<GradientEndColor>FFE0FFFF</GradientEndColor>
+
+</Config>
