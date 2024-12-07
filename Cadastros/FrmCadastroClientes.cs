@@ -71,8 +71,6 @@ namespace ProjetoTeste
             listViewClientes.Columns.Add("DATA CADASTRO", 150, HorizontalAlignment.Right);
 
             listViewClientes.ColumnClick += new ColumnClickEventHandler(ListViewClientes_ColumnClick);
-            listViewClientes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewClientes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         }
         private void ListViewClientes_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -153,6 +151,7 @@ namespace ProjetoTeste
         }
         private void listViewClientes_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
+            string[] centerColumnList = new string[] { "ID", "PESSOA", "CPF/CNPJ", "UF", "CEP", "NUMERO", "CELULAR", "FIXO", "DATA CADASTRO" };
             Color headerBackColor = e.ColumnIndex == sortColumn ? clickedHeaderBackColor : defaultHeaderBackColor;
 
             using (SolidBrush backBrush = new SolidBrush(headerBackColor))
@@ -165,9 +164,7 @@ namespace ProjetoTeste
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap; // Adiciona esta linha para evitar quebra de linha
 
-                if (e.Header.Text == "ID" || e.Header.Text == "PESSOA" || e.Header.Text == "CPF/CNPJ" ||
-                    e.Header.Text == "UF" || e.Header.Text == "CEP" || e.Header.Text == "NUMERO" ||
-                    e.Header.Text == "CELULAR" || e.Header.Text == "FIXO" || e.Header.Text == "DATA CADASTRO")
+                if (centerColumnList.Contains(e.Header.Text))
                 {
                     sf.Alignment = StringAlignment.Center; // Alinhar cabeçalhos numéricos no centro
                 }
@@ -453,18 +450,6 @@ namespace ProjetoTeste
                     listViewClientes.Items.Add(item);
                 }
 
-                // Ajustar automaticamente o tamanho das colunas ao conteúdo, mas não menor que o cabeçalho
-                foreach (ColumnHeader column in listViewClientes.Columns)
-                {
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize); // Ajusta a largura ao cabeçalho primeiro
-                    int headerWidth = TextRenderer.MeasureText(column.Text, listViewClientes.Font).Width + 20; // Adiciona uma margem
-
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent); // Ajusta a largura ao conteúdo
-                    if (column.Width < headerWidth)
-                    {
-                        column.Width = headerWidth; // Garantir que a largura não fique menor que o cabeçalho
-                    }
-                }
 
                 // Manter uma cópia dos itens originais
                 listaOriginalItens = listViewClientes.Items.Cast<ListViewItem>().ToList();
@@ -477,7 +462,7 @@ namespace ProjetoTeste
                 sortAscending = true;
                 listViewClientes.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewClientes.Sort();
-                listViewClientes.Columns[sortColumn].Width = listViewClientes.Columns[sortColumn].Width;
+                ajustaLarguraCabecalho();
                 tabControlClientes.SelectedTab = tabDadosClientes;
 
             }
@@ -874,6 +859,20 @@ namespace ProjetoTeste
                 MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void ajustaLarguraCabecalho()
+        {
+            for (int i = 0; i < listViewClientes.Columns.Count; i++)
+            {
+                listViewClientes.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent);
+                int larguraConteudo = listViewClientes.Columns[i].Width;
 
+                listViewClientes.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize);
+                int larguraCabecalho = listViewClientes.Columns[i].Width;
+
+                listViewClientes.Columns[i].Width = Math.Max(larguraConteudo, larguraCabecalho);
+            }
+
+            listViewClientes.Columns[listViewClientes.Columns.Count - 1].Width = -2;
+        }
     }
 }

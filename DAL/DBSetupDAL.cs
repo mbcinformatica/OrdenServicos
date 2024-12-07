@@ -58,7 +58,6 @@ namespace ProjetoTeste.DAL
                 return true;
             }
         }
-
         private void VerifyAndCreateTables(MySqlConnection connection)
         {
             // Verifica e cria a tabela DBClientes
@@ -225,7 +224,6 @@ namespace ProjetoTeste.DAL
                 "PRIMARY KEY (IDOrdenServico)"
             });
         }
-
         private void VerifyAndCreateTable(MySqlConnection connection, string tableName, string[] columns)
         {
             // Verifica se a tabela existe

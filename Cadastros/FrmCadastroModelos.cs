@@ -51,11 +51,9 @@ namespace ProjetoTeste
             // Adicionar colunas
             listViewModelos.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listViewModelos.Columns.Add("  MARCA", 250, HorizontalAlignment.Left);
-            listViewModelos.Columns.Add("  DESCRIÇÃO", 450, HorizontalAlignment.Left);
+            listViewModelos.Columns.Add("  DESCRIÇÃO", -1, HorizontalAlignment.Left);
             // Adicionar evento de clique no cabeçalho da coluna
             listViewModelos.ColumnClick += new ColumnClickEventHandler(ListViewModelos_ColumnClick);
-            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private void ListViewModelos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -348,33 +346,14 @@ namespace ProjetoTeste
                     listViewModelos.Items.Add(item);
                 }
 
-                // Ajusta a largura das colunas
-                foreach (ColumnHeader column in listViewModelos.Columns)
-                {
-                    {
-                        if (column.Text == "ID")
-                        {
-                            column.Width = 50; // Ignorar cliques em outras colunas
-                        }
-                        else if (column.Text == "  MARCA")
-                        {
-                            column.Width = 250; // Ignorar cliques em outras colunas
-                        }
-                        else
-                        {
-                            column.Width = 450; // Ignorar cliques em outras colunas
-                        }
-                    }
-                }
-
                 listaOriginalItens = listViewModelos.Items.Cast<ListViewItem>().ToList();
                 lbTotalRegistros.Text = "Total de Registros: " + listViewModelos.Items.Count;
                 sortColumn = 2;
                 sortAscending = true;
                 listViewModelos.Sort();
                 listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-                listViewModelos.Columns[sortColumn].Width = listViewModelos.Columns[sortColumn].Width;
-
+       //         listViewModelos.Columns[sortColumn].Width = listViewModelos.Columns[sortColumn].Width;
+                ajustaLarguraCabecalho(listViewModelos);
                 MarcaBLL marcaBLL = new MarcaBLL();
                 List<MarcaInfo> marcas = marcaBLL.Listar();
                 cmbMarca.DataSource = marcas;

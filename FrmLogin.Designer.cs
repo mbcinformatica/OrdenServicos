@@ -130,6 +130,7 @@
             this.lblSenha.Name = "lblSenha";
             this.lblSenha.Size = new System.Drawing.Size(46, 16);
             this.lblSenha.TabIndex = 2;
+            this.lblSenha.Tag = "\"naoAplicar\"";
             this.lblSenha.Text = "Senha";
             // 
             // imgCadeadoAberto
@@ -175,6 +176,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Tag = "\"naoAplicar\"";
             this.Text = "    Login";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoAberto)).EndInit();

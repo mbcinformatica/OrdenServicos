@@ -32,6 +32,8 @@
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tabDadosServico = new System.Windows.Forms.TabPage();
+            this.lblValorServico = new System.Windows.Forms.Label();
+            this.txtValorServico = new System.Windows.Forms.MaskedTextBox();
             this.cmbCategoriaServico = new System.Windows.Forms.ComboBox();
             this.lbCategoriaServico = new System.Windows.Forms.Label();
             this.txtIDCodigoBase = new System.Windows.Forms.TextBox();
@@ -51,8 +53,6 @@
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.btnNovo = new System.Windows.Forms.Button();
-            this.lblValorServico = new System.Windows.Forms.Label();
-            this.txtValorServico = new System.Windows.Forms.MaskedTextBox();
             this.tabDadosServico.SuspendLayout();
             this.tabControlServicos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
@@ -93,6 +93,30 @@
             this.tabDadosServico.Size = new System.Drawing.Size(768, 110);
             this.tabDadosServico.TabIndex = 0;
             this.tabDadosServico.Text = "Dados da Servico";
+            // 
+            // lblValorServico
+            // 
+            this.lblValorServico.AutoSize = true;
+            this.lblValorServico.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValorServico.Location = new System.Drawing.Point(16, 64);
+            this.lblValorServico.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblValorServico.Name = "lblValorServico";
+            this.lblValorServico.Size = new System.Drawing.Size(102, 15);
+            this.lblValorServico.TabIndex = 82;
+            this.lblValorServico.Text = "Valor do Serviço..:";
+            // 
+            // txtValorServico
+            // 
+            this.txtValorServico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtValorServico.Culture = new System.Globalization.CultureInfo("");
+            this.txtValorServico.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtValorServico.Location = new System.Drawing.Point(16, 80);
+            this.txtValorServico.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtValorServico.Name = "txtValorServico";
+            this.txtValorServico.Size = new System.Drawing.Size(128, 22);
+            this.txtValorServico.TabIndex = 81;
+            this.txtValorServico.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtValorServico.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // cmbCategoriaServico
             // 
@@ -314,6 +338,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(220, 33);
             this.lbTotalRegistros.TabIndex = 66;
+            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnNovo
@@ -330,30 +355,6 @@
             this.btnNovo.Text = "     Novo";
             this.btnNovo.UseVisualStyleBackColor = false;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
-            // 
-            // lblValorServico
-            // 
-            this.lblValorServico.AutoSize = true;
-            this.lblValorServico.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValorServico.Location = new System.Drawing.Point(16, 64);
-            this.lblValorServico.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblValorServico.Name = "lblValorServico";
-            this.lblValorServico.Size = new System.Drawing.Size(102, 15);
-            this.lblValorServico.TabIndex = 82;
-            this.lblValorServico.Text = "Valor do Serviço..:";
-            // 
-            // txtValorServico
-            // 
-            this.txtValorServico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtValorServico.Culture = new System.Globalization.CultureInfo("");
-            this.txtValorServico.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtValorServico.Location = new System.Drawing.Point(16, 80);
-            this.txtValorServico.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtValorServico.Name = "txtValorServico";
-            this.txtValorServico.Size = new System.Drawing.Size(128, 22);
-            this.txtValorServico.TabIndex = 81;
-            this.txtValorServico.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtValorServico.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // frmServicos
             // 

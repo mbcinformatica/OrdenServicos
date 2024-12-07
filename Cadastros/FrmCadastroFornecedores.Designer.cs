@@ -227,6 +227,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(312, 33);
             this.lbTotalRegistros.TabIndex = 58;
+            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabControlFornecedores
@@ -294,7 +295,7 @@
             this.lblEmail.Location = new System.Drawing.Point(608, 104);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(50, 15);
+            this.lblEmail.Size = new System.Drawing.Size(53, 15);
             this.lblEmail.TabIndex = 118;
             this.lblEmail.Text = "E-Mail..:";
             // 
@@ -318,7 +319,7 @@
             this.lbContato.Location = new System.Drawing.Point(8, 104);
             this.lbContato.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbContato.Name = "lbContato";
-            this.lbContato.Size = new System.Drawing.Size(56, 15);
+            this.lbContato.Size = new System.Drawing.Size(59, 15);
             this.lbContato.TabIndex = 117;
             this.lbContato.Text = "Contato..:";
             // 
@@ -352,7 +353,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(8, 150);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(121, 15);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(124, 15);
             this.lblPesquisaListView.TabIndex = 120;
             this.lblPesquisaListView.Text = "Pesquisa Fornecedor..:";
             // 
@@ -373,7 +374,7 @@
             this.lbUF.Location = new System.Drawing.Point(1044, 56);
             this.lbUF.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbUF.Name = "lbUF";
-            this.lbUF.Size = new System.Drawing.Size(28, 15);
+            this.lbUF.Size = new System.Drawing.Size(31, 15);
             this.lbUF.TabIndex = 116;
             this.lbUF.Text = "UF..:";
             // 
@@ -395,7 +396,7 @@
             this.lbMunicipio.Location = new System.Drawing.Point(697, 56);
             this.lbMunicipio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMunicipio.Name = "lbMunicipio";
-            this.lbMunicipio.Size = new System.Drawing.Size(68, 15);
+            this.lbMunicipio.Size = new System.Drawing.Size(71, 15);
             this.lbMunicipio.TabIndex = 115;
             this.lbMunicipio.Text = "Municipio..:";
             // 
@@ -417,7 +418,7 @@
             this.lbBairro.Location = new System.Drawing.Point(464, 56);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBairro.Name = "lbBairro";
-            this.lbBairro.Size = new System.Drawing.Size(48, 15);
+            this.lbBairro.Size = new System.Drawing.Size(51, 15);
             this.lbBairro.TabIndex = 114;
             this.lbBairro.Text = "Bairro..:";
             // 
@@ -441,7 +442,7 @@
             this.lbNumero.Location = new System.Drawing.Point(368, 56);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumero.Name = "lbNumero";
-            this.lbNumero.Size = new System.Drawing.Size(57, 15);
+            this.lbNumero.Size = new System.Drawing.Size(60, 15);
             this.lbNumero.TabIndex = 113;
             this.lbNumero.Text = "Numero..:";
             // 
@@ -463,7 +464,7 @@
             this.lbEndereco.Location = new System.Drawing.Point(8, 56);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbEndereco.Name = "lbEndereco";
-            this.lbEndereco.Size = new System.Drawing.Size(62, 15);
+            this.lbEndereco.Size = new System.Drawing.Size(65, 15);
             this.lbEndereco.TabIndex = 112;
             this.lbEndereco.Text = "Endereço..:";
             // 
@@ -527,7 +528,7 @@
             this.lbFone_2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbFone_2.Location = new System.Drawing.Point(488, 104);
             this.lbFone_2.Name = "lbFone_2";
-            this.lbFone_2.Size = new System.Drawing.Size(35, 15);
+            this.lbFone_2.Size = new System.Drawing.Size(38, 15);
             this.lbFone_2.TabIndex = 109;
             this.lbFone_2.Text = "Fixo..:";
             // 
@@ -549,7 +550,7 @@
             this.lbFone_1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbFone_1.Location = new System.Drawing.Point(368, 104);
             this.lbFone_1.Name = "lbFone_1";
-            this.lbFone_1.Size = new System.Drawing.Size(49, 15);
+            this.lbFone_1.Size = new System.Drawing.Size(52, 15);
             this.lbFone_1.TabIndex = 108;
             this.lbFone_1.Text = "Celular..:";
             // 
@@ -575,7 +576,7 @@
             this.lbCep.Location = new System.Drawing.Point(968, 8);
             this.lbCep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCep.Name = "lbCep";
-            this.lbCep.Size = new System.Drawing.Size(35, 15);
+            this.lbCep.Size = new System.Drawing.Size(38, 15);
             this.lbCep.TabIndex = 103;
             this.lbCep.Text = "Cep..:";
             // 
@@ -598,7 +599,7 @@
             this.lbDataCadastro.Location = new System.Drawing.Point(824, 8);
             this.lbDataCadastro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDataCadastro.Name = "lbDataCadastro";
-            this.lbDataCadastro.Size = new System.Drawing.Size(89, 15);
+            this.lbDataCadastro.Size = new System.Drawing.Size(92, 15);
             this.lbDataCadastro.TabIndex = 100;
             this.lbDataCadastro.Text = "Data Cadastro..:";
             // 
@@ -620,7 +621,7 @@
             this.lbNomeRazaoSocial.Location = new System.Drawing.Point(326, 8);
             this.lbNomeRazaoSocial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNomeRazaoSocial.Name = "lbNomeRazaoSocial";
-            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(116, 15);
+            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(119, 15);
             this.lbNomeRazaoSocial.TabIndex = 98;
             this.lbNomeRazaoSocial.Text = "Nome/Razão Social..:";
             // 
@@ -644,7 +645,7 @@
             this.lbCpfCnpj.Location = new System.Drawing.Point(136, 8);
             this.lbCpfCnpj.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCpfCnpj.Name = "lbCpfCnpj";
-            this.lbCpfCnpj.Size = new System.Drawing.Size(62, 15);
+            this.lbCpfCnpj.Size = new System.Drawing.Size(65, 15);
             this.lbCpfCnpj.TabIndex = 95;
             this.lbCpfCnpj.Text = "Cpf/Cnpj..:";
             // 

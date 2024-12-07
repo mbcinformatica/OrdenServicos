@@ -49,7 +49,6 @@
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.btnNovo = new System.Windows.Forms.Button();
-            this.tabInformacoesAdicionais.SuspendLayout();
             this.tabDadosUnidade.SuspendLayout();
             this.tabControlUnidades.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
@@ -67,6 +66,13 @@
             this.tabInformacoesAdicionais.Size = new System.Drawing.Size(768, 110);
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "  Informações Adicionais";
+            // 
+            // lbDataUltimaCompra
+            // 
+            this.lbDataUltimaCompra.Location = new System.Drawing.Point(0, 0);
+            this.lbDataUltimaCompra.Name = "lbDataUltimaCompra";
+            this.lbDataUltimaCompra.Size = new System.Drawing.Size(100, 23);
+            this.lbDataUltimaCompra.TabIndex = 0;
             // 
             // tabDadosUnidade
             // 
@@ -105,7 +111,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(16, 64);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(106, 15);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(109, 15);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Unidade..:";
             // 
@@ -129,7 +135,7 @@
             this.lbDescricao.Location = new System.Drawing.Point(136, 8);
             this.lbDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDescricao.Name = "lbDescricao";
-            this.lbDescricao.Size = new System.Drawing.Size(65, 15);
+            this.lbDescricao.Size = new System.Drawing.Size(68, 15);
             this.lbDescricao.TabIndex = 63;
             this.lbDescricao.Text = "Descrição..:";
             // 
@@ -140,7 +146,7 @@
             this.lbIDUnidade.Location = new System.Drawing.Point(16, 8);
             this.lbIDUnidade.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbIDUnidade.Name = "lbIDUnidade";
-            this.lbIDUnidade.Size = new System.Drawing.Size(27, 15);
+            this.lbIDUnidade.Size = new System.Drawing.Size(30, 15);
             this.lbIDUnidade.TabIndex = 61;
             this.lbIDUnidade.Text = "ID..:";
             // 
@@ -271,6 +277,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(220, 33);
             this.lbTotalRegistros.TabIndex = 66;
+            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnNovo
@@ -299,8 +306,6 @@
             this.Name = "frmUnidades";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Unidades";
-            this.tabInformacoesAdicionais.ResumeLayout(false);
-            this.tabInformacoesAdicionais.PerformLayout();
             this.tabDadosUnidade.ResumeLayout(false);
             this.tabDadosUnidade.PerformLayout();
             this.tabControlUnidades.ResumeLayout(false);

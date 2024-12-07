@@ -15,7 +15,8 @@ namespace ProjetoTeste
         public frmLogin()
         {
             InitializeComponent();
-
+            btnLogin.Tag = new string[] { "alinhar","azul" };
+            
             // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);

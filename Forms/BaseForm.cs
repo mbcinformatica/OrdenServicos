@@ -51,7 +51,6 @@ namespace ProjetoTeste.Forms
         protected int labelMarginRight { get; set; }
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
-
         protected void LoadConfig()
         {
 
@@ -66,14 +65,13 @@ namespace ProjetoTeste.Forms
                     textBox.BackColor = textBoxBackgroundColor;
                     textBox.ForeColor = textBoxFontColor;
                     textBox.BorderStyle = textBoxBorderStyle;
+                    textBox.Margin = new Padding(textBoxMarginLeft, textBoxMarginTop, textBoxMarginRight, textBoxMarginBottom);
 
-                    // Aplicar fonte apenas se não for FrmLogin
-                    if (!(this is frmLogin))
+                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         textBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
                     }
-
-                    textBox.Margin = new Padding(textBoxMarginLeft, textBoxMarginTop, textBoxMarginRight, textBoxMarginBottom);
                 }
                 else if (control is MaskedTextBox maskedTextBox)
                 {
@@ -81,8 +79,8 @@ namespace ProjetoTeste.Forms
                     maskedTextBox.ForeColor = textBoxFontColor;
                     maskedTextBox.BorderStyle = textBoxBorderStyle;
 
-                    // Aplicar fonte apenas se não for FrmLogin
-                    if (!(this is frmLogin))
+                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         maskedTextBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
                     }
@@ -92,8 +90,8 @@ namespace ProjetoTeste.Forms
                     comboBox.BackColor = textBoxBackgroundColor;
                     comboBox.ForeColor = textBoxFontColor;
 
-                    // Aplicar fonte apenas se não for FrmLogin
-                    if (!(this is frmLogin))
+                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         comboBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
                     }
@@ -103,14 +101,14 @@ namespace ProjetoTeste.Forms
                     label.ForeColor = labelFontColor;
                     label.Margin = new Padding(labelMarginLeft, labelMarginTop, labelMarginRight, labelMarginBottom);
 
-                    // Aplicar fonte e AutoSize apenas se não for FrmLogin
-                    if (!(this is frmLogin))
+                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         label.Font = new Font(labelFontFamily, labelFontSize, labelFontStyle);
                     }
 
-                    // Verificar se o nome da Label é "lbTotalRegistros"
-                    if (label.Name == "lbTotalRegistros")
+                    // Verificar se a tag do controle Label é "naoAplicar"
+                    if (label.Tag  == "naoAplicar")
                     {
                         label.AutoSize = false;
                     }
@@ -124,14 +122,13 @@ namespace ProjetoTeste.Forms
                 {
                     button.BackColor = buttonBackgroundColor;
                     button.ForeColor = buttonFontColor;
+                    button.Cursor = Cursors.Hand;
 
-                    // Aplicar fonte apenas se não for FrmLogin
-                    if (!(this is frmLogin))
+                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         button.Font = new Font(buttonFontFamily, buttonFontSize, buttonFontStyle);
                     }
-
-                    button.Cursor = Cursors.Hand;
                 }
                 else if (control is Panel panel)
                 {
@@ -491,14 +488,20 @@ namespace ProjetoTeste.Forms
             }
             return destImage;
         }
-    }
-    public static class ControlExtensions
-    {
-        public static void DoubleBuffered(this Control control, bool enable)
+        protected void ajustaLarguraCabecalho(ListView listView)
         {
-            var doubleBufferPropertyInfo = control.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            doubleBufferPropertyInfo.SetValue(control, enable, null);
+            for (int i = 0; i < listView.Columns.Count; i++)
+            {
+                listView.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent);
+                int larguraConteudo = listView.Columns[i].Width;
+
+                listView.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize);
+                int larguraCabecalho = listView.Columns[i].Width;
+
+                listView.Columns[i].Width = Math.Max(larguraConteudo, larguraCabecalho);
+            }
+
+            listView.Columns[listView.Columns.Count - 1].Width = -2;
         }
     }
-
 }

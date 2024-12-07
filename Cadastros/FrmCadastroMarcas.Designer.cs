@@ -49,7 +49,6 @@
             this.btnFechar = new System.Windows.Forms.Button();
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
-            this.tabInformacoesAdicionais.SuspendLayout();
             this.tabDadosMarca.SuspendLayout();
             this.tabControlMarcas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
@@ -105,7 +104,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(16, 64);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(96, 15);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(99, 15);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Marca..:";
             // 
@@ -129,7 +128,7 @@
             this.lbDescricao.Location = new System.Drawing.Point(136, 8);
             this.lbDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDescricao.Name = "lbDescricao";
-            this.lbDescricao.Size = new System.Drawing.Size(65, 15);
+            this.lbDescricao.Size = new System.Drawing.Size(68, 15);
             this.lbDescricao.TabIndex = 63;
             this.lbDescricao.Text = "Descrição..:";
             // 
@@ -140,7 +139,7 @@
             this.lbIDMarca.Location = new System.Drawing.Point(16, 8);
             this.lbIDMarca.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbIDMarca.Name = "lbIDMarca";
-            this.lbIDMarca.Size = new System.Drawing.Size(27, 15);
+            this.lbIDMarca.Size = new System.Drawing.Size(30, 15);
             this.lbIDMarca.TabIndex = 61;
             this.lbIDMarca.Text = "ID..:";
             // 
@@ -286,6 +285,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(220, 33);
             this.lbTotalRegistros.TabIndex = 66;
+            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmMarcas
@@ -299,8 +299,6 @@
             this.Name = "frmMarcas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Marcas";
-            this.tabInformacoesAdicionais.ResumeLayout(false);
-            this.tabInformacoesAdicionais.PerformLayout();
             this.tabDadosMarca.ResumeLayout(false);
             this.tabDadosMarca.PerformLayout();
             this.tabControlMarcas.ResumeLayout(false);

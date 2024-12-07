@@ -98,6 +98,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(312, 33);
             this.lbTotalRegistros.TabIndex = 58;
+            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtPesquisaListView
@@ -120,7 +121,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(8, 150);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(104, 15);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(107, 15);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Produto..:";
             // 
@@ -161,7 +162,7 @@
             this.lbCodigoIntProduto.Location = new System.Drawing.Point(8, 8);
             this.lbCodigoIntProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCodigoIntProduto.Name = "lbCodigoIntProduto";
-            this.lbCodigoIntProduto.Size = new System.Drawing.Size(93, 15);
+            this.lbCodigoIntProduto.Size = new System.Drawing.Size(96, 15);
             this.lbCodigoIntProduto.TabIndex = 61;
             this.lbCodigoIntProduto.Text = "Código Interno..:";
             // 
@@ -172,7 +173,7 @@
             this.lbDescricao.Location = new System.Drawing.Point(360, 8);
             this.lbDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDescricao.Name = "lbDescricao";
-            this.lbDescricao.Size = new System.Drawing.Size(65, 15);
+            this.lbDescricao.Size = new System.Drawing.Size(68, 15);
             this.lbDescricao.TabIndex = 63;
             this.lbDescricao.Text = "Descrição..:";
             // 
@@ -225,7 +226,7 @@
             this.lbCodigoFabricante.Location = new System.Drawing.Point(182, 8);
             this.lbCodigoFabricante.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCodigoFabricante.Name = "lbCodigoFabricante";
-            this.lbCodigoFabricante.Size = new System.Drawing.Size(110, 15);
+            this.lbCodigoFabricante.Size = new System.Drawing.Size(113, 15);
             this.lbCodigoFabricante.TabIndex = 66;
             this.lbCodigoFabricante.Text = "Código Fabricante..:";
             // 
@@ -425,7 +426,7 @@
             this.lbGarantia.Location = new System.Drawing.Point(661, 104);
             this.lbGarantia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbGarantia.Name = "lbGarantia";
-            this.lbGarantia.Size = new System.Drawing.Size(61, 15);
+            this.lbGarantia.Size = new System.Drawing.Size(64, 15);
             this.lbGarantia.TabIndex = 93;
             this.lbGarantia.Text = "Garantia..:";
             // 
@@ -436,7 +437,7 @@
             this.lbImagemProduto.Location = new System.Drawing.Point(840, 8);
             this.lbImagemProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbImagemProduto.Name = "lbImagemProduto";
-            this.lbImagemProduto.Size = new System.Drawing.Size(100, 15);
+            this.lbImagemProduto.Size = new System.Drawing.Size(103, 15);
             this.lbImagemProduto.TabIndex = 90;
             this.lbImagemProduto.Text = "Imagem Produto..:";
             // 
@@ -447,7 +448,7 @@
             this.lbModeloProduto.Location = new System.Drawing.Point(560, 56);
             this.lbModeloProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbModeloProduto.Name = "lbModeloProduto";
-            this.lbModeloProduto.Size = new System.Drawing.Size(53, 15);
+            this.lbModeloProduto.Size = new System.Drawing.Size(56, 15);
             this.lbModeloProduto.TabIndex = 74;
             this.lbModeloProduto.Text = "Modelo..:";
             // 
@@ -488,7 +489,7 @@
             this.label1.Location = new System.Drawing.Point(544, 104);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 15);
+            this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.TabIndex = 87;
             this.label1.Text = "Estoque Minino..:";
             // 
@@ -499,7 +500,7 @@
             this.lbtxtEstoqueAtual.Location = new System.Drawing.Point(424, 104);
             this.lbtxtEstoqueAtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbtxtEstoqueAtual.Name = "lbtxtEstoqueAtual";
-            this.lbtxtEstoqueAtual.Size = new System.Drawing.Size(86, 15);
+            this.lbtxtEstoqueAtual.Size = new System.Drawing.Size(89, 15);
             this.lbtxtEstoqueAtual.TabIndex = 86;
             this.lbtxtEstoqueAtual.Text = "Estoque Atual..:";
             // 
@@ -545,7 +546,7 @@
             this.lbUnidade.Location = new System.Drawing.Point(8, 104);
             this.lbUnidade.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbUnidade.Name = "lbUnidade";
-            this.lbUnidade.Size = new System.Drawing.Size(57, 15);
+            this.lbUnidade.Size = new System.Drawing.Size(60, 15);
             this.lbUnidade.TabIndex = 82;
             this.lbUnidade.Text = "Unidade..:";
             // 
@@ -556,7 +557,7 @@
             this.lblValorVenda.Location = new System.Drawing.Point(304, 104);
             this.lblValorVenda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblValorVenda.Name = "lblValorVenda";
-            this.lblValorVenda.Size = new System.Drawing.Size(77, 15);
+            this.lblValorVenda.Size = new System.Drawing.Size(80, 15);
             this.lblValorVenda.TabIndex = 81;
             this.lblValorVenda.Text = "Valor Venda..:";
             // 
@@ -567,7 +568,7 @@
             this.lblValorCompra.Location = new System.Drawing.Point(184, 104);
             this.lblValorCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblValorCompra.Name = "lblValorCompra";
-            this.lblValorCompra.Size = new System.Drawing.Size(87, 15);
+            this.lblValorCompra.Size = new System.Drawing.Size(90, 15);
             this.lblValorCompra.TabIndex = 80;
             this.lblValorCompra.Text = "Valor Compra..:";
             // 
@@ -613,7 +614,7 @@
             this.lbMarcaProduto.Location = new System.Drawing.Point(360, 56);
             this.lbMarcaProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMarcaProduto.Name = "lbMarcaProduto";
-            this.lbMarcaProduto.Size = new System.Drawing.Size(47, 15);
+            this.lbMarcaProduto.Size = new System.Drawing.Size(50, 15);
             this.lbMarcaProduto.TabIndex = 72;
             this.lbMarcaProduto.Text = "Marca..:";
             // 
@@ -624,7 +625,7 @@
             this.lbFornecedor.Location = new System.Drawing.Point(8, 56);
             this.lbFornecedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFornecedor.Name = "lbFornecedor";
-            this.lbFornecedor.Size = new System.Drawing.Size(72, 15);
+            this.lbFornecedor.Size = new System.Drawing.Size(75, 15);
             this.lbFornecedor.TabIndex = 69;
             this.lbFornecedor.Text = "Fornecedor..:";
             // 
@@ -665,7 +666,7 @@
             this.lbNumeroSerie.Location = new System.Drawing.Point(8, 8);
             this.lbNumeroSerie.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumeroSerie.Name = "lbNumeroSerie";
-            this.lbNumeroSerie.Size = new System.Drawing.Size(104, 15);
+            this.lbNumeroSerie.Size = new System.Drawing.Size(107, 15);
             this.lbNumeroSerie.TabIndex = 70;
             this.lbNumeroSerie.Text = "Numero de Série..:";
             // 
@@ -690,7 +691,7 @@
             this.lbDataUltimaCompra.Location = new System.Drawing.Point(936, 144);
             this.lbDataUltimaCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDataUltimaCompra.Name = "lbDataUltimaCompra";
-            this.lbDataUltimaCompra.Size = new System.Drawing.Size(95, 15);
+            this.lbDataUltimaCompra.Size = new System.Drawing.Size(98, 15);
             this.lbDataUltimaCompra.TabIndex = 68;
             this.lbDataUltimaCompra.Text = "Ultima Compra..:";
             // 
