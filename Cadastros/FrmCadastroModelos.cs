@@ -21,6 +21,8 @@ namespace ProjetoTeste
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private bool escPressed = false;
+
+
         public frmModelos()
         {
             InitializeComponent();
@@ -352,7 +354,6 @@ namespace ProjetoTeste
                 sortAscending = true;
                 listViewModelos.Sort();
                 listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-       //         listViewModelos.Columns[sortColumn].Width = listViewModelos.Columns[sortColumn].Width;
                 ajustaLarguraCabecalho(listViewModelos);
                 MarcaBLL marcaBLL = new MarcaBLL();
                 List<MarcaInfo> marcas = marcaBLL.Listar();

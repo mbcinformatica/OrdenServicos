@@ -34,14 +34,13 @@ namespace ProjetoTeste
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlClientes); // Chama o método para inicializar o TabControl
-
             erpProvider = new ErrorProvider();
-            CarregarRegistros();
-
             // Configurar eventos dos TextBoxes para maiúsculas
             ConfigurarTextBox();
             // Configurando os Key para os TextBox
             CarregaKey();
+            CarregarRegistros();
+
         }
         private void InitializeListView()
         {
@@ -68,7 +67,7 @@ namespace ProjetoTeste
             listViewClientes.Columns.Add("CELULAR", 100, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("FIXO", 100, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("  EMAIL", 300, HorizontalAlignment.Left);
-            listViewClientes.Columns.Add("DATA CADASTRO", 150, HorizontalAlignment.Right);
+            listViewClientes.Columns.Add("DATA CADASTRO",-1, HorizontalAlignment.Right);
 
             listViewClientes.ColumnClick += new ColumnClickEventHandler(ListViewClientes_ColumnClick);
 
@@ -312,6 +311,7 @@ namespace ProjetoTeste
                         txtCpfCnpj.Clear();
                         txtCpfCnpj.Focus();
                         return;
+                        
                     }
                     if (rdbCpf.Checked)
                     {

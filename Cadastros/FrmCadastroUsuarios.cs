@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -219,31 +217,31 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            txtNome.KeyDown += Evento_KeyDown;
-            txtLogin.KeyDown += Evento_KeyDown;
-            txtSenha.KeyDown += Evento_KeyDown;
-            txtConfirmaSenha.KeyDown += Evento_KeyDown;
-            txtEndereco.KeyDown += Evento_KeyDown;
-            txtNumero.KeyDown += Evento_KeyDown;
-            txtBairro.KeyDown += Evento_KeyDown;
-            txtMunicipio.KeyDown += Evento_KeyDown;
-            txtUF.KeyDown += Evento_KeyDown;
-            txtCep.KeyDown += Evento_KeyDown;
-            txtFone_1.KeyDown += Evento_KeyDown;
-            txtFone_2.KeyDown += Evento_KeyDown;
-            txtEmail.KeyDown += Evento_KeyDown;
-            txtPesquisaListView.KeyDown += Evento_KeyDown;
-            listViewUsuario.KeyDown += Evento_KeyDown;
+            txtNome.KeyDown += Evento1_KeyDown;
+            txtLogin.KeyDown += Evento1_KeyDown;
+            txtSenha.KeyDown += Evento1_KeyDown;
+            txtConfirmaSenha.KeyDown += Evento1_KeyDown;
+            txtEndereco.KeyDown += Evento1_KeyDown;
+            txtNumero.KeyDown += Evento1_KeyDown;
+            txtBairro.KeyDown += Evento1_KeyDown;
+            txtMunicipio.KeyDown += Evento1_KeyDown;
+            txtUF.KeyDown += Evento1_KeyDown;
+            txtCep.KeyDown += Evento1_KeyDown;
+            txtFone_1.KeyDown += Evento1_KeyDown;
+            txtFone_2.KeyDown += Evento1_KeyDown;
+            txtEmail.KeyDown += Evento1_KeyDown;
+            txtPesquisaListView.KeyDown += Evento1_KeyDown;
+            listViewUsuario.KeyDown += Evento1_KeyDown;
 
-            txtCep.KeyPress += Evento_KeyPress;
-            txtFone_1.KeyPress += Evento_KeyPress;
-            txtFone_2.KeyPress += Evento_KeyPress;
+            txtCep.KeyPress += Evento1_KeyPress;
+            txtFone_1.KeyPress += Evento1_KeyPress;
+            txtFone_2.KeyPress += Evento1_KeyPress;
 
-            txtCep.Leave += Evento_Leave;
-            txtFone_1.Leave += Evento_Leave;
-            txtFone_2.Leave += Evento_Leave;
-            txtConfirmaSenha.Leave += Evento_Leave;
-            txtEmail.Leave += Evento_Leave;
+            txtCep.Leave += Evento1_Leave;
+            txtFone_1.Leave += Evento1_Leave;
+            txtFone_2.Leave += Evento1_Leave;
+            txtConfirmaSenha.Leave += Evento1_Leave;
+            txtEmail.Leave += Evento1_Leave;
 
             // Adiciona eventos de mouse aos botões
             btnSalvar.MouseEnter += Button_MouseEnter;
@@ -285,7 +283,7 @@ namespace ProjetoTeste
                 button.ForeColor = buttonFontColor; // Cor da fonte original
             }
         }
-        private void Evento_KeyPress(object sender, KeyPressEventArgs e)
+        private void Evento1_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Permitir apenas dígitos e controle (como backspace)
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
@@ -293,7 +291,7 @@ namespace ProjetoTeste
                 e.Handled = true;
             }
         }
-        private void Evento_Leave(object sender, EventArgs e)
+        private void Evento1_Leave(object sender, EventArgs e)
         {
             if (escPressed)
             {
@@ -329,7 +327,7 @@ namespace ProjetoTeste
                 }
             }
         }
-        private void Evento_KeyDown(object sender, KeyEventArgs e)
+        private void Evento1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -423,30 +421,13 @@ namespace ProjetoTeste
                     listViewUsuario.Items.Add(item);
                 }
 
-                // Ajustar automaticamente o tamanho das colunas ao conteúdo, mas não menor que o cabeçalho
-                foreach (ColumnHeader column in listViewUsuario.Columns)
-                {
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize); // Ajusta a largura ao cabeçalho primeiro
-                    int headerWidth = TextRenderer.MeasureText(column.Text, listViewUsuario.Font).Width + 20; // Adiciona uma margem
-
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent); // Ajusta a largura ao conteúdo
-                    if (column.Width < headerWidth)
-                    {
-                        column.Width = headerWidth; // Garantir que a largura não fique menor que o cabeçalho
-                    }
-                }
-
-                // Manter uma cópia dos itens originais
                 listaOriginalItens = listViewUsuario.Items.Cast<ListViewItem>().ToList();
-
-                // Atualizar o Label com o total de registros
                 lbTotalRegistros.Text = "Total de Registros..:  " + listViewUsuario.Items.Count;
-
                 sortColumn = 1;
                 sortAscending = true;
-                listViewUsuario.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewUsuario.Sort();
-                listViewUsuario.Columns[sortColumn].Width = listViewUsuario.Columns[sortColumn].Width;
+                listViewUsuario.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                ajustaLarguraCabecalho(listViewUsuario);
                 tabControlUsuarios.SelectedTab = tabDadosUsuario;
 
             }
@@ -963,43 +944,6 @@ namespace ProjetoTeste
         {
             // Limpar a imagem do PictureBox
             imgImagemUsuario.Image = null;
-        }
-        private byte[] ImageToByteArray(Image image)
-        {
-            if (image == null)
-                return null;
-
-            // Redimensionar a imagem para um tamanho menor, se necessário
-            Image resizedImage = ResizeImage(image, 136, 160); // Ajuste o tamanho conforme necessário
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                resizedImage.Save(ms, image.RawFormat);
-                return ms.ToArray();
-            }
-        }
-        private Image ResizeImage(Image image, int width, int height)
-        {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-            return destImage;
         }
     }
 }

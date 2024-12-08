@@ -374,6 +374,7 @@
             this.cmbCliente.Name = "cmbCliente";
             this.cmbCliente.Size = new System.Drawing.Size(448, 23);
             this.cmbCliente.TabIndex = 88;
+            this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Clienre");
             // 
             // lbCliente
             // 

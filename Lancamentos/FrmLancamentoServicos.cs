@@ -300,6 +300,8 @@ namespace ProjetoTeste
             {
                 return; // Sai do método sem fazer verificações
             }
+
+ 
             MaskedTextBox maskedTextBox = sender as MaskedTextBox;
             if (maskedTextBox != null)
             {
@@ -460,23 +462,13 @@ namespace ProjetoTeste
             else if (sender is ComboBox comboBox)
             {
                 // comboBox.Select();
+                tlpDicas.SetToolTip(comboBox, null); // Remove o ToolTip ao entrar no ComboBox
+
             }
             else if (sender is DateTimePicker dateTimePicker)
             {
                 // dateTimePicker.Select();
             }
-        }
-        private Control GetNextControl(Control current, bool forward)
-        {
-            Control parent = current.Parent;
-            if (parent == null)
-            {
-                return null;
-            }
-            List<Control> controls = parent.Controls.Cast<Control>().Where(ct => ct.TabStop).OrderBy(ct => ct.TabIndex).ToList();
-            int currentIndex = controls.IndexOf(current);
-            int nextIndex = (currentIndex + (forward ? 1 : -1) + controls.Count) % controls.Count;
-            return controls[nextIndex];
         }
         private void ConfigurarTabIndexControles()
         {

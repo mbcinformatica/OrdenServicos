@@ -38,8 +38,6 @@
             this.btnNovo = new System.Windows.Forms.Button();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.txtIDCliente = new System.Windows.Forms.TextBox();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlClientes = new System.Windows.Forms.TabControl();
@@ -77,8 +75,8 @@
             this.txtCpfCnpj = new System.Windows.Forms.MaskedTextBox();
             this.lbCpfCnpj = new System.Windows.Forms.Label();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
+            this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlClientes.SuspendLayout();
             this.tabDadosClientes.SuspendLayout();
@@ -189,18 +187,6 @@
             this.txtIDCliente.Text = " ";
             this.txtIDCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIDCliente.Visible = false;
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // mySqlCommand1
-            // 
-            this.mySqlCommand1.CacheAge = 0;
-            this.mySqlCommand1.Connection = null;
-            this.mySqlCommand1.EnableCaching = false;
-            this.mySqlCommand1.Transaction = null;
             // 
             // pnlBotoes
             // 
@@ -613,6 +599,7 @@
             this.txtNomeRazaoSocial.Name = "txtNomeRazaoSocial";
             this.txtNomeRazaoSocial.Size = new System.Drawing.Size(472, 22);
             this.txtNomeRazaoSocial.TabIndex = 93;
+            this.tlpDicas.SetToolTip(this.txtNomeRazaoSocial, "Favor informar o Nome do Cliente");
             // 
             // lbNomeRazaoSocial
             // 
@@ -675,7 +662,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro de Clientes";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.pnlBotoes.ResumeLayout(false);
             this.pnlBotoes.PerformLayout();
             this.tabControlClientes.ResumeLayout(false);
@@ -695,8 +681,6 @@
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.ErrorProvider erpProvider;
         private System.Windows.Forms.TextBox txtIDCliente;
-        private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
         private System.Windows.Forms.Panel pnlBotoes;
         private System.Windows.Forms.Label lbTotalRegistros;
         private System.Windows.Forms.TabControl tabControlClientes;
@@ -734,5 +718,6 @@
         private System.Windows.Forms.Label lbNomeRazaoSocial;
         private System.Windows.Forms.MaskedTextBox txtCpfCnpj;
         private System.Windows.Forms.Label lbCpfCnpj;
+        private System.Windows.Forms.ToolTip tlpDicas;
     }
 }
