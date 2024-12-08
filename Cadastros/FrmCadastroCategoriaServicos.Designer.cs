@@ -269,7 +269,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(220, 33);
             this.lbTotalRegistros.TabIndex = 66;
-            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
+            this.lbTotalRegistros.Tag = "naoAplicarAutoSize";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnNovo

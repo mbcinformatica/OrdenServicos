@@ -108,7 +108,7 @@
             this.lbTotalRegistros.Name = "lbTotalRegistros";
             this.lbTotalRegistros.Size = new System.Drawing.Size(312, 33);
             this.lbTotalRegistros.TabIndex = 58;
-            this.lbTotalRegistros.Tag = "\"naoAplicar\"";
+            this.lbTotalRegistros.Tag = "naoAplicarAutoSize";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listViewUsuario

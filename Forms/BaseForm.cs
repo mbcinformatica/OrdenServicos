@@ -26,8 +26,8 @@ namespace ProjetoTeste.Forms
         protected int textBoxMarginTop { get; set; }
         protected int textBoxMarginRight { get; set; }
         protected int textBoxMarginBottom { get; set; }
-        protected Color buttonBackgroundColor { get; set; }
-        protected Color buttonFontColor { get; set; }
+        public Color buttonBackgroundColor { get; set; }
+        public Color buttonFontColor { get; set; }
         protected bool buttonAutoSize { get; set; }
         protected Color buttonBorderColor { get; set; }
         protected Color buttonMouseDownBackColor { get; set; }
@@ -100,6 +100,8 @@ namespace ProjetoTeste.Forms
                 {
                     label.ForeColor = labelFontColor;
                     label.Margin = new Padding(labelMarginLeft, labelMarginTop, labelMarginRight, labelMarginBottom);
+                    label.BackColor = labelBackgroundColor;
+                    label.AutoSize = labelAutoSize;
 
                     // Verificar se a tag do formulário é diferente de "naoAplicar"
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
@@ -108,14 +110,12 @@ namespace ProjetoTeste.Forms
                     }
 
                     // Verificar se a tag do controle Label é "naoAplicar"
-                    if (label.Tag  == "naoAplicar")
+                    if (label.Tag != null)
                     {
-                        label.AutoSize = false;
-                    }
-                    else
-                    {
-                        label.BackColor = labelBackgroundColor;
-                        label.AutoSize = labelAutoSize;
+                        if (label.Tag.ToString() == "naoAplicarAutoSize")
+                        {
+                            label.AutoSize = false;
+                        }
                     }
                 }
                 else if (control is Button button)

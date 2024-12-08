@@ -436,6 +436,7 @@
     <Compile Include="Relatorios\RelatorioClientes.cs" />
     <Compile Include="Relatorios\CabecalhoRelatorio.cs" />
     <Compile Include="Relatorios\RelatorioUsuarios.cs" />
+    <Compile Include="Utils\EventosUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <EmbeddedResource Include="Cadastros\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

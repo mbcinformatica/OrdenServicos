@@ -20,7 +20,6 @@ namespace ProjetoTeste.Utils
             }
             return phoneNumber; // Retorna o número sem formatação se não for de 10 ou 11 dígitos
         }
-
         public static string FormatCNPJ(string CNPJ)
         {
             try
@@ -32,7 +31,6 @@ namespace ProjetoTeste.Utils
                 return "";
             }
         }
-
         public static string FormatCPF(string CPF)
         {
             try
@@ -44,7 +42,6 @@ namespace ProjetoTeste.Utils
                 return "";
             }
         }
-
         public static string FormatCEP(string cep)
         {
             try
@@ -56,7 +53,6 @@ namespace ProjetoTeste.Utils
                 return "";
             }
         }
-
         public static async Task<string> BuscarCEP(string cep)
         {
             using (HttpClient client = new HttpClient())
@@ -75,7 +71,6 @@ namespace ProjetoTeste.Utils
                 }
             }
         }
-
         public static string SemFormatacao(string codigo)
         {
             if (string.IsNullOrEmpty(codigo))
@@ -92,7 +87,6 @@ namespace ProjetoTeste.Utils
                          .Replace("$", string.Empty)
                          .Replace(" ", string.Empty);
         }
-
         public static string FormatValorMoeda(string valor)
         {
             if (decimal.TryParse(valor, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal result))
@@ -101,7 +95,6 @@ namespace ProjetoTeste.Utils
             }
             return valor;
         }
-
         public static string FormatValorUnidade(string valor)
         {
             if (decimal.TryParse(valor, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal result))

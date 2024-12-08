@@ -24,6 +24,8 @@ namespace ProjetoTeste
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private bool escPressed = false;
+        private Control ControleAnterior;
+
         public frmLancamentoServicos()
         {
             InitializeComponent();
@@ -238,57 +240,22 @@ namespace ProjetoTeste
             txtIDOrdenServico.Enter += Evento_Enter;
 
             // Adiciona eventos de mouse aos botões
-            txtIDOrdenServico.MouseDown += new MouseEventHandler(Evento_MouseDown);
+            txtIDOrdenServico.MouseDown += (sender, e) => EventosUtils.Evento_MouseDown(sender, e, txtIDOrdenServico, ControleAnterior);
 
-            btnSalvar.MouseEnter += Button_MouseEnter;
-            btnSalvar.MouseLeave += Button_MouseLeave;
-            btnAlterar.MouseEnter += Button_MouseEnter;
-            btnAlterar.MouseLeave += Button_MouseLeave;
-            btnExcluir.MouseEnter += Button_MouseEnter;
-            btnExcluir.MouseLeave += Button_MouseLeave;
-            btnFechar.MouseEnter += Button_MouseEnter;
-            btnFechar.MouseLeave += Button_MouseLeave;
-            btnNovo.MouseEnter += Button_MouseEnter;
-            btnNovo.MouseLeave += Button_MouseLeave;
+            btnSalvar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
+            btnSalvar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
+            btnAlterar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
+            btnAlterar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
+            btnExcluir.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
+            btnExcluir.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
+            btnFechar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
+            btnFechar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
+            btnNovo.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
+            btnNovo.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
 
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_Click;
-        }
-        private void Evento_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                if (textBox.Name == "txtIDOrdenServico")
-                {
-                    txtDataEmissao.Focus();
-                }
-            }
-            if (sender is MaskedTextBox maskedTextBox)
-            {
-                if (maskedTextBox.Name == "txtValorTotalServico" || maskedTextBox.Name == "txtValorTotalMaterial")
-                {
-                    txtDataEmissao.Focus();
-                }
-            }
-        }
-        private void Button_MouseEnter(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
-        }
-        private void Button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
         }
         private void Evento_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -333,7 +300,6 @@ namespace ProjetoTeste
             {
                 return; // Sai do método sem fazer verificações
             }
-
             MaskedTextBox maskedTextBox = sender as MaskedTextBox;
             if (maskedTextBox != null)
             {
@@ -346,7 +312,6 @@ namespace ProjetoTeste
                     tabControlOrdenServico.SelectedTab = tabDadosCliente;
                 }
             }
-
             DateTimePicker dateTimePicker = sender as DateTimePicker;
             if (dateTimePicker != null)
             {
@@ -360,7 +325,6 @@ namespace ProjetoTeste
                 dateTimePicker.CustomFormat = "dd/MM/yyyy";
                 dateTimePicker.Format = DateTimePickerFormat.Custom;
             }
-
             ComboBox combobox = sender as ComboBox;
             if (combobox != null)
             {
@@ -396,6 +360,10 @@ namespace ProjetoTeste
                         cmbCliente.Text = string.Empty;
                         cmbCliente.Focus();
                     }
+                    if (string.IsNullOrEmpty(clienteDigitado))
+                    {
+                        cmbCliente.Focus();
+                    }
                 }
                 if (sender == cmbMarca)
                 {
@@ -427,6 +395,10 @@ namespace ProjetoTeste
                             MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         cmbMarca.Text = string.Empty;
+                        cmbMarca.Focus();
+                    }
+                    if (string.IsNullOrEmpty(marcaDigitada))
+                    {
                         cmbMarca.Focus();
                     }
                 }
@@ -462,28 +434,27 @@ namespace ProjetoTeste
                             MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    else if (produtoDigitado == string.Empty || idMarca == 0)
+                    if (produtoDigitado == string.Empty || idMarca == 0)
                     {
                         cmbProduto.Focus();
                     }
                 }
             }
-
-            // Definir o próximo controle com base no TabIndex e selecionar o conteúdo
-            Control nextControl = GetNextControl((Control)sender, true);
-            if (nextControl != null)
-            {
-                nextControl.Focus();
-            }
         }
         private void Evento_Enter(object sender, EventArgs e)
         {
+
             if (sender is MaskedTextBox maskedTextBox)
             {
                 maskedTextBox.SelectAll();
             }
             else if (sender is TextBox textBox)
             {
+                if (sender == txtIDOrdenServico)
+                {
+                    ControleAnterior = cmbCliente;
+                    ControleAnterior.Focus();
+                }
                 textBox.SelectAll();
             }
             else if (sender is ComboBox comboBox)
@@ -538,7 +509,7 @@ namespace ProjetoTeste
         private void CarregarRegistros()
         {
             DesabilitarCampos();
-            DesabilitarBotoesAcoes();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes",this);
             listViewLancamentoServicos.Items.Clear();
             listViewLancamentoServicos.Columns.Clear();
             InitializeListView();
@@ -669,7 +640,7 @@ namespace ProjetoTeste
                 {
                     imgImagemProduto.Image = null;
                 }
-                HabilitarBotoesAlterarExcluir();
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir",this);
             }
         }
         private void ConfigurarComboBoxClientes()
@@ -754,7 +725,7 @@ namespace ProjetoTeste
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar",this);
             txtIDOrdenServico.Text = "0";
             bNovo = true;
             HabilitarCampos("Novo");
@@ -827,7 +798,7 @@ namespace ProjetoTeste
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             HabilitarCampos("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -845,7 +816,7 @@ namespace ProjetoTeste
                 }
             }
             CarregarRegistros();
-            DesabilitarBotoesAcoes();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
@@ -900,31 +871,6 @@ namespace ProjetoTeste
                 default:
                     break;
             }
-        }
-        private void DesabilitarBotoesAcoes()
-        {
-            btnSalvar.Enabled = false;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-            btnNovo.Focus();
-        }
-        private void HabilitarBotaoSalvar()
-        {
-            btnSalvar.Enabled = true;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = false;
-            btnNovo.Enabled = false;
-        }
-        private void HabilitarBotoesAlterarExcluir()
-        {
-            btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
         }
         private void LimparCampos()
         {
