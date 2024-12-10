@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace ProjetoTeste.Forms
 {
-    public partial class BaseForm : Form
+    public partial class BaseForm : Form, BaseFormFuncoes
     {
         protected Color gradientStartColor { get; set; }
         protected Color gradientEndColor { get; set; }
@@ -51,6 +51,14 @@ namespace ProjetoTeste.Forms
         protected int labelMarginRight { get; set; }
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
+        public bool escPressed { get; set; }
+        public Control ControleAnterior { get; set; }
+        public virtual void CarregarRegistros()
+        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
+        } 
+        public virtual void LimparCampos() 
+        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
+        }
         protected void LoadConfig()
         {
 

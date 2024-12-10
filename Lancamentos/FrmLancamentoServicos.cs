@@ -23,8 +23,13 @@ namespace ProjetoTeste
         private int previousSortColumn = -1;
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-        private bool escPressed = false;
-        private Control ControleAnterior;
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
+
 
         public frmLancamentoServicos()
         {
@@ -44,6 +49,7 @@ namespace ProjetoTeste
             ConfigurarTabIndexControles();
             // Configurando os Key para os TextBox
             CarregaKey();
+
         }
         private void InitializeListView()
         {
@@ -204,121 +210,102 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            txtIDOrdenServico.KeyPress += Evento_KeyPress;
-            txtValorTotalServico.KeyPress += Evento_KeyPress;
-            txtValorTotalMaterial.KeyPress += Evento_KeyPress;
+            // Adicionar controles às listas específicas com base no tipo de evento
+            controlesKeyPress.AddRange(new Control[] { txtIDOrdenServico, txtValorTotalServico, txtValorTotalMaterial });
+            controlesLeave.AddRange(new Control[] { txtValorTotalServico, txtValorTotalMaterial, txtDataEmissao, txtDataConclucao, cmbCliente, cmbMarca, cmbProduto });
+            controlesEnter.AddRange(new Control[] { txtValorTotalServico, txtValorTotalMaterial, cmbCliente, cmbMarca, cmbProduto, txtNumeroSerie, txtDescricaoDefeito, txtPesquisaListView, txtIDOrdenServico });
+            controlesMouseDown.AddRange(new Control[] { txtIDOrdenServico });
+            controlesKeyDown.AddRange(new Control[] { txtDataEmissao, txtDataConclucao, cmbCliente, cmbMarca, cmbProduto, txtNumeroSerie, txtDescricaoDefeito, txtValorTotalServico, txtValorTotalMaterial, txtPesquisaListView, listViewLancamentoServicos });
+            controlesBotoes.AddRange(new Control[] { btnSalvar, btnAlterar, btnExcluir, btnFechar, btnNovo });
 
-            txtDataEmissao.KeyDown += Evento_KeyDown;
-            txtDataConclucao.KeyDown += Evento_KeyDown;
-            cmbCliente.KeyDown += Evento_KeyDown;
-            cmbMarca.KeyDown += Evento_KeyDown;
-            cmbProduto.KeyDown += Evento_KeyDown;
-            txtNumeroSerie.KeyDown += Evento_KeyDown;
-            txtDescricaoDefeito.KeyDown += Evento_KeyDown;
-            txtValorTotalServico.KeyDown += Evento_KeyDown;
-            txtValorTotalMaterial.KeyDown += Evento_KeyDown;
-            txtPesquisaListView.KeyDown += Evento_KeyDown;
-            listViewLancamentoServicos.KeyDown += Evento_KeyDown;
+            // Definir a propriedade Tag para comportamentos específicos
+            txtIDOrdenServico.Tag = "no-input"; // Bloquear qualquer entrada
+            txtValorTotalServico.Tag = "numeric"; // Permitir somente números
+            txtValorTotalMaterial.Tag = "numeric"; // Permitir somente números
+            txtNumeroSerie.Tag = "letters"; // Permitir somente letras
 
-            // Associar eventos Leave e Enter aos controles relevantes
-            txtValorTotalServico.Leave += Evento_Leave;
-            txtValorTotalMaterial.Leave += Evento_Leave;
-            txtDataEmissao.Leave += Evento_Leave;
-            txtDataConclucao.Leave += Evento_Leave;
-            cmbCliente.Leave += Evento_Leave;
-            cmbMarca.Leave += Evento_Leave;
-            cmbProduto.Leave += Evento_Leave;
+            // Inicializar eventos para os controles
+            InicializarEventos(this.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this);
 
-            txtValorTotalServico.Enter += Evento_Enter;
-            txtValorTotalMaterial.Enter += Evento_Enter;
-            cmbCliente.Enter += Evento_Enter;
-            cmbMarca.Enter += Evento_Enter;
-            cmbProduto.Enter += Evento_Enter;
-            txtNumeroSerie.Enter += Evento_Enter;
-            txtDescricaoDefeito.Enter += Evento_Enter;
-            txtPesquisaListView.Enter += Evento_Enter;
-            txtIDOrdenServico.Enter += Evento_Enter;
-
-            // Adiciona eventos de mouse aos botões
-            txtIDOrdenServico.MouseDown += (sender, e) => EventosUtils.Evento_MouseDown(sender, e, txtIDOrdenServico, ControleAnterior);
-
-            btnSalvar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
-            btnSalvar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
-            btnAlterar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
-            btnAlterar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
-            btnExcluir.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
-            btnExcluir.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
-            btnFechar.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
-            btnFechar.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
-            btnNovo.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, this);
-            btnNovo.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, this);
-
+            // Associar eventos SelectedIndexChanged e Click
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_Click;
+
+            // Focar no btnNovo ao iniciar
+            btnNovo.Focus();
         }
-        private void Evento_KeyPress(object sender, KeyPressEventArgs e)
+        private void InicializarEventos(Control.ControlCollection controles, List<Control> controlesKeyPress, List<Control> controlesLeave, List<Control> controlesEnter, List<Control> controlesMouseDown, List<Control> controlesKeyDown, List<Control> controlesBotoes, BaseForm form)
         {
-            if (sender is MaskedTextBox maskedTextBox)
+            foreach (Control controle in controles)
             {
-                // Permitir somente números, vírgula e controle (como backspace)
-                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+                // Associar eventos KeyPress
+                if (controlesKeyPress.Contains(controle))
                 {
-                    e.Handled = true;
+                    controle.KeyPress += (sender, e) => EventosUtils.Evento_KeyPress(sender, e, controle, form);
                 }
-                // Permitir somente uma vírgula decimal
-                if (e.KeyChar == ',' && maskedTextBox.Text.IndexOf(',') > -1)
+
+                // Associar eventos Leave
+                if (controlesLeave.Contains(controle))
                 {
-                    e.Handled = true;
+                    controle.Leave += (sender, e) => Evento_Leave(sender, e, controle);
                 }
-            }
-            else if (sender is TextBox textBox && textBox.Name == "txtIDOrdenServico")
-            {
-                // Bloqueia qualquer entrada de caractere para txtIDOrdenServico
-                e.Handled = true;
+
+                // Associar eventos Enter
+                if (controlesEnter.Contains(controle))
+                {
+                    controle.Enter += (sender, e) => EventosUtils.Evento_Enter(sender, e, controle, form);
+                }
+
+                // Associar eventos MouseDown
+                if (controlesMouseDown.Contains(controle))
+                {
+                    controle.MouseDown += (sender, e) => EventosUtils.Evento_MouseDown(sender, e, controle, form);
+                }
+
+                // Associar eventos KeyDown
+                if (controlesKeyDown.Contains(controle))
+                {
+                    controle.KeyDown += (sender, e) => EventosUtils.Evento_KeyDown(sender, e, controle, form);
+                }
+
+                // Associar eventos aos botões
+                if (controle is Button && controlesBotoes.Contains(controle))
+                {
+                    controle.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, form);
+                    controle.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, form);
+                }
+
+                // Recursão para controles dentro de Panel, TabControl e TabPage
+                if (controle is Panel || controle is TabControl || controle is TabPage)
+                {
+                    InicializarEventos(controle.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this);
+                }
             }
         }
-        private void Evento_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                escPressed = true;
-                AutoValidate = AutoValidate.Disable;
-                CarregarRegistros();
-                LimparCampos();
-                AutoValidate = AutoValidate.EnablePreventFocusChange;
-            }
-        }
-        private void Evento_Leave(object sender, EventArgs e)
+        private void Evento_Leave(object sender, EventArgs e, Control nomeControles)
         {
             if (escPressed)
             {
                 return; // Sai do método sem fazer verificações
             }
 
- 
-            MaskedTextBox maskedTextBox = sender as MaskedTextBox;
-            if (maskedTextBox != null)
+            if (sender is MaskedTextBox maskedTextBox)
             {
-                if (sender == txtValorTotalServico || sender == txtValorTotalMaterial)
+                if (maskedTextBox == txtValorTotalServico || maskedTextBox == txtValorTotalMaterial)
                 {
                     maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
                 }
-                if (sender == txtValorTotalMaterial)
+                if (maskedTextBox == txtValorTotalMaterial)
                 {
                     tabControlOrdenServico.SelectedTab = tabDadosCliente;
                 }
+
             }
-            DateTimePicker dateTimePicker = sender as DateTimePicker;
-            if (dateTimePicker != null)
+            else if (sender is DateTimePicker dateTimePicker)
             {
                 DateTime selectedDate = dateTimePicker.Value;
-                if (sender == txtDataEmissao)
+                if (dateTimePicker == txtDataEmissao)
                 {
                     txtDataConclucao.Value = selectedDate.AddDays(15);
                 }
@@ -327,10 +314,9 @@ namespace ProjetoTeste
                 dateTimePicker.CustomFormat = "dd/MM/yyyy";
                 dateTimePicker.Format = DateTimePickerFormat.Custom;
             }
-            ComboBox combobox = sender as ComboBox;
-            if (combobox != null)
+            else if (sender is ComboBox comboBox)
             {
-                if (sender == cmbCliente)
+                if (comboBox == cmbCliente)
                 {
                     string clienteDigitado = cmbCliente.Text.ToUpper(); // Converte para maiúsculas
                     cmbCliente.Text = clienteDigitado; // Atualiza o texto no ComboBox
@@ -341,13 +327,13 @@ namespace ProjetoTeste
                             DialogResult result = MessageBox.Show($"Cliente '{clienteDigitado}' não Cadastrado", "Cliente não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                             if (result == DialogResult.Yes)
                             {
-                                // Abre o formulário frmMarcas
+                                // Abre o formulário frmClientes
                                 frmClientes frm = new frmClientes();
                                 frm.ShowDialog();
                                 ClienteBLL clienteBLL = new ClienteBLL();
-                                // Recarregar as marcas no ComboBox
+                                // Recarregar os clientes no ComboBox
                                 List<ClienteInfo> clientes = clienteBLL.Listar();
-                                // Ordenar a lista de marcas em ordem alfabética
+                                // Ordenar a lista de clientes em ordem alfabética
                                 clientes = clientes.OrderBy(c => c.Nome_RazaoSocial).ToList();
                                 // Definir a fonte de dados do ComboBox
                                 cmbCliente.DataSource = clientes;
@@ -364,10 +350,11 @@ namespace ProjetoTeste
                     }
                     if (string.IsNullOrEmpty(clienteDigitado))
                     {
+                        tlpDicas.SetToolTip(comboBox, "Favor inserir o nome do Cliente");
                         cmbCliente.Focus();
                     }
                 }
-                if (sender == cmbMarca)
+                else if (comboBox == cmbMarca)
                 {
                     string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                     cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
@@ -404,7 +391,7 @@ namespace ProjetoTeste
                         cmbMarca.Focus();
                     }
                 }
-                if (sender == cmbProduto)
+                else if (comboBox == cmbProduto)
                 {
                     string produtoDigitado = cmbProduto.Text.ToUpper(); // Converte para maiúsculas
                     cmbProduto.Text = produtoDigitado; // Atualiza o texto no ComboBox
@@ -416,7 +403,7 @@ namespace ProjetoTeste
                             DialogResult result = MessageBox.Show($"O Produto '{produtoDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Produto não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                             if (result == DialogResult.Yes)
                             {
-                                // Abre o formulário frmMarcas
+                                // Abre o formulário frmProdutos
                                 frmProdutos frm = new frmProdutos();
                                 frm.ShowDialog();
                                 if (cmbMarca.SelectedValue != null)
@@ -441,33 +428,6 @@ namespace ProjetoTeste
                         cmbProduto.Focus();
                     }
                 }
-            }
-        }
-        private void Evento_Enter(object sender, EventArgs e)
-        {
-
-            if (sender is MaskedTextBox maskedTextBox)
-            {
-                maskedTextBox.SelectAll();
-            }
-            else if (sender is TextBox textBox)
-            {
-                if (sender == txtIDOrdenServico)
-                {
-                    ControleAnterior = cmbCliente;
-                    ControleAnterior.Focus();
-                }
-                textBox.SelectAll();
-            }
-            else if (sender is ComboBox comboBox)
-            {
-                // comboBox.Select();
-                tlpDicas.SetToolTip(comboBox, null); // Remove o ToolTip ao entrar no ComboBox
-
-            }
-            else if (sender is DateTimePicker dateTimePicker)
-            {
-                // dateTimePicker.Select();
             }
         }
         private void ConfigurarTabIndexControles()
@@ -498,7 +458,7 @@ namespace ProjetoTeste
                 camposObrigatorios
             );
         }
-        private void CarregarRegistros()
+        public override void CarregarRegistros()
         {
             DesabilitarCampos();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes",this);
@@ -558,7 +518,6 @@ namespace ProjetoTeste
                 listViewLancamentoServicos.Sort();
                 listViewLancamentoServicos.Columns[sortColumn].Width = listViewLancamentoServicos.Columns[sortColumn].Width;
                 tabControlOrdenServico.SelectedTab = tabDadosOrdenServico;
-
 
                 // Carregar clientes no ComboBox
                 ClienteBLL clienteBLL = new ClienteBLL();
@@ -864,7 +823,7 @@ namespace ProjetoTeste
                     break;
             }
         }
-        private void LimparCampos()
+        public override void LimparCampos()
         {
             txtIDOrdenServico.Clear();
             txtDataEmissao.Value = DateTime.Now;

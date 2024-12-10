@@ -372,6 +372,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSetRelUsuarios.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BaseFormFuncoes.cs" />
+    <Compile Include="Forms\BaseFormFuncoes.Designer.cs">
+      <DependentUpon>BaseFormFuncoes.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>

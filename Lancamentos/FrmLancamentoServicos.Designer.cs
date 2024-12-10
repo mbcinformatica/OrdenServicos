@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLancamentoServicos));
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.imgImagemProduto = new System.Windows.Forms.PictureBox();
+            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.tabDadosCliente = new System.Windows.Forms.TabPage();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlOrdenServico = new System.Windows.Forms.TabControl();
@@ -54,7 +55,6 @@
             this.txtPesquisaListView = new System.Windows.Forms.TextBox();
             this.lblPesquisaListView = new System.Windows.Forms.Label();
             this.lbImagemProduto = new System.Windows.Forms.Label();
-            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.lbCliente = new System.Windows.Forms.Label();
             this.ibDataEmissao = new System.Windows.Forms.Label();
             this.lbIDOrdenServico = new System.Windows.Forms.Label();
@@ -90,6 +90,16 @@
             this.imgImagemProduto.TabIndex = 89;
             this.imgImagemProduto.TabStop = false;
             this.tlpDicas.SetToolTip(this.imgImagemProduto, "Realiza Pesquisa desse Produto na Internet");
+            // 
+            // cmbCliente
+            // 
+            this.cmbCliente.BackColor = System.Drawing.Color.White;
+            this.cmbCliente.FormattingEnabled = true;
+            this.cmbCliente.Location = new System.Drawing.Point(464, 24);
+            this.cmbCliente.Name = "cmbCliente";
+            this.cmbCliente.Size = new System.Drawing.Size(448, 23);
+            this.cmbCliente.TabIndex = 88;
+            this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Clienre");
             // 
             // tabDadosCliente
             // 
@@ -366,16 +376,6 @@
             this.lbImagemProduto.TabIndex = 90;
             this.lbImagemProduto.Text = "Imagem Produto..:";
             // 
-            // cmbCliente
-            // 
-            this.cmbCliente.BackColor = System.Drawing.Color.White;
-            this.cmbCliente.FormattingEnabled = true;
-            this.cmbCliente.Location = new System.Drawing.Point(464, 24);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(448, 23);
-            this.cmbCliente.TabIndex = 88;
-            this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Clienre");
-            // 
             // lbCliente
             // 
             this.lbCliente.AutoSize = true;
@@ -418,6 +418,7 @@
             this.txtIDOrdenServico.Name = "txtIDOrdenServico";
             this.txtIDOrdenServico.Size = new System.Drawing.Size(72, 22);
             this.txtIDOrdenServico.TabIndex = 64;
+            this.txtIDOrdenServico.TabStop = false;
             this.txtIDOrdenServico.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // tabDadosMaterias
