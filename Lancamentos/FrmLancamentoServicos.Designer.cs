@@ -44,8 +44,8 @@
             this.cmbProduto = new System.Windows.Forms.ComboBox();
             this.txtDescricaoDefeito = new System.Windows.Forms.TextBox();
             this.lbDescricaoDefeito = new System.Windows.Forms.Label();
-            this.txtDataConclucao = new System.Windows.Forms.DateTimePicker();
-            this.lbDataPrevistaConclucao = new System.Windows.Forms.Label();
+            this.txtDataConclusao = new System.Windows.Forms.DateTimePicker();
+            this.lbDataPrevistaConclusao = new System.Windows.Forms.Label();
             this.txtNumeroSerie = new System.Windows.Forms.TextBox();
             this.lbNumeroSerie = new System.Windows.Forms.Label();
             this.lbProduto = new System.Windows.Forms.Label();
@@ -99,7 +99,7 @@
             this.cmbCliente.Name = "cmbCliente";
             this.cmbCliente.Size = new System.Drawing.Size(448, 23);
             this.cmbCliente.TabIndex = 88;
-            this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Clienre");
+            this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Cliente");
             // 
             // tabDadosCliente
             // 
@@ -151,8 +151,8 @@
             this.tabDadosOrdenServico.Controls.Add(this.cmbProduto);
             this.tabDadosOrdenServico.Controls.Add(this.txtDescricaoDefeito);
             this.tabDadosOrdenServico.Controls.Add(this.lbDescricaoDefeito);
-            this.tabDadosOrdenServico.Controls.Add(this.txtDataConclucao);
-            this.tabDadosOrdenServico.Controls.Add(this.lbDataPrevistaConclucao);
+            this.tabDadosOrdenServico.Controls.Add(this.txtDataConclusao);
+            this.tabDadosOrdenServico.Controls.Add(this.lbDataPrevistaConclusao);
             this.tabDadosOrdenServico.Controls.Add(this.txtNumeroSerie);
             this.tabDadosOrdenServico.Controls.Add(this.lbNumeroSerie);
             this.tabDadosOrdenServico.Controls.Add(this.lbProduto);
@@ -257,27 +257,27 @@
             this.lbDescricaoDefeito.TabIndex = 172;
             this.lbDescricaoDefeito.Text = "Descrição do Defeito..:";
             // 
-            // txtDataConclucao
+            // txtDataConclusao
             // 
-            this.txtDataConclucao.CustomFormat = "dd/MM/yyyy ";
-            this.txtDataConclucao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.erpProvider.SetIconAlignment(this.txtDataConclucao, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
-            this.txtDataConclucao.Location = new System.Drawing.Point(288, 24);
-            this.txtDataConclucao.Name = "txtDataConclucao";
-            this.txtDataConclucao.Size = new System.Drawing.Size(152, 23);
-            this.txtDataConclucao.TabIndex = 169;
-            this.txtDataConclucao.Value = new System.DateTime(2024, 11, 26, 0, 0, 0, 0);
+            this.txtDataConclusao.CustomFormat = "dd/MM/yyyy ";
+            this.txtDataConclusao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.erpProvider.SetIconAlignment(this.txtDataConclusao, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
+            this.txtDataConclusao.Location = new System.Drawing.Point(288, 24);
+            this.txtDataConclusao.Name = "txtDataConclusao";
+            this.txtDataConclusao.Size = new System.Drawing.Size(152, 23);
+            this.txtDataConclusao.TabIndex = 169;
+            this.txtDataConclusao.Value = new System.DateTime(2024, 11, 26, 0, 0, 0, 0);
             // 
-            // lbDataPrevistaConclucao
+            // lbDataPrevistaConclusao
             // 
-            this.lbDataPrevistaConclucao.AutoSize = true;
-            this.lbDataPrevistaConclucao.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDataPrevistaConclucao.Location = new System.Drawing.Point(288, 8);
-            this.lbDataPrevistaConclucao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbDataPrevistaConclucao.Name = "lbDataPrevistaConclucao";
-            this.lbDataPrevistaConclucao.Size = new System.Drawing.Size(145, 15);
-            this.lbDataPrevistaConclucao.TabIndex = 168;
-            this.lbDataPrevistaConclucao.Text = "Data Prevista Conclução..:";
+            this.lbDataPrevistaConclusao.AutoSize = true;
+            this.lbDataPrevistaConclusao.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDataPrevistaConclusao.Location = new System.Drawing.Point(288, 8);
+            this.lbDataPrevistaConclusao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbDataPrevistaConclusao.Name = "lbDataPrevistaConclusao";
+            this.lbDataPrevistaConclusao.Size = new System.Drawing.Size(145, 15);
+            this.lbDataPrevistaConclusao.TabIndex = 168;
+            this.lbDataPrevistaConclusao.Text = "Data Prevista Conclusão..:";
             // 
             // txtNumeroSerie
             // 
@@ -642,8 +642,8 @@
         private System.Windows.Forms.Label lbProduto;
         private System.Windows.Forms.TextBox txtNumeroSerie;
         private System.Windows.Forms.Label lbNumeroSerie;
-        private System.Windows.Forms.DateTimePicker txtDataConclucao;
-        private System.Windows.Forms.Label lbDataPrevistaConclucao;
+        private System.Windows.Forms.DateTimePicker txtDataConclusao;
+        private System.Windows.Forms.Label lbDataPrevistaConclusao;
         private System.Windows.Forms.TextBox txtDescricaoDefeito;
         private System.Windows.Forms.Label lbDescricaoDefeito;
         private System.Windows.Forms.TextBox txtGarantiaMaterial;

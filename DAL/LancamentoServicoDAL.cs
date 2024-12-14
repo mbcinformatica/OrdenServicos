@@ -20,7 +20,7 @@ namespace ProjetoTeste.DAL
             {
                 conn.Open();
                 string query = @"
-        SELECT ls.IDOrdenServico, ls.DataEmissao, ls.DataConclucao, c.Nome_RazaoSocial AS Cliente, 
+        SELECT ls.IDOrdenServico, ls.DataEmissao, ls.DataConclusao, c.Nome_RazaoSocial AS Cliente, 
             m.Descricao AS Marca, p.Descricao AS Produto, ls.NumeroSerie, ls.DescricaoDefeito,
             ls.ValorTotalServico, ls.ValorTotalMaterial, ls.Imagem 
         FROM DBLancamentoServicos ls
@@ -36,7 +36,7 @@ namespace ProjetoTeste.DAL
                         {
                             IDOrdenServico = Convert.ToInt32(reader["IDOrdenServico"]),
                             DataEmissao = reader["DataEmissao"] != DBNull.Value ? Convert.ToDateTime(reader["DataEmissao"]) : DateTime.MinValue,
-                            DataConclucao = reader["DataConclucao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclucao"]) : DateTime.MinValue,
+                            DataConclusao = reader["DataConclusao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclusao"]) : DateTime.MinValue,
                             Cliente = reader["Cliente"].ToString(), // Nome do cliente
                             Marca = reader["Marca"].ToString(), // Nome da marca
                             Produto = reader["Produto"].ToString(), // Nome do produto
@@ -69,7 +69,7 @@ namespace ProjetoTeste.DAL
 
                         lancamentoServico.IDOrdenServico = Convert.ToInt32(reader["IDOrdenServico"]);
                         lancamentoServico.DataEmissao = reader["DataEmissao"] != DBNull.Value ? Convert.ToDateTime(reader["DataEmissao"]) : DateTime.MinValue;
-                        lancamentoServico.DataConclucao = reader["DataConclucao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclucao"]) : DateTime.MinValue;
+                        lancamentoServico.DataConclusao = reader["DataConclusao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclusao"]) : DateTime.MinValue;
                         lancamentoServico.IDCliente = Convert.ToInt32(reader["IDCliente"]); // Nome do fornecedor
                         lancamentoServico.IDMarca = Convert.ToInt32(reader["IDMarca"]);
                         lancamentoServico.IDProduto = Convert.ToInt32(reader["IDProduto"]); // Nome da unidade
@@ -94,7 +94,7 @@ namespace ProjetoTeste.DAL
                 string query = @"
                         UPDATE DBLancamentoServicos 
                         SET DataEmissao = @DataEmissao,
-                            DataConclucao = @DataConclucao, 
+                            DataConclusao = @DataConclusao, 
                             IDCliente = @IDCliente, 
                             IDMarca = @IDMarca,
                             IDProduto = @IDProduto, 
@@ -108,7 +108,7 @@ namespace ProjetoTeste.DAL
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IDOrdenServico", lancamentoServico.IDOrdenServico);
                 cmd.Parameters.AddWithValue("@DataEmissao", lancamentoServico.DataEmissao);
-                cmd.Parameters.AddWithValue("@DataConclucao", lancamentoServico.DataConclucao);
+                cmd.Parameters.AddWithValue("@DataConclusao", lancamentoServico.DataConclusao);
                 cmd.Parameters.AddWithValue("@IDCliente", lancamentoServico.IDCliente);
                 cmd.Parameters.AddWithValue("@IDMarca", lancamentoServico.IDMarca);
                 cmd.Parameters.AddWithValue("@IDProduto", lancamentoServico.IDProduto);
@@ -129,13 +129,13 @@ namespace ProjetoTeste.DAL
                 conn.Open();
                 string query = @"
         INSERT INTO DBLancamentoServicos 
-        (DataEmissao, DataConclucao, IDCliente, IDMarca, IDProduto, NumeroSerie, DescricaoDefeito, ValorTotalServico, ValorTotalMaterial, Imagem)
+        (DataEmissao, DataConclusao, IDCliente, IDMarca, IDProduto, NumeroSerie, DescricaoDefeito, ValorTotalServico, ValorTotalMaterial, Imagem)
         VALUES 
-        (@DataEmissao, @DataConclucao, @IDCliente, @IDMarca, @IDProduto, @NumeroSerie, @DescricaoDefeito, @ValorTotalServico, @ValorTotalMaterial, @Imagem)";
+        (@DataEmissao, @DataConclusao, @IDCliente, @IDMarca, @IDProduto, @NumeroSerie, @DescricaoDefeito, @ValorTotalServico, @ValorTotalMaterial, @Imagem)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DataEmissao", lancamentoServico.DataEmissao);
-                cmd.Parameters.AddWithValue("@DataConclucao", lancamentoServico.DataConclucao);
+                cmd.Parameters.AddWithValue("@DataConclusao", lancamentoServico.DataConclusao);
                 cmd.Parameters.AddWithValue("@IDCliente", lancamentoServico.IDCliente);
                 cmd.Parameters.AddWithValue("@IDMarca", lancamentoServico.IDMarca);
                 cmd.Parameters.AddWithValue("@IDProduto", lancamentoServico.IDProduto);

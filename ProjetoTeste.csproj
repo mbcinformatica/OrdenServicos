@@ -419,6 +419,7 @@
       <DependentUpon>FrmLancamentoServicos.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\CategoriaServicoInfo.cs" />
+    <Compile Include="Model\EventosUtilsInfo.cs" />
     <Compile Include="Model\LancamentoServicoInfo.cs" />
     <Compile Include="Model\MarcaInfo.cs" />
     <Compile Include="Model\ModeloInfo.cs" />

@@ -52,16 +52,22 @@ namespace ProjetoTeste.Forms
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
         public bool escPressed { get; set; }
+        public bool bNovo { get; set; }
         public Control ControleAnterior { get; set; }
         public virtual void CarregarRegistros()
         { // Implementação padrão (pode ser sobreposta nos formulários derivados)
-        } 
+        }
+        public virtual void VerificaComboBox(ComboBox comboBox)
+        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
+        }
         public virtual void LimparCampos() 
         { // Implementação padrão (pode ser sobreposta nos formulários derivados)
         }
+
+
+
         protected void LoadConfig()
         {
-
             CarregaDadosControles("config.xml");
         }
         protected void ApplyConfigToControls(Control.ControlCollection controls, XDocument config)
@@ -299,7 +305,36 @@ namespace ProjetoTeste.Forms
                     errorProvider.SetError(radioButton, string.Empty);
                 }
             }
-            // Adicione verificações para outros tipos de controles conforme necessário
+            else if (sender is DateTimePicker dateTimePicker)
+            {
+                if (string.IsNullOrWhiteSpace(dateTimePicker.Text))
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(dateTimePicker, $"{campo} é obrigatório.");
+                }
+                else
+                {
+                    e.Cancel = false;
+                    errorProvider.SetError(dateTimePicker, string.Empty);
+                }
+            }
+            else if (sender is ComboBox comboBox)
+            {
+                if (string.IsNullOrWhiteSpace(comboBox.Text))
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(comboBox, $"{campo} é obrigatório.");
+                }
+                else
+                {
+                    e.Cancel = false;
+                    errorProvider.SetError(comboBox, string.Empty);
+                }
+            }
+            if (e.Cancel)
+            {
+                MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         protected void AdicionarValidacao(ErrorProvider errorProvider, params (Control, string)[] controlCampos)
         {
@@ -501,12 +536,12 @@ namespace ProjetoTeste.Forms
             for (int i = 0; i < listView.Columns.Count; i++)
             {
                 listView.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent);
-                int larguraConteudo = listView.Columns[i].Width;
+                int larguraConteudo = listView.Columns[i].Width + 20;
 
                 listView.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize);
-                int larguraCabecalho = listView.Columns[i].Width;
+                int larguraCabecalho = listView.Columns[i].Width + 20;
 
-                listView.Columns[i].Width = Math.Max(larguraConteudo, larguraCabecalho);
+                listView.Columns[i].Width  = Math.Max(larguraConteudo, larguraCabecalho);
             }
 
             listView.Columns[listView.Columns.Count - 1].Width = -2;

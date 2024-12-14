@@ -17,7 +17,6 @@ namespace ProjetoTeste
     {
         private int sortColumn = -1;
         private bool sortAscending = true;
-        private bool bNovo;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
         private int previousSortColumn = -1;
@@ -29,7 +28,6 @@ namespace ProjetoTeste
         private List<Control> controlesMouseDown = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
-
 
         public frmLancamentoServicos()
         {
@@ -61,9 +59,9 @@ namespace ProjetoTeste
             listViewLancamentoServicos.DrawItem += new DrawListViewItemEventHandler(listViewLancamentoServicos_DrawItem);
             listViewLancamentoServicos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewLancamentoServicos_DrawSubItem);
             // Adicionar colunas
-            listViewLancamentoServicos.Columns.Add("ID", 50, HorizontalAlignment.Right);
-            listViewLancamentoServicos.Columns.Add("  DATA EMISSÃO", 120, HorizontalAlignment.Center);
-            listViewLancamentoServicos.Columns.Add("  DATA PREVISTA CONCLUÇÃO", 120, HorizontalAlignment.Center);
+            listViewLancamentoServicos.Columns.Add("  ID", 50, HorizontalAlignment.Right);
+            listViewLancamentoServicos.Columns.Add("  DATA EMISSÃO", 200, HorizontalAlignment.Center);
+            listViewLancamentoServicos.Columns.Add("  DATA CONCLUSÃO", 200, HorizontalAlignment.Center);
             listViewLancamentoServicos.Columns.Add("  CLIENTE", 120, HorizontalAlignment.Left);
             listViewLancamentoServicos.Columns.Add("  MARCA", 200, HorizontalAlignment.Left);
             listViewLancamentoServicos.Columns.Add("  PRODUTO", 150, HorizontalAlignment.Left);
@@ -139,7 +137,7 @@ namespace ProjetoTeste
             {
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap; // Adiciona esta linha para evitar quebra de linha
-                if (e.Header.Text == "ID")
+                if (e.Header.Text == "  ID")
 
                 {
                     sf.Alignment = StringAlignment.Center; // Alinhar cabeçalhos numéricos no centro
@@ -176,7 +174,7 @@ namespace ProjetoTeste
         {
             using (StringFormat sf = new StringFormat())
             {
-                if (listViewLancamentoServicos.Columns[e.ColumnIndex].Text == "ID")
+                if (listViewLancamentoServicos.Columns[e.ColumnIndex].Text == "  ID")
                 {
                     sf.Alignment = StringAlignment.Far; // Alinhar conteúdo numérico à direita
                 }
@@ -211,21 +209,69 @@ namespace ProjetoTeste
         private void CarregaKey()
         {
             // Adicionar controles às listas específicas com base no tipo de evento
-            controlesKeyPress.AddRange(new Control[] { txtIDOrdenServico, txtValorTotalServico, txtValorTotalMaterial });
-            controlesLeave.AddRange(new Control[] { txtValorTotalServico, txtValorTotalMaterial, txtDataEmissao, txtDataConclucao, cmbCliente, cmbMarca, cmbProduto });
-            controlesEnter.AddRange(new Control[] { txtValorTotalServico, txtValorTotalMaterial, cmbCliente, cmbMarca, cmbProduto, txtNumeroSerie, txtDescricaoDefeito, txtPesquisaListView, txtIDOrdenServico });
-            controlesMouseDown.AddRange(new Control[] { txtIDOrdenServico });
-            controlesKeyDown.AddRange(new Control[] { txtDataEmissao, txtDataConclucao, cmbCliente, cmbMarca, cmbProduto, txtNumeroSerie, txtDescricaoDefeito, txtValorTotalServico, txtValorTotalMaterial, txtPesquisaListView, listViewLancamentoServicos });
-            controlesBotoes.AddRange(new Control[] { btnSalvar, btnAlterar, btnExcluir, btnFechar, btnNovo });
+            controlesKeyPress.AddRange(new Control[] {
+                txtIDOrdenServico,
+                txtValorTotalServico,
+                txtValorTotalMaterial
+            });
+            controlesLeave.AddRange(new Control[] {
+                txtValorTotalServico,
+                txtValorTotalMaterial,
+                txtDataEmissao,
+                txtDataConclusao,
+                cmbCliente,
+                cmbMarca,
+                cmbProduto
+            });
+            controlesEnter.AddRange(new Control[] {
+                txtDataConclusao,
+                txtValorTotalServico,
+                txtValorTotalMaterial,
+                cmbCliente,
+                cmbMarca,
+                cmbProduto,
+                txtNumeroSerie,
+                txtDescricaoDefeito,
+                txtPesquisaListView,
+                txtIDOrdenServico
+            });
+            controlesMouseDown.AddRange(new Control[] {
+                txtIDOrdenServico
+            });
+            controlesKeyDown.AddRange(new Control[] {
+                txtDataEmissao,
+                txtDataConclusao,
+                cmbCliente,
+                cmbMarca,
+                cmbProduto,
+                txtNumeroSerie,
+                txtDescricaoDefeito,
+                txtValorTotalServico,
+                txtValorTotalMaterial,
+                txtPesquisaListView,
+                listViewLancamentoServicos
+            });
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnAlterar,
+                btnExcluir,
+                btnFechar,
+                btnNovo });
 
             // Definir a propriedade Tag para comportamentos específicos
             txtIDOrdenServico.Tag = "no-input"; // Bloquear qualquer entrada
-            txtValorTotalServico.Tag = "numeric"; // Permitir somente números
-            txtValorTotalMaterial.Tag = "numeric"; // Permitir somente números
+            txtValorTotalMaterial.Tag = "TabPage"; // Permitir somente números
             txtNumeroSerie.Tag = "letters"; // Permitir somente letras
+            txtDataEmissao.Tag = "data-inicial"; // Tag específica para txtDataEmissao
+            txtDataConclusao.Tag = "data-final"; // Tag específica para txtDataConclusao
+
+            // Localizar o TabControl e a TabPage
+            var tabControl = Controls.Find("tabControlOrdenServico", true).FirstOrDefault() as TabControl;
+            var tabPage = tabControl?.TabPages["tabDadosCliente"];
 
             // Inicializar eventos para os controles
-            InicializarEventos(this.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+
 
             // Associar eventos SelectedIndexChanged e Click
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
@@ -233,207 +279,33 @@ namespace ProjetoTeste
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_Click;
 
             // Focar no btnNovo ao iniciar
-            btnNovo.Focus();
+            txtPesquisaListView.Focus();
+            AdicionarToolTipsAosControles();
+
         }
-        private void InicializarEventos(Control.ControlCollection controles, List<Control> controlesKeyPress, List<Control> controlesLeave, List<Control> controlesEnter, List<Control> controlesMouseDown, List<Control> controlesKeyDown, List<Control> controlesBotoes, BaseForm form)
+        private void AdicionarToolTipsAosControles()
         {
-            foreach (Control controle in controles)
-            {
-                // Associar eventos KeyPress
-                if (controlesKeyPress.Contains(controle))
-                {
-                    controle.KeyPress += (sender, e) => EventosUtils.Evento_KeyPress(sender, e, controle, form);
-                }
-
-                // Associar eventos Leave
-                if (controlesLeave.Contains(controle))
-                {
-                    controle.Leave += (sender, e) => Evento_Leave(sender, e, controle);
-                }
-
-                // Associar eventos Enter
-                if (controlesEnter.Contains(controle))
-                {
-                    controle.Enter += (sender, e) => EventosUtils.Evento_Enter(sender, e, controle, form);
-                }
-
-                // Associar eventos MouseDown
-                if (controlesMouseDown.Contains(controle))
-                {
-                    controle.MouseDown += (sender, e) => EventosUtils.Evento_MouseDown(sender, e, controle, form);
-                }
-
-                // Associar eventos KeyDown
-                if (controlesKeyDown.Contains(controle))
-                {
-                    controle.KeyDown += (sender, e) => EventosUtils.Evento_KeyDown(sender, e, controle, form);
-                }
-
-                // Associar eventos aos botões
-                if (controle is Button && controlesBotoes.Contains(controle))
-                {
-                    controle.MouseEnter += (sender, e) => EventosUtils.Button_MouseEnter(sender, e, form);
-                    controle.MouseLeave += (sender, e) => EventosUtils.Button_MouseLeave(sender, e, form);
-                }
-
-                // Recursão para controles dentro de Panel, TabControl e TabPage
-                if (controle is Panel || controle is TabControl || controle is TabPage)
-                {
-                    InicializarEventos(controle.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this);
-                }
-            }
-        }
-        private void Evento_Leave(object sender, EventArgs e, Control nomeControles)
+            List<ControlToolTipPair> controlToolTipPairs = new List<ControlToolTipPair>
         {
-            if (escPressed)
-            {
-                return; // Sai do método sem fazer verificações
-            }
+            new ControlToolTipPair { Control = txtDataEmissao, ToolTipText = "Data de Emissão da Ordem de Serviço" },
+            new ControlToolTipPair { Control = txtDataConclusao, ToolTipText = "Data de Conclusão da Ordem de Serviço" },
+            new ControlToolTipPair { Control = cmbCliente, ToolTipText = "Selecione o Cliente" },
+            new ControlToolTipPair { Control = cmbMarca, ToolTipText = "Selecione a Marca" },
+            new ControlToolTipPair { Control = cmbProduto, ToolTipText = "Selecione o Produto" },
+            new ControlToolTipPair { Control = txtNumeroSerie, ToolTipText = "Digite o Número de Série" },
+            new ControlToolTipPair { Control = txtDescricaoDefeito, ToolTipText = "Descreva o Defeito" },
+            new ControlToolTipPair { Control = txtValorTotalServico, ToolTipText = "Valor Total do Serviço" },
+            new ControlToolTipPair { Control = txtValorTotalMaterial, ToolTipText = "Valor Total do Material" },
+            new ControlToolTipPair { Control = txtPesquisaListView, ToolTipText = "Inserir Informações para Pesquisa" }
 
-            if (sender is MaskedTextBox maskedTextBox)
-            {
-                if (maskedTextBox == txtValorTotalServico || maskedTextBox == txtValorTotalMaterial)
-                {
-                    maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
-                }
-                if (maskedTextBox == txtValorTotalMaterial)
-                {
-                    tabControlOrdenServico.SelectedTab = tabDadosCliente;
-                }
+        };
 
-            }
-            else if (sender is DateTimePicker dateTimePicker)
-            {
-                DateTime selectedDate = dateTimePicker.Value;
-                if (dateTimePicker == txtDataEmissao)
-                {
-                    txtDataConclucao.Value = selectedDate.AddDays(15);
-                }
-                dateTimePicker.Value = new DateTime(selectedDate.Year, selectedDate.Month,
-                    selectedDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                dateTimePicker.CustomFormat = "dd/MM/yyyy";
-                dateTimePicker.Format = DateTimePickerFormat.Custom;
-            }
-            else if (sender is ComboBox comboBox)
-            {
-                if (comboBox == cmbCliente)
-                {
-                    string clienteDigitado = cmbCliente.Text.ToUpper(); // Converte para maiúsculas
-                    cmbCliente.Text = clienteDigitado; // Atualiza o texto no ComboBox
-                    if (!ClienteExiste(clienteDigitado) && !string.IsNullOrEmpty(clienteDigitado))
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"Cliente '{clienteDigitado}' não Cadastrado", "Cliente não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmClientes
-                                frmClientes frm = new frmClientes();
-                                frm.ShowDialog();
-                                ClienteBLL clienteBLL = new ClienteBLL();
-                                // Recarregar os clientes no ComboBox
-                                List<ClienteInfo> clientes = clienteBLL.Listar();
-                                // Ordenar a lista de clientes em ordem alfabética
-                                clientes = clientes.OrderBy(c => c.Nome_RazaoSocial).ToList();
-                                // Definir a fonte de dados do ComboBox
-                                cmbCliente.DataSource = clientes;
-                                cmbCliente.DisplayMember = "Nome_RazaoSocial";
-                                cmbCliente.ValueMember = "IDCliente";
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        cmbCliente.Text = string.Empty;
-                        cmbCliente.Focus();
-                    }
-                    if (string.IsNullOrEmpty(clienteDigitado))
-                    {
-                        tlpDicas.SetToolTip(comboBox, "Favor inserir o nome do Cliente");
-                        cmbCliente.Focus();
-                    }
-                }
-                else if (comboBox == cmbMarca)
-                {
-                    string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
-                    cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
-                    if (!MarcaExiste(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmMarcas
-                                frmMarcas frm = new frmMarcas();
-                                frm.ShowDialog();
-                                MarcaBLL marcaBLL = new MarcaBLL();
-                                // Recarregar as marcas no ComboBox
-                                List<MarcaInfo> marcas = marcaBLL.Listar();
-                                // Ordenar a lista de marcas em ordem alfabética
-                                marcas = marcas.OrderBy(m => m.Descricao).ToList();
-                                // Definir a fonte de dados do ComboBox
-                                cmbMarca.DataSource = marcas;
-                                cmbMarca.DisplayMember = "Descricao";
-                                cmbMarca.ValueMember = "IDMarca";
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        cmbMarca.Text = string.Empty;
-                        cmbMarca.Focus();
-                    }
-                    if (string.IsNullOrEmpty(marcaDigitada))
-                    {
-                        cmbMarca.Focus();
-                    }
-                }
-                else if (comboBox == cmbProduto)
-                {
-                    string produtoDigitado = cmbProduto.Text.ToUpper(); // Converte para maiúsculas
-                    cmbProduto.Text = produtoDigitado; // Atualiza o texto no ComboBox
-                    int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da Marca selecionada
-                    if (!ProdutoExiste(idMarca, produtoDigitado) && produtoDigitado != string.Empty && idMarca != 0)
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"O Produto '{produtoDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Produto não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmProdutos
-                                frmProdutos frm = new frmProdutos();
-                                frm.ShowDialog();
-                                if (cmbMarca.SelectedValue != null)
-                                {
-                                    int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                                    CarregarProdutosPorMarca(idmarca);
-                                }
-                            }
-                            else
-                            {
-                                cmbProduto.Text = string.Empty;
-                                cmbProduto.Focus();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    if (produtoDigitado == string.Empty || idMarca == 0)
-                    {
-                        cmbProduto.Focus();
-                    }
-                }
-            }
+            EventosUtils.AdicionarToolTips(this, controlToolTipPairs, tlpDicas);
         }
         private void ConfigurarTabIndexControles()
         {
             txtDataEmissao.TabIndex = 0;
-            txtDataConclucao.TabIndex = 1;
+            txtDataConclusao.TabIndex = 1;
             cmbCliente.TabIndex = 2;
             cmbMarca.TabIndex = 3;
             cmbProduto.TabIndex = 4;
@@ -448,9 +320,9 @@ namespace ProjetoTeste
             camposObrigatorios = new (Control, string)[]
             {
                 (txtDataEmissao, "DataEmissao"),
-                (txtDataConclucao, "DataConclucao"),
+                (txtDataConclusao, "DataConclusao"),
                 (cmbCliente, "IDCliente"),
-                (cmbMarca, "IDmarca"),
+                (cmbMarca, "IDMarca"),
                 (cmbProduto, "IDProduto")
             };
             AdicionarValidacao(
@@ -460,8 +332,8 @@ namespace ProjetoTeste
         }
         public override void CarregarRegistros()
         {
-            DesabilitarCampos();
-            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes",this);
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewLancamentoServicos.Items.Clear();
             listViewLancamentoServicos.Columns.Clear();
             InitializeListView();
@@ -473,7 +345,7 @@ namespace ProjetoTeste
                 {
                     ListViewItem item = new ListViewItem(lancamentoServico.IDOrdenServico.ToString());
                     item.SubItems.Add(lancamentoServico.DataEmissao.ToString("dd/MM/yyyy"));
-                    item.SubItems.Add(lancamentoServico.DataConclucao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(lancamentoServico.DataConclusao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(lancamentoServico.Cliente); // Usar o nome do cliente
                     item.SubItems.Add(lancamentoServico.Marca); // Usar o nome da marca
                     item.SubItems.Add(lancamentoServico.Produto); // Usar o nome da produto
@@ -492,24 +364,7 @@ namespace ProjetoTeste
                     }
                     listViewLancamentoServicos.Items.Add(item);
                 }
-                // Ajustar automaticamente o tamanho das colunas ao conteúdo, mas não menor que o cabeçalho
-                foreach (ColumnHeader column in listViewLancamentoServicos.Columns)
-                {
-                    if (column.Text == "  DESCRIÇÃO DO DEFEITO")
-                    {
-                        column.Width = 400; // Ignorar cliques em outras colunas
-                    }
-                    else
-                    {
-                        column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize); // Ajusta a largura ao cabeçalho primeiro
-                        int headerWidth = TextRenderer.MeasureText(column.Text, listViewLancamentoServicos.Font).Width + 20; // Adiciona uma margem
-                        column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent); // Ajusta a largura ao conteúdo
-                        if (column.Width < headerWidth)
-                        {
-                            column.Width = headerWidth; // Garantir que a largura não fique menor que o cabeçalho
-                        }
-                    }
-                }
+
                 listaOriginalItens = listViewLancamentoServicos.Items.Cast<ListViewItem>().ToList();
                 lbTotalRegistros.Text = "Total de Registros: " + listViewLancamentoServicos.Items.Count;
                 sortColumn = 3;
@@ -517,6 +372,7 @@ namespace ProjetoTeste
                 listViewLancamentoServicos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewLancamentoServicos.Sort();
                 listViewLancamentoServicos.Columns[sortColumn].Width = listViewLancamentoServicos.Columns[sortColumn].Width;
+                ajustaLarguraCabecalho(listViewLancamentoServicos);
                 tabControlOrdenServico.SelectedTab = tabDadosOrdenServico;
 
                 // Carregar clientes no ComboBox
@@ -546,7 +402,7 @@ namespace ProjetoTeste
                 ListViewItem item = listViewLancamentoServicos.SelectedItems[0];
                 txtIDOrdenServico.Text = item.SubItems[0].Text;
                 txtDataEmissao.Text = item.SubItems[1].Text;
-                txtDataConclucao.Text = item.SubItems[2].Text;
+                txtDataConclusao.Text = item.SubItems[2].Text;
                 string clienteNome = item.SubItems[3].Text;
                 ClienteBLL clienteBLL = new ClienteBLL();
                 List<ClienteInfo> clientes = clienteBLL.Listar();
@@ -591,7 +447,7 @@ namespace ProjetoTeste
                 {
                     imgImagemProduto.Image = null;
                 }
-                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir",this);
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
             }
         }
         private void ConfigurarComboBoxClientes()
@@ -639,6 +495,123 @@ namespace ProjetoTeste
                 }
             }
         }
+        public override void VerificaComboBox(ComboBox comboBox)
+        {
+            if (comboBox == cmbCliente)
+            {
+                string clienteDigitado = cmbCliente.Text.ToUpper(); // Converte para maiúsculas
+                cmbCliente.Text = clienteDigitado; // Atualiza o texto no ComboBox
+                if (!ClienteExiste(clienteDigitado) && !string.IsNullOrEmpty(clienteDigitado))
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"Cliente '{clienteDigitado}' não Cadastrado", "Cliente não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmClientes
+                            frmClientes frm = new frmClientes();
+                            frm.ShowDialog();
+                            ClienteBLL clienteBLL = new ClienteBLL();
+                            // Recarregar os clientes no ComboBox
+                            List<ClienteInfo> clientes = clienteBLL.Listar();
+                            // Ordenar a lista de clientes em ordem alfabética
+                            clientes = clientes.OrderBy(c => c.Nome_RazaoSocial).ToList();
+                            // Definir a fonte de dados do ComboBox
+                            cmbCliente.DataSource = clientes;
+                            cmbCliente.DisplayMember = "Nome_RazaoSocial";
+                            cmbCliente.ValueMember = "IDCliente";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    cmbCliente.Text = string.Empty;
+                    cmbCliente.Focus();
+                }
+                if (string.IsNullOrEmpty(clienteDigitado))
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbCliente.Focus();
+                }
+            }
+            else if (comboBox == cmbMarca)
+            {
+                string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
+                cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
+                if (!MarcaExiste(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmMarcas
+                            frmMarcas frm = new frmMarcas();
+                            frm.ShowDialog();
+                            MarcaBLL marcaBLL = new MarcaBLL();
+                            // Recarregar as marcas no ComboBox
+                            List<MarcaInfo> marcas = marcaBLL.Listar();
+                            // Ordenar a lista de marcas em ordem alfabética
+                            marcas = marcas.OrderBy(m => m.Descricao).ToList();
+                            // Definir a fonte de dados do ComboBox
+                            cmbMarca.DataSource = marcas;
+                            cmbMarca.DisplayMember = "Descricao";
+                            cmbMarca.ValueMember = "IDMarca";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    cmbMarca.Text = string.Empty;
+                    cmbMarca.Focus();
+                }
+                if (string.IsNullOrEmpty(marcaDigitada))
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbMarca.Focus();
+                }
+            }
+            else if (comboBox == cmbProduto)
+            {
+                string produtoDigitado = cmbProduto.Text.ToUpper(); // Converte para maiúsculas
+                cmbProduto.Text = produtoDigitado; // Atualiza o texto no ComboBox
+                int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da Marca selecionada
+                if (!ProdutoExiste(idMarca, produtoDigitado) && produtoDigitado != string.Empty && idMarca != 0)
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"O Produto '{produtoDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Produto não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmProdutos
+                            frmProdutos frm = new frmProdutos();
+                            frm.ShowDialog();
+                            if (cmbMarca.SelectedValue != null)
+                            {
+                                int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
+                                CarregarProdutosPorMarca(idmarca);
+                            }
+                        }
+                        else
+                        {
+                            cmbProduto.Text = string.Empty;
+                            cmbProduto.Focus();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                if (produtoDigitado == string.Empty || idMarca == 0)
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbProduto.Focus();
+                }
+            }
+        }
         private bool ClienteExiste(string nome_RazaoSocial)
         {
             ClienteBLL clienteBLL = new ClienteBLL();
@@ -676,10 +649,10 @@ namespace ProjetoTeste
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar",this);
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             txtIDOrdenServico.Text = "0";
             bNovo = true;
-            HabilitarCampos("Novo");
+            HabilitarCamposDoFormulario("Novo");
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -706,7 +679,7 @@ namespace ProjetoTeste
                     LancamentoServicoInfo lancamentoServico = new LancamentoServicoInfo
                     {
                         DataEmissao = txtDataEmissao.Value,
-                        DataConclucao = txtDataConclucao.Value,
+                        DataConclusao = txtDataConclusao.Value,
                         IDCliente = Convert.ToInt32(cmbCliente.SelectedValue),
                         IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
                         IDProduto = Convert.ToInt32(cmbProduto.SelectedValue),
@@ -730,7 +703,7 @@ namespace ProjetoTeste
                     {
                         IDOrdenServico = int.Parse(txtIDOrdenServico.Text),
                         DataEmissao = txtDataEmissao.Value,
-                        DataConclucao = txtDataConclucao.Value,
+                        DataConclusao = txtDataConclusao.Value,
                         IDCliente = Convert.ToInt32(cmbCliente.SelectedValue),
                         IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
                         IDProduto = Convert.ToInt32(cmbProduto.SelectedValue),
@@ -750,7 +723,7 @@ namespace ProjetoTeste
         private void btnAlterar_Click(object sender, EventArgs e)
         {
             EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
-            HabilitarCampos("Alterar");
+            HabilitarCamposDoFormulario("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -774,52 +747,56 @@ namespace ProjetoTeste
         {
             this.Close();
         }
-        private void DesabilitarCampos()
+        private void DesabilitarCamposDoFormulario()
         {
-            txtDataEmissao.Enabled = false;
-            txtDataConclucao.Enabled = false;
-            cmbCliente.Enabled = false;
-            cmbMarca.Enabled = false;
-            cmbProduto.Enabled = false;
-            txtNumeroSerie.Enabled = false;
-            txtDescricaoDefeito.Enabled = false;
-            txtValorTotalServico.Enabled = false;
-            txtValorTotalMaterial.Enabled = false;
+            List<Control> controlesDesabilitar = new List<Control>
+        {
+            txtDataEmissao,
+            txtDataConclusao,
+            cmbCliente,
+            cmbMarca,
+            cmbProduto,
+            txtNumeroSerie,
+            txtDescricaoDefeito,
+            txtValorTotalServico,
+            txtValorTotalMaterial
+        };
+
+            EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewLancamentoServicos.Enabled = true;
             txtPesquisaListView.Enabled = true;
         }
-        private void HabilitarCampos(string buttonPressed)
+        private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-            txtDescricaoDefeito.Enabled = true;
-            txtDataConclucao.Enabled = true;
-            txtValorTotalServico.Enabled = true;
-            txtValorTotalMaterial.Enabled = true;
             listViewLancamentoServicos.Enabled = false;
             txtPesquisaListView.Enabled = false;
+            List<Control> controlesHabilitar = new List<Control>
+            {
+                txtDescricaoDefeito,
+                txtDataConclusao,
+                txtValorTotalServico,
+                txtValorTotalMaterial
+            };
+            EventosUtils.HabilitarControles(controlesHabilitar, this);
             switch (buttonPressed)
             {
                 case "Novo":
-                    txtDataEmissao.Enabled = true;
-                    cmbCliente.Enabled = true;
-                    cmbMarca.Enabled = true;
-                    cmbProduto.Enabled = true;
-                    txtNumeroSerie.Enabled = true;
+                    List<Control> controlesHabilitarNovo = new List<Control>
+                     {
+                          txtDataEmissao,
+                          cmbCliente,
+                          cmbMarca,
+                          cmbProduto,
+                          txtNumeroSerie
+                     };
+                    EventosUtils.HabilitarControles(controlesHabilitarNovo, this);
                     txtIDOrdenServico.Text = "0";
                     txtDataEmissao.Text = DateTime.Now.ToString();
-                    txtDataConclucao.Text = DateTime.Now.ToString();
+                    txtDataConclusao.Text = DateTime.Now.ToString();
                     txtDataEmissao.Focus();
-
-                    break;
-                case "Salvar":
-                    // Adicionar ações específicas para "Salvar" se necessário
                     break;
                 case "Alterar":
-                    txtDataConclucao.Focus();
-                    break;
-                case "Excluir":
-                    // Adicionar ações específicas para "Excluir" se necessário
-                    break;
-                default:
+                    txtDataConclusao.Focus();
                     break;
             }
         }
@@ -827,7 +804,7 @@ namespace ProjetoTeste
         {
             txtIDOrdenServico.Clear();
             txtDataEmissao.Value = DateTime.Now;
-            txtDataConclucao.Value = DateTime.Now;
+            txtDataConclusao.Value = DateTime.Now;
             cmbCliente.SelectedIndex = -1;
             cmbMarca.SelectedIndex = -1;
             cmbProduto.SelectedIndex = -1;

@@ -11,6 +11,99 @@ namespace ProjetoTeste.Utils
 {
     public static class EventosUtils
     {
+            public static void AdicionarToolTips(BaseForm form, List<ControlToolTipPair> controlToolTipPairs, ToolTip tlpDicas)
+    {
+        foreach (var pair in controlToolTipPairs)
+        {
+            AddToolTipRecursively(tlpDicas, form, pair.Control, pair.ToolTipText);
+        }
+    }
+
+    private static void AddToolTipRecursively(ToolTip tlpDicas, Control parent, Control targetControl, string toolTipText)
+    {
+        foreach (Control control in parent.Controls)
+        {
+            if (control == targetControl)
+            {
+                tlpDicas.SetToolTip(control, toolTipText);
+                return;
+            }
+
+            if (control.HasChildren)
+            {
+                AddToolTipRecursively(tlpDicas, control, targetControl, toolTipText);
+            }
+        }
+    }
+        public static void InicializarEventos(Control.ControlCollection controles, List<Control> controlesKeyPress, List<Control> controlesLeave, List<Control> controlesEnter, List<Control> controlesMouseDown, List<Control> controlesKeyDown, List<Control> controlesBotoes, BaseForm form, TabControl tabControl, TabPage tabPage)
+
+        {
+            foreach (Control controle in controles)
+            {
+                // Associar eventos KeyPress
+                if (controlesKeyPress.Contains(controle))
+                {
+                    controle.KeyPress += (sender, e) => Evento_KeyPress(sender, e, controle, form);
+                }
+
+                // Associar eventos Leave
+                if (controlesLeave.Contains(controle))
+                {
+                    controle.Leave += (sender, e) => Evento_Leave(sender, e, controle, form, tabControl, tabPage);
+                }
+                // Associar eventos Enter
+                if (controlesEnter.Contains(controle))
+                {
+                    controle.Enter += (sender, e) => Evento_Enter(sender, e, controle, form);
+                }
+
+                // Associar eventos MouseDown
+                if (controlesMouseDown.Contains(controle))
+                {
+                    controle.MouseDown += (sender, e) => Evento_MouseDown(sender, e, controle, form);
+                }
+
+                // Associar eventos KeyDown
+                if (controlesKeyDown.Contains(controle))
+                {
+                    controle.KeyDown += (sender, e) => Evento_KeyDown(sender, e, controle, form);
+                }
+
+                // Associar eventos aos botões
+                if (controle is Button && controlesBotoes.Contains(controle))
+                {
+                    controle.MouseEnter += (sender, e) => Button_MouseEnter(sender, e, form);
+                    controle.MouseLeave += (sender, e) => Button_MouseLeave(sender, e, form);
+                }
+
+                // Recursão para controles dentro de Panel, TabControl e TabPage
+                if (controle is Panel || controle is TabControl || controle is TabPage)
+                {
+                    InicializarEventos(controle.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, form, tabControl, tabPage);
+                }
+            }
+        }
+        public static DateTimePicker FindDateTimePickerByTag(Control.ControlCollection controls, string tag)
+        {
+            foreach (Control control in controls)
+            {
+                if (control is DateTimePicker dateTimePicker && dateTimePicker.Tag?.ToString() == tag)
+                {
+                    return dateTimePicker;
+                }
+
+                if (control.HasChildren)
+                {
+                    var foundControl = FindDateTimePickerByTag(control.Controls, tag);
+                    if (foundControl != null)
+                    {
+                        return foundControl;
+                    }
+                }
+            }
+
+            return null;
+        }
         public static void Evento_KeyDown(object sender, KeyEventArgs e, Control nomeControles, BaseForm form)
         {
             if (e.KeyCode == Keys.Enter)
@@ -32,7 +125,7 @@ namespace ProjetoTeste.Utils
                 ((Form)form).SelectNextControl((Control)sender, false, true, true, true);
             }
         }
-        public static void Evento_Enter(object sender, EventArgs e, Control controleEspecifico, BaseFormFuncoes form)
+        public static void Evento_Enter(object sender, EventArgs e, Control controleEspecifico, BaseForm form)
         {
             if (sender is MaskedTextBox maskedTextBox)
             {
@@ -41,7 +134,7 @@ namespace ProjetoTeste.Utils
             }
             else if (sender is TextBox textBox)
             {
-                if (controleEspecifico.Contains(textBox))
+                if (controleEspecifico.Tag?.ToString() == "no-input")
                 {
                     form.ControleAnterior?.Focus();
                 }
@@ -58,6 +151,24 @@ namespace ProjetoTeste.Utils
             else if (sender is DateTimePicker dateTimePicker)
             {
                 form.ControleAnterior = dateTimePicker;
+                if (dateTimePicker.Tag?.ToString() == "data-final")
+                {
+                    // Encontrar o controle com a tag "data-inicial" usando busca recursiva
+                    var dataEmissaoControl = FindDateTimePickerByTag(form.Controls, "data-inicial");
+
+                    // Depuração para verificar se o controle foi encontrado
+                    if (dataEmissaoControl == null)
+                    {
+                        MessageBox.Show("Data de emissão não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (form.bNovo)
+                    {
+                        // Somar 15 dias à data de emissão
+                        dateTimePicker.Value = dataEmissaoControl.Value.AddDays(15);
+                        dateTimePicker.CustomFormat = "dd/MM/yyyy";
+                        dateTimePicker.Format = DateTimePickerFormat.Custom;
+                    }
+                }
             }
         }
         public static void Evento_KeyPress(object sender, KeyPressEventArgs e, Control controleEspecifico, BaseForm form)
@@ -92,6 +203,60 @@ namespace ProjetoTeste.Utils
                     // Permite somente letras no TextBox específico
                     e.Handled = true;
                 }
+            }
+        }
+        public static void Evento_Leave(object sender, EventArgs e, Control nomeControles, BaseForm form, TabControl tabControl, TabPage tabPage)
+        {
+            if (form.escPressed)
+            {
+                form.escPressed = false; // Reseta a variável de controle
+                return; // Sai do método sem fazer verificações
+            }
+
+            if (sender is MaskedTextBox maskedTextBox)
+            {
+                form.ControleAnterior = maskedTextBox;
+                if (maskedTextBox == nomeControles)
+                {
+                    if (maskedTextBox.Text == "")
+                    {
+                        maskedTextBox.Text = "0.0";
+                        maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
+                    }
+                    else
+                    {
+                        maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
+                    }
+  
+                }
+                if (maskedTextBox.Tag?.ToString() == "TabPage")
+                {
+                    tabControl.SelectedTab = tabPage;
+                }
+            }
+            else if (sender is DateTimePicker dateTimePicker)
+            {
+                if (dateTimePicker.Tag?.ToString() == "data-inicial")
+                {
+                    form.ControleAnterior = dateTimePicker;
+                    DateTime selectedDate = dateTimePicker.Value;
+                    dateTimePicker.Value = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                    dateTimePicker.CustomFormat = "dd/MM/yyyy";
+                    dateTimePicker.Format = DateTimePickerFormat.Custom;
+                }
+
+            }
+            else if (sender is ComboBox comboBox)
+            {
+                form.ControleAnterior = comboBox;
+                if (comboBox == nomeControles)
+                {
+                    form.VerificaComboBox(comboBox);
+                }
+            }
+            else if (sender is TextBox textBox)
+            {
+                form.ControleAnterior = textBox;
             }
         }
         public static void Evento_MouseDown(object sender, MouseEventArgs e, Control nomeControles, BaseForm form)
@@ -190,5 +355,49 @@ namespace ProjetoTeste.Utils
                 if (btnNovo != null) btnNovo.Enabled = true;
             }
         }
+        public static void DesabilitarControles(List<Control> controles, BaseForm form)
+        {
+            foreach (Control controle in form.Controls)
+            {
+                DesabilitarControleRecursivo(controle, controles);
+            }
+        }
+        private static void DesabilitarControleRecursivo(Control controle, List<Control> controles)
+        {
+            if (controles.Contains(controle))
+            {
+                controle.Enabled = false;
+            }
+
+            foreach (Control childControl in controle.Controls)
+            {
+                DesabilitarControleRecursivo(childControl, controles);
+            }
+        }
+        public static void HabilitarControles(List<Control> controles, BaseForm form)
+        {
+            // Habilitar controles fornecidos na lista
+            foreach (Control control in controles)
+            {
+                HabilitarControleRecursivo(form, control);
+            }
+        }
+        private static void HabilitarControleRecursivo(Control parent, Control controle)
+        {
+            foreach (Control childControl in parent.Controls)
+            {
+                if (childControl == controle)
+                {
+                    childControl.Enabled = true;
+                    return;
+                }
+
+                if (childControl.HasChildren)
+                {
+                    HabilitarControleRecursivo(childControl, controle);
+                }
+            }
+        }
+
     }
 }

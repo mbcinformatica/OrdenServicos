@@ -57,17 +57,17 @@ namespace ProjetoTeste
             listViewUsuario.DrawSubItem += new DrawListViewSubItemEventHandler(listViewUsuario_DrawSubItem);
 
             // Adicionar colunas
-            listViewUsuario.Columns.Add("ID", 50, HorizontalAlignment.Right);
+            listViewUsuario.Columns.Add("  ID", 50, HorizontalAlignment.Right);
             listViewUsuario.Columns.Add("  NOME", 300, HorizontalAlignment.Left);
-            listViewUsuario.Columns.Add("  LOGIN", 80, HorizontalAlignment.Left);
+            listViewUsuario.Columns.Add("  LOGIN", 200, HorizontalAlignment.Left);
             listViewUsuario.Columns.Add("  ENDEREÇO", 200, HorizontalAlignment.Left);
-            listViewUsuario.Columns.Add("NUMERO", 70, HorizontalAlignment.Right);
+            listViewUsuario.Columns.Add("  NUMERO", 200, HorizontalAlignment.Right);
             listViewUsuario.Columns.Add("  BAIRRO", 150, HorizontalAlignment.Left);
             listViewUsuario.Columns.Add("  MUNICIPIO", 200, HorizontalAlignment.Left);
-            listViewUsuario.Columns.Add("UF", 30, HorizontalAlignment.Center);
-            listViewUsuario.Columns.Add("CEP", 70, HorizontalAlignment.Center);
-            listViewUsuario.Columns.Add("CELULAR", 100, HorizontalAlignment.Right);
-            listViewUsuario.Columns.Add("FIXO", 100, HorizontalAlignment.Right);
+            listViewUsuario.Columns.Add("  UF", 50, HorizontalAlignment.Center);
+            listViewUsuario.Columns.Add("  CEP", 70, HorizontalAlignment.Center);
+            listViewUsuario.Columns.Add("  CELULAR", 100, HorizontalAlignment.Right);
+            listViewUsuario.Columns.Add("  FIXO", 100, HorizontalAlignment.Right);
             listViewUsuario.Columns.Add("  EMAIL", 300, HorizontalAlignment.Left);
             listViewUsuario.Columns.Add("  DATA CADASTRO", 150, HorizontalAlignment.Right);
 
@@ -155,12 +155,12 @@ namespace ProjetoTeste
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap;
 
-                if (e.Header.Text == "ID" 
-                    || e.Header.Text == "UF" 
-                    || e.Header.Text == "CEP" 
-                    || e.Header.Text == "NUMERO" 
-                    || e.Header.Text == "CELULAR" 
-                    || e.Header.Text == "FIXO")
+                if (e.Header.Text == "  ID" 
+                    || e.Header.Text == "  UF" 
+                    || e.Header.Text == "  CEP" 
+                    || e.Header.Text == "  NUMERO" 
+                    || e.Header.Text == "  CELULAR" 
+                    || e.Header.Text == "  FIXO")
                 {
                     sf.Alignment = StringAlignment.Center;
                 }
@@ -198,12 +198,12 @@ namespace ProjetoTeste
         {
             using (StringFormat sf = new StringFormat())
             {
-                if (listViewUsuario.Columns[e.ColumnIndex].Text == "ID" ||
-                    listViewUsuario.Columns[e.ColumnIndex].Text == "UF" ||
-                    listViewUsuario.Columns[e.ColumnIndex].Text == "CEP" ||
-                    listViewUsuario.Columns[e.ColumnIndex].Text == "NUMERO" ||
-                    listViewUsuario.Columns[e.ColumnIndex].Text == "CELULAR" ||
-                    listViewUsuario.Columns[e.ColumnIndex].Text == "FIXO")
+                if (listViewUsuario.Columns[e.ColumnIndex].Text == "  ID" ||
+                    listViewUsuario.Columns[e.ColumnIndex].Text == "  UF" ||
+                    listViewUsuario.Columns[e.ColumnIndex].Text == "  CEP" ||
+                    listViewUsuario.Columns[e.ColumnIndex].Text == "  NUMERO" ||
+                    listViewUsuario.Columns[e.ColumnIndex].Text == "  CELULAR" ||
+                    listViewUsuario.Columns[e.ColumnIndex].Text == "  FIXO")
                 {
                     sf.Alignment = StringAlignment.Far; // Alinhar conteúdo numérico à direita
                 }

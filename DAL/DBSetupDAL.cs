@@ -210,7 +210,7 @@ namespace ProjetoTeste.DAL
             {
                 "IDOrdenServico int NOT NULL AUTO_INCREMENT",
                 "DataEmissao datetime DEFAULT NULL",
-                "DataConclucao datetime DEFAULT NULL",
+                "DataConclusao datetime DEFAULT NULL",
                 "IDCliente int DEFAULT NULL",
                 "IDMarca int DEFAULT NULL",
                 "IDProduto int DEFAULT NULL",

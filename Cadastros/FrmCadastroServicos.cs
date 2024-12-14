@@ -327,10 +327,9 @@ namespace ProjetoTeste
                 }
                 else if (string.IsNullOrEmpty(categoriaServicoDigitada))
                 {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbCategoriaServico.Focus();
                 }
-
-
             }
         }
         private void Evento_KeyPress(object sender, KeyPressEventArgs e)

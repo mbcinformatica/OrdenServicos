@@ -7,7 +7,7 @@ namespace ProjetoTeste.Model
         //Banco de Dados
         public int IDOrdenServico { get; set; }
         public DateTime DataEmissao { get; set; }
-        public DateTime DataConclucao { get; set; }
+        public DateTime DataConclusao { get; set; }
         public int IDCliente { get; set; }
         public int IDMarca { get; set; }
         public int IDProduto { get; set; }

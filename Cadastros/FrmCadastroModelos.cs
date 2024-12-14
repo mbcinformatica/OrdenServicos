@@ -311,10 +311,9 @@ namespace ProjetoTeste
                 }
                 else if (string.IsNullOrEmpty(marcaDigitada))
                 {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbMarca.Focus();
                 }
-
-
             }
         }
         private void ConfigurarTextBox()
