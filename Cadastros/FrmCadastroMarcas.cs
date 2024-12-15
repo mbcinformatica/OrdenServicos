@@ -14,12 +14,10 @@ namespace ProjetoTeste
 
         private int sortColumn = -1;
         private bool sortAscending = true;
-        private bool bNovo;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-        private bool escPressed = false;
 
         public frmMarcas()
         {

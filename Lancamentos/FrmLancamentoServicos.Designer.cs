@@ -597,6 +597,7 @@
             this.Controls.Add(this.listViewLancamentoServicos);
             this.Controls.Add(this.pnlBotoes);
             this.Name = "frmLancamentoServicos";
+            this.Tag = "LancaServicos";
             this.Text = "Lançamento Orden Serviço";
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemProduto)).EndInit();
             this.tabControlOrdenServico.ResumeLayout(false);

@@ -348,30 +348,6 @@
     <Compile Include="DAL\PesquisaWebDAL.cs" />
     <Compile Include="DAL\FornecedorDAL .cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
-    <Compile Include="Date_Table\DataSetRelClientes.cs">
-      <DependentUpon>DataSetRelClientes.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Date_Table\DataSetRelClientes.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetRelClientes.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Date_Table\DataSetRelFornecedores.cs">
-      <DependentUpon>DataSetRelFornecedores.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Date_Table\DataSetRelFornecedores.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetRelFornecedores.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Date_Table\DataSetRelUsuarios.cs">
-      <DependentUpon>DataSetRelUsuarios.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Date_Table\DataSetRelUsuarios.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetRelUsuarios.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Forms\BaseFormFuncoes.cs" />
     <Compile Include="Forms\BaseFormFuncoes.Designer.cs">
       <DependentUpon>BaseFormFuncoes.cs</DependentUpon>
@@ -495,39 +471,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include=".editorconfig" />
-    <None Include="Date_Table\DataSetRelClientes.xsc">
-      <DependentUpon>DataSetRelClientes.xsd</DependentUpon>
-    </None>
-    <None Include="Date_Table\DataSetRelClientes.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetRelClientes.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Date_Table\DataSetRelClientes.xss">
-      <DependentUpon>DataSetRelClientes.xsd</DependentUpon>
-    </None>
-    <None Include="Date_Table\DataSetRelFornecedores.xsc">
-      <DependentUpon>DataSetRelFornecedores.xsd</DependentUpon>
-    </None>
-    <None Include="Date_Table\DataSetRelFornecedores.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetRelFornecedores.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Date_Table\DataSetRelFornecedores.xss">
-      <DependentUpon>DataSetRelFornecedores.xsd</DependentUpon>
-    </None>
-    <None Include="Date_Table\DataSetRelUsuarios.xsc">
-      <DependentUpon>DataSetRelUsuarios.xsd</DependentUpon>
-    </None>
-    <None Include="Date_Table\DataSetRelUsuarios.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetRelUsuarios.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Date_Table\DataSetRelUsuarios.xss">
-      <DependentUpon>DataSetRelUsuarios.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ProjetoTeste.Model.FornecedorInfo.datasource" />
     <None Include="Properties\Settings.settings">

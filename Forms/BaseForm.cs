@@ -32,14 +32,9 @@ namespace ProjetoTeste.Forms
         protected Color buttonBorderColor { get; set; }
         protected Color buttonMouseDownBackColor { get; set; }
         protected Color buttonMouseOverBackColor { get; set; }
-        protected Cursors buttonCursor { get; set; }
         protected string buttonFontFamily { get; set; }
         protected float buttonFontSize { get; set; }
         protected FontStyle buttonFontStyle { get; set; }
-        protected Color comboBoxBackgroundColor { get; set; }
-        protected Color comboBoxFontColor { get; set; }
-        protected Color maskedTextBoxBackgroundColor { get; set; }
-        protected Color maskedTextBoxFontColor { get; set; }
         protected Color labelBackgroundColor { get; set; }
         protected Color labelFontColor { get; set; }
         protected bool labelAutoSize { get; set; }
@@ -57,13 +52,15 @@ namespace ProjetoTeste.Forms
         public virtual void CarregarRegistros()
         { // Implementação padrão (pode ser sobreposta nos formulários derivados)
         }
+        public virtual void LimparCampos()
+        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
+        }
         public virtual void VerificaComboBox(ComboBox comboBox)
         { // Implementação padrão (pode ser sobreposta nos formulários derivados)
         }
-        public virtual void LimparCampos() 
+        public virtual void VerificaTextBox(TextBox textBox)
         { // Implementação padrão (pode ser sobreposta nos formulários derivados)
         }
-
 
 
         protected void LoadConfig()

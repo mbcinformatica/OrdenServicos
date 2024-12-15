@@ -259,6 +259,7 @@ namespace ProjetoTeste
                 btnNovo });
 
             // Definir a propriedade Tag para comportamentos específicos
+            this.Tag = "frmLancamentoServicos"; 
             txtIDOrdenServico.Tag = "no-input"; // Bloquear qualquer entrada
             txtValorTotalMaterial.Tag = "TabPage"; // Permitir somente números
             txtNumeroSerie.Tag = "letters"; // Permitir somente letras

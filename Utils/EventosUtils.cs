@@ -11,30 +11,29 @@ namespace ProjetoTeste.Utils
 {
     public static class EventosUtils
     {
-            public static void AdicionarToolTips(BaseForm form, List<ControlToolTipPair> controlToolTipPairs, ToolTip tlpDicas)
-    {
-        foreach (var pair in controlToolTipPairs)
+        public static void AdicionarToolTips(BaseForm form, List<ControlToolTipPair> controlToolTipPairs, ToolTip tlpDicas)
         {
-            AddToolTipRecursively(tlpDicas, form, pair.Control, pair.ToolTipText);
-        }
-    }
-
-    private static void AddToolTipRecursively(ToolTip tlpDicas, Control parent, Control targetControl, string toolTipText)
-    {
-        foreach (Control control in parent.Controls)
-        {
-            if (control == targetControl)
+            foreach (var pair in controlToolTipPairs)
             {
-                tlpDicas.SetToolTip(control, toolTipText);
-                return;
-            }
-
-            if (control.HasChildren)
-            {
-                AddToolTipRecursively(tlpDicas, control, targetControl, toolTipText);
+                AddToolTipRecursively(tlpDicas, form, pair.Control, pair.ToolTipText);
             }
         }
-    }
+        private static void AddToolTipRecursively(ToolTip tlpDicas, Control parent, Control targetControl, string toolTipText)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control == targetControl)
+                {
+                    tlpDicas.SetToolTip(control, toolTipText);
+                    return;
+                }
+
+                if (control.HasChildren)
+                {
+                    AddToolTipRecursively(tlpDicas, control, targetControl, toolTipText);
+                }
+            }
+        }
         public static void InicializarEventos(Control.ControlCollection controles, List<Control> controlesKeyPress, List<Control> controlesLeave, List<Control> controlesEnter, List<Control> controlesMouseDown, List<Control> controlesKeyDown, List<Control> controlesBotoes, BaseForm form, TabControl tabControl, TabPage tabPage)
 
         {
@@ -109,6 +108,17 @@ namespace ProjetoTeste.Utils
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true; // Impede o som de "beep"
+                if (form.Tag?.ToString() == "frmLogin")
+
+                {
+                    if (sender is TextBox textBox)
+                    {
+                        if (textBox == nomeControles)
+                        {
+                            form.VerificaTextBox(textBox);
+                        }
+                    }
+                }
                 ((Form)form).SelectNextControl((Control)sender, true, true, true, true);
             }
             else if (e.KeyCode == Keys.Escape)
@@ -207,12 +217,17 @@ namespace ProjetoTeste.Utils
         }
         public static void Evento_Leave(object sender, EventArgs e, Control nomeControles, BaseForm form, TabControl tabControl, TabPage tabPage)
         {
-            if (form.escPressed)
+            if (form.escPressed || (form.ActiveControl is Button button && button.Name == "btnSair"))
             {
-                form.escPressed = false; // Reseta a variável de controle
-                return; // Sai do método sem fazer verificações
+                if (form.Tag?.ToString() == "frmLogin")
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    return;
+                }
             }
-
             if (sender is MaskedTextBox maskedTextBox)
             {
                 form.ControleAnterior = maskedTextBox;
@@ -227,7 +242,7 @@ namespace ProjetoTeste.Utils
                     {
                         maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
                     }
-  
+
                 }
                 if (maskedTextBox.Tag?.ToString() == "TabPage")
                 {
@@ -257,6 +272,15 @@ namespace ProjetoTeste.Utils
             else if (sender is TextBox textBox)
             {
                 form.ControleAnterior = textBox;
+
+                if (form.Tag?.ToString() == "frmLogin")
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        textBox.Focus();
+                    }
+                }
             }
         }
         public static void Evento_MouseDown(object sender, MouseEventArgs e, Control nomeControles, BaseForm form)

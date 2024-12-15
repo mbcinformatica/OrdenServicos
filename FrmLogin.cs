@@ -1,6 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
+using ProjetoTeste.BLL;
 using ProjetoTeste.Forms;
+using ProjetoTeste.Model;
+using ProjetoTeste.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ProjetoTeste
@@ -10,13 +15,18 @@ namespace ProjetoTeste
         private static readonly string connectionString = "Server=192.168.1.198;Port=3306;Database=DBOrdenServicos;User ID=root;Password=password;";
         private (Control, string)[] camposObrigatorios;
         private int nTentativasLogin = 0;
-        private bool escPressed = false; // Reseta a variável de controle
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
 
         public frmLogin()
         {
             InitializeComponent();
-            btnLogin.Tag = new string[] { "alinhar","azul" };
-            
+            btnLogin.Tag = new string[] { "alinhar", "azul" };
+
             // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
@@ -27,83 +37,54 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            txtLogin.KeyDown += TextBox_KeyDown;
-            txtSenha.KeyDown += TextBox_KeyDown;
+            // Adicionar controles às listas específicas com base no tipo de evento
+            controlesKeyPress.AddRange(new Control[] {});
+            controlesEnter.AddRange(new Control[] { });
+            controlesMouseDown.AddRange(new Control[] {});
+            controlesLeave.AddRange(new Control[] {
+                txtLogin,
+                txtSenha
+            });
+            controlesKeyDown.AddRange(new Control[] {
+                txtLogin,
+                txtSenha
+            });
+            controlesBotoes.AddRange(new Control[] {
+                btnLogin,
+                btnSair
+            });
 
-            txtLogin.Leave += TextBox_Leave;
-            txtSenha.Leave += TextBox_Leave;
+             this.Tag = "frmLogin";
 
-            // Adiciona eventos de mouse aos botões
-            btnLogin.MouseEnter += Button_MouseEnter;
-            btnLogin.MouseLeave += Button_MouseLeave;
-            btnSair.MouseEnter += Button_MouseEnter;
-            btnSair.MouseLeave += Button_MouseLeave;
+            TabControl tabControl = null;
+            TabPage tabPage = null;
 
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
         }
-        private void Button_MouseEnter(object sender, EventArgs e)
+        public override void VerificaTextBox(TextBox textBox)
         {
-            Button button = sender as Button;
-
-            if (button != null)
+            if (textBox == txtLogin)
             {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
-        }
-        private void Button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-
-            if (button != null)
-            {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
-        }
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-
-                if (sender == txtLogin)
+                if (ValidaUsuario(txtLogin.Text) && !string.IsNullOrWhiteSpace(txtLogin.Text))
                 {
-                    if (ValidaUsuario(txtLogin.Text))
-                    {
-                        MessageBox.Show("Usuário não Cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LimparCampos();
-                    }
-                    else
-                    {
-                        imgCadeadoAberto.Visible = true;
-                        imgCadeadoFechado.Visible = false;
-                        PegaSenhaHansDB();
-                    }
+                    MessageBox.Show("Usuário não Cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimparCampos();
+                    return;
                 }
-                this.SelectNextControl((Control)sender, true, true, true, true);
-
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                this.AutoValidate = AutoValidate.Disable;
-                escPressed = true; // Reseta a variável de controle
-            }
-        }
-        private void TextBox_Leave(object sender, EventArgs e)
-        {
-            if (escPressed)
-            {
-                escPressed = false; // Reseta a variável de controle
-                Application.Exit();
-
+                else
+                {
+                    imgCadeadoAberto.Visible = true;
+                    imgCadeadoFechado.Visible = false;
+                    PegaSenhaHansDB();
+                }
             }
         }
         private void ConfigurarTextBox()
         {
             camposObrigatorios = new (Control, string)[]
             {
-                (txtLogin, "Login"),
-                (txtSenha, "Senha"),
+  //              (txtLogin, "Login"),
+  //              (txtSenha, "Senha"),
             };
 
             AdicionarValidacao(
@@ -122,14 +103,13 @@ namespace ProjetoTeste
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
-            escPressed = true;
-            Application.Exit(); // Fecha o programa inteiro
+            Application.Exit();
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (ValidarCredenciais())
             {
-                this.Close();
+                Close();
                 return;
             }
             nTentativasLogin++;

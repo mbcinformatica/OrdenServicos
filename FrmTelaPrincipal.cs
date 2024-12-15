@@ -47,6 +47,7 @@ namespace ProjetoTeste
                 MessageBox.Show("Erro ao conectar ao banco de dados: ", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
+            AbrirFormularioLogin();
         }
         private void frmTelaPrincipal_Load(object sender, EventArgs e)
         {
@@ -59,7 +60,6 @@ namespace ProjetoTeste
             Location = new Point(
                (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
-            AbrirFormularioLogin();
         }
         private void AbrirFormularioLogin()
         {
@@ -71,7 +71,7 @@ namespace ProjetoTeste
 
             formularioLogin.ShowDialog();
         }
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit(); // Fecha o programa inteiro
         }
