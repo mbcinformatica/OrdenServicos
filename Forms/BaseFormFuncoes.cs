@@ -5,13 +5,15 @@ namespace ProjetoTeste.Forms
 {
     public interface BaseFormFuncoes
     {
-        void CarregarRegistros();
-        void LimparCampos();
-        void VerificaComboBox(ComboBox comboBox);
-        void VerificaTextBox(TextBox textBox);
         bool escPressed { get; set; }
         bool bNovo { get; set; }
+        string TagFormato { get; set; }
+        string TagAction { get; set; }
         Control ControleAnterior { get; set; }
-        AutoValidate AutoValidate { get; set; }
+        void CarregarRegistros();
+        void LimparCampos();
+        void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox);
+        void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox);
+
     }
 }

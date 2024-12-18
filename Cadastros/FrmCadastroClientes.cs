@@ -299,54 +299,6 @@ namespace ProjetoTeste
             {
                 e.SuppressKeyPress = true; // Impede o som de "beep"
 
-                if (sender == txtCpfCnpj)
-                {
-                    string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
-                    DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                    string cpfCnpj = txtCpfCnpj.Text;
-                    // Verifica se o CPF/CNPJ já está cadastrado
-                    if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
-                    {
-                        MessageBox.Show("Cliente já cadastrado. Favor verificar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtCpfCnpj.Clear();
-                        txtCpfCnpj.Focus();
-                        return;
-                        
-                    }
-                    if (rdbCpf.Checked)
-                    {
-                        if (!ValidaCpf(cpfCnpj))
-                        {
-                            MessageBox.Show("CPF informado está incorreto. Favor verificar!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            txtCpfCnpj.Clear();
-                            txtCpfCnpj.Focus();
-                            return;
-                        }
-                    }
-                    else if (rdbCnpj.Checked)
-                    {
-                        if (!ValidaCnpj(cpfCnpj))
-                        {
-                            MessageBox.Show("CNPJ informado está incorreto. Favor verificar!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            txtCpfCnpj.Clear();
-                            txtCpfCnpj.Focus();
-                            return;
-                        }
-                        else
-                        {
-                            // Executa a pesquisa do CNPJ após validação
-                            btnPesquisarCnpj_Click(sender, e);
-                        }
-                    }
-                }
-                if (sender == txtNumero)
-                {
-                    if (string.IsNullOrWhiteSpace(txtNumero.Text))
-                    {
-                        txtNumero.Text = "S/N";
-                    }
-                }
-
                 this.SelectNextControl((Control)sender, true, true, true, true);
             }
             else if (e.KeyCode == Keys.Escape)
@@ -386,6 +338,8 @@ namespace ProjetoTeste
                 }
                 else if (sender == txtCpfCnpj)
                 {
+
+
                     if (rdbCpf.Checked)
                     {
                         txtCpfCnpj.Text = StringUtils.FormatCPF(txtCpfCnpj.Text);

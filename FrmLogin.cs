@@ -61,7 +61,7 @@ namespace ProjetoTeste
 
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
         }
-        public override void VerificaTextBox(TextBox textBox)
+        public override void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox)
         {
             if (textBox == txtLogin)
             {

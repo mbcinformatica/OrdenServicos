@@ -115,7 +115,7 @@ namespace ProjetoTeste.Utils
                     {
                         if (textBox == nomeControles)
                         {
-                            form.VerificaTextBox(textBox);
+                            form.ExecutaFuncaoEventoKeyDownTextBox(textBox);
                         }
                     }
                 }
@@ -135,52 +135,6 @@ namespace ProjetoTeste.Utils
                 ((Form)form).SelectNextControl((Control)sender, false, true, true, true);
             }
         }
-        public static void Evento_Enter(object sender, EventArgs e, Control controleEspecifico, BaseForm form)
-        {
-            if (sender is MaskedTextBox maskedTextBox)
-            {
-                form.ControleAnterior = maskedTextBox;
-                maskedTextBox.SelectAll();
-            }
-            else if (sender is TextBox textBox)
-            {
-                if (controleEspecifico.Tag?.ToString() == "no-input")
-                {
-                    form.ControleAnterior?.Focus();
-                }
-                else
-                {
-                    form.ControleAnterior = textBox;
-                    textBox.SelectAll();
-                }
-            }
-            else if (sender is ComboBox comboBox)
-            {
-                form.ControleAnterior = comboBox;
-            }
-            else if (sender is DateTimePicker dateTimePicker)
-            {
-                form.ControleAnterior = dateTimePicker;
-                if (dateTimePicker.Tag?.ToString() == "data-final")
-                {
-                    // Encontrar o controle com a tag "data-inicial" usando busca recursiva
-                    var dataEmissaoControl = FindDateTimePickerByTag(form.Controls, "data-inicial");
-
-                    // Depuração para verificar se o controle foi encontrado
-                    if (dataEmissaoControl == null)
-                    {
-                        MessageBox.Show("Data de emissão não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else if (form.bNovo)
-                    {
-                        // Somar 15 dias à data de emissão
-                        dateTimePicker.Value = dataEmissaoControl.Value.AddDays(15);
-                        dateTimePicker.CustomFormat = "dd/MM/yyyy";
-                        dateTimePicker.Format = DateTimePickerFormat.Custom;
-                    }
-                }
-            }
-        }
         public static void Evento_KeyPress(object sender, KeyPressEventArgs e, Control controleEspecifico, BaseForm form)
         {
             if (sender is MaskedTextBox maskedTextBox)
@@ -198,20 +152,70 @@ namespace ProjetoTeste.Utils
             }
             else if (sender is TextBox textBox)
             {
-                if (controleEspecifico.Tag?.ToString() == "no-input")
+                var customTag = controleEspecifico.Tag as BaseForm;
+                if (customTag != null && customTag.TagAction == "no-input")
+
                 {
                     // Bloqueia qualquer entrada de caractere para o controle especificado
                     e.Handled = true;
                 }
-                else if (controleEspecifico.Tag?.ToString() == "numeric" && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                else if (customTag != null && customTag.TagAction == "numeric" && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 {
                     // Permite somente números no TextBox específico
                     e.Handled = true;
                 }
-                else if (controleEspecifico.Tag?.ToString() == "letters" && !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
+                else if (customTag != null && customTag.TagAction  == "letters" && !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
                 {
                     // Permite somente letras no TextBox específico
                     e.Handled = true;
+                }
+            }
+        }
+        public static void Evento_Enter(object sender, EventArgs e, Control controleEspecifico, BaseForm form)
+        {
+            if (sender is MaskedTextBox maskedTextBox)
+            {
+                form.ControleAnterior = maskedTextBox;
+                maskedTextBox.SelectAll();
+            }
+            else if (sender is TextBox textBox)
+            {
+                var customTag = controleEspecifico.Tag as BaseForm;
+                if (customTag != null && customTag.TagAction == "no-input")
+                {
+                    form.ControleAnterior?.Focus();
+                }
+                else
+                {
+                    form.ControleAnterior = textBox;
+                    textBox.SelectAll();
+                }
+            }
+            else if (sender is ComboBox comboBox)
+            {
+                form.ControleAnterior = comboBox;
+            }
+            else if (sender is DateTimePicker dateTimePicker)
+            {
+                form.ControleAnterior = dateTimePicker;
+                var customTag = dateTimePicker.Tag as BaseForm;
+                if (customTag != null && customTag.TagAction == "data-final")
+                {
+                    // Encontrar o controle com a tag "data-inicial" usando busca recursiva
+                    var dataEmissaoControl = FindDateTimePickerByTag(form.Controls, "data-inicial");
+
+                    // Depuração para verificar se o controle foi encontrado
+                    if (dataEmissaoControl == null)
+                    {
+                        MessageBox.Show("Data de emissão não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (form.bNovo)
+                    {
+                        // Somar 15 dias à data de emissão
+                        dateTimePicker.Value = dataEmissaoControl.Value.AddDays(15);
+                        dateTimePicker.CustomFormat = "dd/MM/yyyy";
+                        dateTimePicker.Format = DateTimePickerFormat.Custom;
+                    }
                 }
             }
         }
@@ -233,25 +237,37 @@ namespace ProjetoTeste.Utils
                 form.ControleAnterior = maskedTextBox;
                 if (maskedTextBox == nomeControles)
                 {
-                    if (maskedTextBox.Text == "")
+                    var customTag = maskedTextBox.Tag as BaseForm;
+                    if (customTag != null)
                     {
-                        maskedTextBox.Text = "0.0";
-                        maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
-                    }
-                    else
-                    {
-                        maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
-                    }
+                        if (customTag.TagAction == "TabPage" && tabControl != null && tabPage != null)
+                        {
+                            tabControl.SelectedTab = tabPage;
+                        }
 
-                }
-                if (maskedTextBox.Tag?.ToString() == "TabPage")
-                {
-                    tabControl.SelectedTab = tabPage;
+                        if (customTag.TagFormato == "FormatoMoeda")
+                        {
+                            if (string.IsNullOrEmpty(maskedTextBox.Text))
+                            {
+                                maskedTextBox.Text = "0";
+                            }
+                            maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
+                        }
+                        else if (customTag.TagFormato == "FormatoUnidade")
+                        {
+                            if (string.IsNullOrEmpty(maskedTextBox.Text))
+                            {
+                                maskedTextBox.Text = "0";
+                            }
+                            maskedTextBox.Text = StringUtils.FormatValorUnidade(maskedTextBox.Text);
+                        }
+                    }
                 }
             }
             else if (sender is DateTimePicker dateTimePicker)
             {
-                if (dateTimePicker.Tag?.ToString() == "data-inicial")
+                var customTag = dateTimePicker.Tag as BaseForm;
+                if (customTag != null && customTag.TagAction == "data-inicial")
                 {
                     form.ControleAnterior = dateTimePicker;
                     DateTime selectedDate = dateTimePicker.Value;
@@ -259,14 +275,13 @@ namespace ProjetoTeste.Utils
                     dateTimePicker.CustomFormat = "dd/MM/yyyy";
                     dateTimePicker.Format = DateTimePickerFormat.Custom;
                 }
-
             }
             else if (sender is ComboBox comboBox)
             {
                 form.ControleAnterior = comboBox;
                 if (comboBox == nomeControles)
                 {
-                    form.VerificaComboBox(comboBox);
+                    form.ExecutaFuncaoEventoLeaveComboBox(comboBox);
                 }
             }
             else if (sender is TextBox textBox)

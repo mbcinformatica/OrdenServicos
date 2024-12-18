@@ -46,27 +46,20 @@ namespace ProjetoTeste.Forms
         protected int labelMarginRight { get; set; }
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
+
+
         public bool escPressed { get; set; }
         public bool bNovo { get; set; }
         public Control ControleAnterior { get; set; }
-        public virtual void CarregarRegistros()
-        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
-        }
-        public virtual void LimparCampos()
-        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
-        }
-        public virtual void VerificaComboBox(ComboBox comboBox)
-        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
-        }
-        public virtual void VerificaTextBox(TextBox textBox)
-        { // Implementação padrão (pode ser sobreposta nos formulários derivados)
-        }
+        public string TagFormato { get; set; }
+        public string TagAction { get; set; }
+        public virtual void CarregarRegistros() { }
+        public virtual void LimparCampos() { }
+        public virtual void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox) { }
+        public virtual void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox) { }
 
 
-        protected void LoadConfig()
-        {
-            CarregaDadosControles("config.xml");
-        }
+        protected void LoadConfig() {CarregaDadosControles("config.xml");}
         protected void ApplyConfigToControls(Control.ControlCollection controls, XDocument config)
         {
             foreach (Control control in controls)
@@ -242,23 +235,7 @@ namespace ProjetoTeste.Forms
 
             public GradientMenuRenderer(BaseForm form)
             {
-                this.baseForm = form;
-            }
-
-            protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
-            {
-                try
-                {
-                    // Usar as variáveis menuStripBackgroundColor e gradientEndColor carregadas anteriormente
-                    using (LinearGradientBrush brush = new LinearGradientBrush(e.AffectedBounds, baseForm.menuStripBackgroundColor, baseForm.gradientMenuEndColor, 70F))
-                    {
-                        e.Graphics.FillRectangle(brush, e.AffectedBounds);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erro ao aplicar o gradiente no MenuStrip: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                baseForm = form;
             }
         }
         protected void ValidarControle(object sender, System.ComponentModel.CancelEventArgs e, string campo, ErrorProvider errorProvider)

@@ -146,7 +146,7 @@
             // 
             this.txtIDProduto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIDProduto.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDProduto.Location = new System.Drawing.Point(1060, 164);
+            this.txtIDProduto.Location = new System.Drawing.Point(472, 10);
             this.txtIDProduto.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtIDProduto.Name = "txtIDProduto";
             this.txtIDProduto.Size = new System.Drawing.Size(23, 22);
@@ -235,6 +235,7 @@
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
+            this.pnlBotoes.Controls.Add(this.txtIDProduto);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
             this.pnlBotoes.Controls.Add(this.btnExcluir);
             this.pnlBotoes.Controls.Add(this.btnNovo);
@@ -337,7 +338,6 @@
             this.tabDadosProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabDadosProduto.Controls.Add(this.btnExcluirImagem);
             this.tabDadosProduto.Controls.Add(this.btnInserirImagem);
-            this.tabDadosProduto.Controls.Add(this.txtIDProduto);
             this.tabDadosProduto.Controls.Add(this.txtGarantia);
             this.tabDadosProduto.Controls.Add(this.lbGarantia);
             this.tabDadosProduto.Controls.Add(this.txtPesquisaListView);

@@ -256,15 +256,21 @@ namespace ProjetoTeste
                 btnAlterar,
                 btnExcluir,
                 btnFechar,
-                btnNovo });
+                btnNovo
+            });
 
             // Definir a propriedade Tag para comportamentos específicos
-            this.Tag = "frmLancamentoServicos"; 
-            txtIDOrdenServico.Tag = "no-input"; // Bloquear qualquer entrada
-            txtValorTotalMaterial.Tag = "TabPage"; // Permitir somente números
-            txtNumeroSerie.Tag = "letters"; // Permitir somente letras
-            txtDataEmissao.Tag = "data-inicial"; // Tag específica para txtDataEmissao
-            txtDataConclusao.Tag = "data-final"; // Tag específica para txtDataConclusao
+            this.Tag = "frmLancamentoServicos";
+            txtIDOrdenServico.Tag = new BaseForm { TagAction = "no-input" }; // Bloquear qualquer entrada
+
+            txtValorTotalMaterial.Tag = new BaseForm { TagFormato = "FormatoMoeda", TagAction = "TabPage" }; // Formato de moeda e ação de TabPage
+            txtValorTotalServico.Tag = new BaseForm { TagFormato = "FormatoMoeda" }; // Formato de moeda
+
+            txtNumeroSerie.Tag = new BaseForm { TagAction = "letters" }; // Permitir somente letras
+            txtDataEmissao.Tag = new BaseForm { TagAction = "data-inicial" }; // Tag específica para txtDataEmissao
+            txtDataConclusao.Tag = new BaseForm { TagAction = "data-final" }; // Tag específica para txtDataConclusao
+
+
 
             // Localizar o TabControl e a TabPage
             var tabControl = Controls.Find("tabControlOrdenServico", true).FirstOrDefault() as TabControl;
@@ -496,7 +502,7 @@ namespace ProjetoTeste
                 }
             }
         }
-        public override void VerificaComboBox(ComboBox comboBox)
+        public override void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox)
         {
             if (comboBox == cmbCliente)
             {
