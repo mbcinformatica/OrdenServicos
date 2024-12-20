@@ -473,6 +473,11 @@ namespace ProjetoTeste
         {
             Close();
         }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            CarregarRegistros();
+            LimparCampos();
+        }
         private void DesabilitarCampos()
         {
             cmbMarca.Enabled = false;

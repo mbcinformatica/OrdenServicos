@@ -41,6 +41,7 @@
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.pnlBotoes = new System.Windows.Forms.Panel();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlFornecedores = new System.Windows.Forms.TabControl();
             this.tabDadosFornecedor = new System.Windows.Forms.TabPage();
@@ -205,6 +206,7 @@
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
@@ -215,6 +217,21 @@
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(1108, 49);
             this.pnlBotoes.TabIndex = 97;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(972, 2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
+            this.btnCancelar.TabIndex = 67;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lbTotalRegistros
             // 
@@ -734,5 +751,6 @@
         private System.Windows.Forms.Label lbNomeRazaoSocial;
         private System.Windows.Forms.MaskedTextBox txtCpfCnpj;
         private System.Windows.Forms.Label lbCpfCnpj;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

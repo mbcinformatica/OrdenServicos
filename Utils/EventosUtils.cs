@@ -9,8 +9,10 @@ using System.Windows.Forms;
 
 namespace ProjetoTeste.Utils
 {
+
     public static class EventosUtils
     {
+
         public static void AdicionarToolTips(BaseForm form, List<ControlToolTipPair> controlToolTipPairs, ToolTip tlpDicas)
         {
             foreach (var pair in controlToolTipPairs)
@@ -39,46 +41,36 @@ namespace ProjetoTeste.Utils
         {
             foreach (Control controle in controles)
             {
-                // Associar eventos KeyPress
                 if (controlesKeyPress.Contains(controle))
                 {
                     controle.KeyPress += (sender, e) => Evento_KeyPress(sender, e, controle, form);
                 }
-
-                // Associar eventos Leave
                 if (controlesLeave.Contains(controle))
                 {
                     controle.Leave += (sender, e) => Evento_Leave(sender, e, controle, form, tabControl, tabPage);
                 }
-                // Associar eventos Enter
                 if (controlesEnter.Contains(controle))
                 {
                     controle.Enter += (sender, e) => Evento_Enter(sender, e, controle, form);
                 }
-
-                // Associar eventos MouseDown
                 if (controlesMouseDown.Contains(controle))
                 {
                     controle.MouseDown += (sender, e) => Evento_MouseDown(sender, e, controle, form);
                 }
-
-                // Associar eventos KeyDown
                 if (controlesKeyDown.Contains(controle))
                 {
                     controle.KeyDown += (sender, e) => Evento_KeyDown(sender, e, controle, form);
                 }
-
-                // Associar eventos aos botões
                 if (controle is Button && controlesBotoes.Contains(controle))
                 {
                     controle.MouseEnter += (sender, e) => Button_MouseEnter(sender, e, form);
                     controle.MouseLeave += (sender, e) => Button_MouseLeave(sender, e, form);
                 }
-
-                // Recursão para controles dentro de Panel, TabControl e TabPage
                 if (controle is Panel || controle is TabControl || controle is TabPage)
                 {
-                    InicializarEventos(controle.Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, form, tabControl, tabPage);
+                    InicializarEventos(controle.Controls, controlesKeyPress, 
+                                       controlesLeave, controlesEnter, controlesMouseDown,
+                                       controlesKeyDown, controlesBotoes, form, tabControl, tabPage);
                 }
             }
         }
@@ -108,17 +100,6 @@ namespace ProjetoTeste.Utils
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true; // Impede o som de "beep"
-                if (form.Tag?.ToString() == "frmLogin")
-
-                {
-                    if (sender is TextBox textBox)
-                    {
-                        if (textBox == nomeControles)
-                        {
-                            form.ExecutaFuncaoEventoKeyDownTextBox(textBox);
-                        }
-                    }
-                }
                 ((Form)form).SelectNextControl((Control)sender, true, true, true, true);
             }
             else if (e.KeyCode == Keys.Escape)
@@ -139,7 +120,7 @@ namespace ProjetoTeste.Utils
         {
             if (sender is MaskedTextBox maskedTextBox)
             {
-                // Permitir somente números, vírgula e controle (como backspace)
+                var customTag = controleEspecifico.Tag as BaseForm;
                 if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
                 {
                     e.Handled = true;
@@ -159,12 +140,12 @@ namespace ProjetoTeste.Utils
                     // Bloqueia qualquer entrada de caractere para o controle especificado
                     e.Handled = true;
                 }
-                else if (customTag != null && customTag.TagAction == "numeric" && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                else if (customTag != null && customTag.TagAction == "SomenteNumeros" && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 {
                     // Permite somente números no TextBox específico
                     e.Handled = true;
                 }
-                else if (customTag != null && customTag.TagAction  == "letters" && !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
+                else if (customTag != null && customTag.TagAction == "SomenteLetras" && !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
                 {
                     // Permite somente letras no TextBox específico
                     e.Handled = true;
@@ -201,18 +182,16 @@ namespace ProjetoTeste.Utils
                 var customTag = dateTimePicker.Tag as BaseForm;
                 if (customTag != null && customTag.TagAction == "data-final")
                 {
-                    // Encontrar o controle com a tag "data-inicial" usando busca recursiva
-                    var dataEmissaoControl = FindDateTimePickerByTag(form.Controls, "data-inicial");
 
                     // Depuração para verificar se o controle foi encontrado
-                    if (dataEmissaoControl == null)
+                    if (form.dataEmissaoControl == null && form.bNovo)
                     {
                         MessageBox.Show("Data de emissão não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else if (form.bNovo)
                     {
                         // Somar 15 dias à data de emissão
-                        dateTimePicker.Value = dataEmissaoControl.Value.AddDays(15);
+                        dateTimePicker.Value = form.dataEmissaoControl.AddDays(15);
                         dateTimePicker.CustomFormat = "dd/MM/yyyy";
                         dateTimePicker.Format = DateTimePickerFormat.Custom;
                     }
@@ -221,16 +200,22 @@ namespace ProjetoTeste.Utils
         }
         public static void Evento_Leave(object sender, EventArgs e, Control nomeControles, BaseForm form, TabControl tabControl, TabPage tabPage)
         {
-            if (form.escPressed || (form.ActiveControl is Button button && button.Name == "btnSair"))
+            form.CampoObrigatorio = false;
+            if (form.escPressed || (form.ActiveControl is Button button && button.Name == "btnSair") ||
+               (form.ActiveControl is Button buttonCancel && buttonCancel.Name == "btnCancelar"))
             {
                 if (form.Tag?.ToString() == "frmLogin")
                 {
+                    form.escPressed = true;
                     Application.Exit();
                 }
-                else
+                else if (form.ActiveControl is Button buttonCanc && buttonCanc.Name == "btnCancelar")
                 {
-                    return;
+                    form.escPressed = true;
+                    form.CarregarRegistros();
+                    form.LimparCampos();
                 }
+                return;
             }
             if (sender is MaskedTextBox maskedTextBox)
             {
@@ -240,11 +225,6 @@ namespace ProjetoTeste.Utils
                     var customTag = maskedTextBox.Tag as BaseForm;
                     if (customTag != null)
                     {
-                        if (customTag.TagAction == "TabPage" && tabControl != null && tabPage != null)
-                        {
-                            tabControl.SelectedTab = tabPage;
-                        }
-
                         if (customTag.TagFormato == "FormatoMoeda")
                         {
                             if (string.IsNullOrEmpty(maskedTextBox.Text))
@@ -261,7 +241,52 @@ namespace ProjetoTeste.Utils
                             }
                             maskedTextBox.Text = StringUtils.FormatValorUnidade(maskedTextBox.Text);
                         }
+                        else if (customTag.TagFormato == "FormataCep")
+                        {
+                            maskedTextBox.Text = StringUtils.SemFormatacao(maskedTextBox.Text);
+                            maskedTextBox.Text = StringUtils.FormatCEP(maskedTextBox.Text);
+                        }
+                        else if (customTag.TagFormato == "FormataFone")
+                        {
+                            maskedTextBox.Text = StringUtils.FormatPhoneNumber(maskedTextBox.Text);
+                        }
                     }
+                    form.ExecutaFuncaoEvento(maskedTextBox);
+                }
+            }
+            else if (sender is TextBox textBox)
+            {
+                form.ControleAnterior = textBox;
+                if (textBox == nomeControles)
+                {
+                    var customTag = textBox.Tag as BaseForm;
+                    if (customTag != null)
+                    {
+                        if (customTag.TagAction == "FocaBotaoSalvar")
+                        {
+                            Control btnSalvar = form.Controls.Find("btnSalvar", true).FirstOrDefault();
+                            if (btnSalvar != null)
+                            {
+                                btnSalvar.Focus();
+                            }
+                        }
+                    }
+                    form.ExecutaFuncaoEvento(textBox);
+                }
+            }
+            else if (sender is RadioButton radioButton)
+            {
+                form.ControleAnterior = radioButton;
+                if (radioButton == nomeControles)
+                {
+                }
+            }
+            else if (sender is ComboBox comboBox)
+            {
+                form.ControleAnterior = comboBox;
+                if (comboBox == nomeControles)
+                {
+                    form.ExecutaFuncaoEvento(comboBox);
                 }
             }
             else if (sender is DateTimePicker dateTimePicker)
@@ -271,30 +296,10 @@ namespace ProjetoTeste.Utils
                 {
                     form.ControleAnterior = dateTimePicker;
                     DateTime selectedDate = dateTimePicker.Value;
+                    form.dataEmissaoControl = dateTimePicker.Value;
                     dateTimePicker.Value = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                     dateTimePicker.CustomFormat = "dd/MM/yyyy";
                     dateTimePicker.Format = DateTimePickerFormat.Custom;
-                }
-            }
-            else if (sender is ComboBox comboBox)
-            {
-                form.ControleAnterior = comboBox;
-                if (comboBox == nomeControles)
-                {
-                    form.ExecutaFuncaoEventoLeaveComboBox(comboBox);
-                }
-            }
-            else if (sender is TextBox textBox)
-            {
-                form.ControleAnterior = textBox;
-
-                if (form.Tag?.ToString() == "frmLogin")
-                {
-                    if (string.IsNullOrEmpty(textBox.Text))
-                    {
-                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        textBox.Focus();
-                    }
                 }
             }
         }
@@ -331,7 +336,8 @@ namespace ProjetoTeste.Utils
         }
         public static void AcaoBotoes(String acaoBotao, BaseForm form)
         {
-            Button btnSalvar = null, btnAlterar = null, btnExcluir = null, btnFechar = null, btnNovo = null;
+            Button btnSalvar = null, btnAlterar = null,
+                   btnExcluir = null, btnFechar = null, btnNovo = null, btnCancelar = null;
 
             foreach (Control control in form.Controls)
             {
@@ -358,6 +364,9 @@ namespace ProjetoTeste.Utils
                                 case "btnNovo":
                                     btnNovo = button;
                                     break;
+                                case "btnCancelar":
+                                    btnCancelar = button;
+                                    break;
                             }
                         }
                     }
@@ -369,6 +378,9 @@ namespace ProjetoTeste.Utils
                 if (btnAlterar != null) btnAlterar.Enabled = false;
                 if (btnExcluir != null) btnExcluir.Enabled = false;
                 if (btnFechar != null) btnFechar.Enabled = true;
+                if (btnFechar != null) btnFechar.Visible = true;
+                if (btnCancelar != null) btnCancelar.Visible = false;
+                if (btnCancelar != null) btnCancelar.Enabled = false;
                 if (btnNovo != null)
                 {
                     btnNovo.Enabled = true;
@@ -382,7 +394,10 @@ namespace ProjetoTeste.Utils
                 if (btnAlterar != null) btnAlterar.Enabled = false;
                 if (btnExcluir != null) btnExcluir.Enabled = false;
                 if (btnFechar != null) btnFechar.Enabled = false;
+                if (btnFechar != null) btnFechar.Visible = false;
                 if (btnNovo != null) btnNovo.Enabled = false;
+                if (btnCancelar != null) btnCancelar.Visible = true;
+                if (btnCancelar != null) btnCancelar.Enabled = true;
             }
             else if (acaoBotao == "HabilitarBotoesAlterarExcluir")
 
@@ -391,7 +406,10 @@ namespace ProjetoTeste.Utils
                 if (btnAlterar != null) btnAlterar.Enabled = true;
                 if (btnExcluir != null) btnExcluir.Enabled = true;
                 if (btnFechar != null) btnFechar.Enabled = true;
+                if (btnFechar != null) btnFechar.Visible = true;
                 if (btnNovo != null) btnNovo.Enabled = true;
+                if (btnCancelar != null) btnCancelar.Visible = false;
+                if (btnCancelar != null) btnCancelar.Enabled = false;
             }
         }
         public static void DesabilitarControles(List<Control> controles, BaseForm form)

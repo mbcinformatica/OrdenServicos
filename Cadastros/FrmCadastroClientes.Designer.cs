@@ -39,6 +39,7 @@
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.txtIDCliente = new System.Windows.Forms.TextBox();
             this.pnlBotoes = new System.Windows.Forms.Panel();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlClientes = new System.Windows.Forms.TabControl();
             this.tabDadosClientes = new System.Windows.Forms.TabPage();
@@ -191,6 +192,7 @@
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
@@ -201,6 +203,21 @@
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(1108, 49);
             this.pnlBotoes.TabIndex = 97;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(972, 2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
+            this.btnCancelar.TabIndex = 66;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lbTotalRegistros
             // 
@@ -501,7 +518,6 @@
             this.txtFone_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFone_2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_2.Location = new System.Drawing.Point(488, 120);
-            this.txtFone_2.Mask = "(99) 9999-9999";
             this.txtFone_2.Name = "txtFone_2";
             this.txtFone_2.Size = new System.Drawing.Size(96, 22);
             this.txtFone_2.TabIndex = 106;
@@ -523,7 +539,6 @@
             this.txtFone_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFone_1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_1.Location = new System.Drawing.Point(368, 120);
-            this.txtFone_1.Mask = "(99) 99999-9999";
             this.txtFone_1.Name = "txtFone_1";
             this.txtFone_1.Size = new System.Drawing.Size(96, 22);
             this.txtFone_1.TabIndex = 105;
@@ -547,7 +562,6 @@
             this.txtCep.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCep.Location = new System.Drawing.Point(968, 24);
             this.txtCep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtCep.Mask = "99999-999";
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtCep.Size = new System.Drawing.Size(73, 22);
@@ -719,5 +733,6 @@
         private System.Windows.Forms.MaskedTextBox txtCpfCnpj;
         private System.Windows.Forms.Label lbCpfCnpj;
         private System.Windows.Forms.ToolTip tlpDicas;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

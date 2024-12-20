@@ -1,6 +1,7 @@
 ﻿using ProjetoTeste.BLL;
 using ProjetoTeste.Forms;
 using ProjetoTeste.Model;
+using ProjetoTeste.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,13 +14,18 @@ namespace ProjetoTeste
     {
         private int sortColumn = -1;
         private bool sortAscending = true;
-        private bool bNovo;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
         private int previousSortColumn = -1;
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-        private bool escPressed = false;
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
+
         public frmCategoriaServicos()
         {
             InitializeComponent();
@@ -180,70 +186,59 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            txtDescricao.KeyDown += Evento_KeyDown;
-            txtPesquisaListView.KeyDown += Evento_KeyDown;
-            listViewCategoriaServico.KeyDown += Evento_KeyDown;
+            // Adicionar controles às listas específicas com base no tipo de evento
+            controlesKeyPress.AddRange(new Control[] { });
 
-            txtDescricao.Leave += Evento_Leave;
-            // Adiciona eventos de mouse aos botões
-            btnSalvar.MouseEnter += Button_MouseEnter;
-            btnSalvar.MouseLeave += Button_MouseLeave;
-            btnAlterar.MouseEnter += Button_MouseEnter;
-            btnAlterar.MouseLeave += Button_MouseLeave;
-            btnExcluir.MouseEnter += Button_MouseEnter;
-            btnExcluir.MouseLeave += Button_MouseLeave;
-            btnFechar.MouseEnter += Button_MouseEnter;
-            btnFechar.MouseLeave += Button_MouseLeave;
-            btnNovo.MouseEnter += Button_MouseEnter;
-            btnNovo.MouseLeave += Button_MouseLeave;
+            controlesLeave.AddRange(new Control[] {
+                txtDescricao
+            });
+
+            controlesEnter.AddRange(new Control[] {
+                txtDescricao,
+                txtPesquisaListView
+            });
+
+            controlesMouseDown.AddRange(new Control[] { });
+
+            controlesKeyDown.AddRange(new Control[] {
+                txtDescricao,
+                txtPesquisaListView,
+                listViewCategoriaServico
+            });
+
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnAlterar,
+                btnExcluir,
+                btnFechar,
+                btnCancelar,
+                btnNovo
+            });
+
+            // Definir a propriedade Tag para comportamentos específicos
+            this.Tag = "frmCategoriaServicos";
+
+            txtDescricao.Tag = new BaseForm { TagAction = "TabPage" }; // Permitir somente letras
+
+
+            // Localizar o TabControl e a TabPage
+            var tabControl = Controls.Find("tabControlCategoriaServicos", true).FirstOrDefault() as TabControl;
+            var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
+
+            // Inicializar eventos para os controles
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+
             listViewCategoriaServico.Click += ListViewCategoriaServico_Click;
+
+            // Focar no btnNovo ao iniciar
+            txtPesquisaListView.Focus();
         }
-        private void Button_MouseEnter(object sender, EventArgs e)
+        public override void ExecutaFuncaoEvento(Control control)
         {
-            Button button = sender as Button;
-            if (button != null)
+            if (control == txtDescricao)
             {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
-        }
-        private void Button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
-        }
-        private void Evento_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                escPressed = true;
-                this.AutoValidate = AutoValidate.Disable;
-                CarregarRegistros();
-                LimparCampos();
-                this.AutoValidate = AutoValidate.EnablePreventFocusChange;
-            }
-        }
-        private void Evento_Leave(object sender, EventArgs e)
-        {
-            if (escPressed)
-            {
-                return; // Sai do método sem fazer verificações
-            }
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                if (sender == txtDescricao && !string.IsNullOrEmpty(txtDescricao.Text))
+                if (string.IsNullOrEmpty(txtDescricao.Text))
                 {
-                    tabControlCategoriaServicos.SelectedTab = tabInformacoesAdicionais;
                 }
             }
         }
@@ -263,10 +258,10 @@ namespace ProjetoTeste
             txtDescricao.TabIndex = 0;
             btnSalvar.TabIndex = 1;
         }
-        private void CarregarRegistros()
+        public override void CarregarRegistros()
         {
-            DesabilitarCampos();
-            DesabilitarBotoesAcoes();
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewCategoriaServico.Items.Clear();
             listViewCategoriaServico.Columns.Clear();
             InitializeListView();
@@ -318,16 +313,16 @@ namespace ProjetoTeste
                 ListViewItem item = listViewCategoriaServico.SelectedItems[0];
                 txtIDCategoriaServico.Text = item.SubItems[0].Text;
                 txtDescricao.Text = item.SubItems[1].Text;
-                HabilitarBotoesAlterarExcluir();
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
             }
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             txtIDCategoriaServico.Text = "0";
             bNovo = true;
-            HabilitarCampos("Novo");
+            HabilitarCamposDoFormulario("Novo");
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -375,8 +370,8 @@ namespace ProjetoTeste
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            HabilitarBotaoSalvar();
-            HabilitarCampos("Alterar");
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
+            HabilitarCamposDoFormulario("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -393,68 +388,52 @@ namespace ProjetoTeste
                 }
             }
             CarregarRegistros();
-            DesabilitarBotoesAcoes();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-        private void DesabilitarCampos()
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            txtDescricao.Enabled = false;
+            CarregarRegistros();
+            LimparCampos();
+        }
+        private void DesabilitarCamposDoFormulario()
+        {
+            List<Control> controlesDesabilitar = new List<Control>
+            {
+                txtDescricao
+            };
+
+            EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewCategoriaServico.Enabled = true;
             txtPesquisaListView.Enabled = true;
         }
-        private void HabilitarCampos(string buttonPressed)
+        private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-            txtDescricao.Enabled = true;
             listViewCategoriaServico.Enabled = false;
             txtPesquisaListView.Enabled = false;
+
+            List<Control> controlesHabilitar = new List<Control>
+            {
+                txtDescricao
+            };
+            EventosUtils.HabilitarControles(controlesHabilitar, this);
             switch (buttonPressed)
             {
                 case "Novo":
+
                     txtDescricao.Focus();
-                    break;
-                case "Salvar":
-                    // Adicionar ações específicas para "Salvar" se necessário
+
                     break;
                 case "Alterar":
                     txtDescricao.Focus();
                     break;
-                case "Excluir":
-                    // Adicionar ações específicas para "Excluir" se necessário
-                    break;
-                default:
-                    break;
             }
         }
-        private void DesabilitarBotoesAcoes()
-        {
-            btnSalvar.Enabled = false;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-            btnNovo.Focus();
-        }
-        private void HabilitarBotaoSalvar()
-        {
-            btnSalvar.Enabled = true;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = false;
-            btnNovo.Enabled = false;
-        }
-        private void HabilitarBotoesAlterarExcluir()
-        {
-            btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-        }
-        private void LimparCampos()
+        public override void LimparCampos()
         {
             txtIDCategoriaServico.Clear();
             txtDescricao.Clear();

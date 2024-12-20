@@ -5,15 +5,15 @@ namespace ProjetoTeste.Forms
 {
     public interface BaseFormFuncoes
     {
+        DateTime dataEmissaoControl { get; set; }
         bool escPressed { get; set; }
+        bool CampoObrigatorio { get; set; }
         bool bNovo { get; set; }
         string TagFormato { get; set; }
         string TagAction { get; set; }
         Control ControleAnterior { get; set; }
         void CarregarRegistros();
         void LimparCampos();
-        void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox);
-        void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox);
-
+        void ExecutaFuncaoEvento(Control control);
     }
 }

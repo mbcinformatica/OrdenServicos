@@ -45,25 +45,27 @@ namespace ProjetoTeste
                 txtLogin,
                 txtSenha
             });
+
             controlesKeyDown.AddRange(new Control[] {
                 txtLogin,
                 txtSenha
             });
+
             controlesBotoes.AddRange(new Control[] {
                 btnLogin,
                 btnSair
             });
 
-             this.Tag = "frmLogin";
+            this.Tag = "frmLogin";
 
             TabControl tabControl = null;
             TabPage tabPage = null;
 
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
         }
-        public override void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox)
+        public override void ExecutaFuncaoEvento(Control control)
         {
-            if (textBox == txtLogin)
+            if (control == txtLogin)
             {
                 if (ValidaUsuario(txtLogin.Text) && !string.IsNullOrWhiteSpace(txtLogin.Text))
                 {
@@ -71,7 +73,7 @@ namespace ProjetoTeste
                     LimparCampos();
                     return;
                 }
-                else
+                else if (!string.IsNullOrEmpty(txtLogin.Text))
                 {
                     imgCadeadoAberto.Visible = true;
                     imgCadeadoFechado.Visible = false;
@@ -83,8 +85,8 @@ namespace ProjetoTeste
         {
             camposObrigatorios = new (Control, string)[]
             {
-  //              (txtLogin, "Login"),
-  //              (txtSenha, "Senha"),
+                (txtLogin, "Login"),
+                (txtSenha, "Senha"),
             };
 
             AdicionarValidacao(
@@ -122,7 +124,6 @@ namespace ProjetoTeste
             {
                 MessageBox.Show("Senha Inválida!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 LimparCampos();
-
             }
         }
         private bool ValidarCredenciais()

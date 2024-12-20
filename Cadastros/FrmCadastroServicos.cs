@@ -538,6 +538,11 @@ namespace ProjetoTeste
         {
             this.Close();
         }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            CarregarRegistros();
+            LimparCampos();
+        }
         private void DesabilitarCampos()
         {
             txtIDCodigoBase.Enabled = false;

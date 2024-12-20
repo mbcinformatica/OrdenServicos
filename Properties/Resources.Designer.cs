@@ -83,6 +83,16 @@ namespace ProjetoTeste.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cancelar24X24 {
+            get {
+                object obj = ResourceManager.GetObject("Cancelar24X24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Editar24x24 {
             get {
                 object obj = ResourceManager.GetObject("Editar24x24", resourceCulture);

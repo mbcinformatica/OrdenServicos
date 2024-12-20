@@ -19,14 +19,18 @@ namespace ProjetoTeste
     {
         private int sortColumn = 1; // Coluna "Nome" por padrão
         private bool sortAscending = true;
-        private bool bNovo;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private (Control, string)[] camposObrigatorios;
-        private bool escPressed = false;
         private VideoCaptureDevice videoSource;
         private FilterInfoCollection videoDevices;
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
 
         public frmUsuarios()
         {
@@ -155,11 +159,11 @@ namespace ProjetoTeste
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap;
 
-                if (e.Header.Text == "  ID" 
-                    || e.Header.Text == "  UF" 
-                    || e.Header.Text == "  CEP" 
-                    || e.Header.Text == "  NUMERO" 
-                    || e.Header.Text == "  CELULAR" 
+                if (e.Header.Text == "  ID"
+                    || e.Header.Text == "  UF"
+                    || e.Header.Text == "  CEP"
+                    || e.Header.Text == "  NUMERO"
+                    || e.Header.Text == "  CELULAR"
                     || e.Header.Text == "  FIXO")
                 {
                     sf.Alignment = StringAlignment.Center;
@@ -217,153 +221,149 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            txtNome.KeyDown += Evento1_KeyDown;
-            txtLogin.KeyDown += Evento1_KeyDown;
-            txtSenha.KeyDown += Evento1_KeyDown;
-            txtConfirmaSenha.KeyDown += Evento1_KeyDown;
-            txtEndereco.KeyDown += Evento1_KeyDown;
-            txtNumero.KeyDown += Evento1_KeyDown;
-            txtBairro.KeyDown += Evento1_KeyDown;
-            txtMunicipio.KeyDown += Evento1_KeyDown;
-            txtUF.KeyDown += Evento1_KeyDown;
-            txtCep.KeyDown += Evento1_KeyDown;
-            txtFone_1.KeyDown += Evento1_KeyDown;
-            txtFone_2.KeyDown += Evento1_KeyDown;
-            txtEmail.KeyDown += Evento1_KeyDown;
-            txtPesquisaListView.KeyDown += Evento1_KeyDown;
-            listViewUsuario.KeyDown += Evento1_KeyDown;
+            // Adicionar controles às listas específicas com base no tipo de evento
+            controlesKeyPress.AddRange(new Control[] {
+                txtCep,
+                txtFone_1,
+                txtFone_2
+            });
+            controlesEnter.AddRange(new Control[] {
+                txtNome,
+                txtLogin,
+                txtSenha,
+                txtConfirmaSenha,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail
+            });
+            controlesMouseDown.AddRange(new Control[] { });
+            controlesLeave.AddRange(new Control[] {
+                txtNome,
+                txtLogin,
+                txtSenha,
+                txtConfirmaSenha,
+                txtNumero,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail
+            });
+            controlesKeyDown.AddRange(new Control[] {
+                txtNome,
+                txtLogin,
+                txtSenha,
+                txtConfirmaSenha,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail,
+                txtPesquisaListView,
+                listViewUsuario
+            });
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnAlterar,
+                btnExcluir,
+                btnFechar,
+                btnCancelar,
+                btnNovo,
+                btnPesquisaCep,
+                btnInserirImagem,
+                btnExcluirImagem
+            });
 
-            txtCep.KeyPress += Evento1_KeyPress;
-            txtFone_1.KeyPress += Evento1_KeyPress;
-            txtFone_2.KeyPress += Evento1_KeyPress;
+            this.Tag = "frmCadastroUsuarios";
 
-            txtCep.Leave += Evento1_Leave;
-            txtFone_1.Leave += Evento1_Leave;
-            txtFone_2.Leave += Evento1_Leave;
-            txtConfirmaSenha.Leave += Evento1_Leave;
-            txtEmail.Leave += Evento1_Leave;
+            txtCep.Tag = new BaseForm { TagFormato = "FormataCep" };
+            txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone" };
+            txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone" };
+            txtEmail.Tag = new BaseForm { TagAction = "TabPage" };
 
-            // Adiciona eventos de mouse aos botões
-            btnSalvar.MouseEnter += Button_MouseEnter;
-            btnSalvar.MouseLeave += Button_MouseLeave;
-            btnAlterar.MouseEnter += Button_MouseEnter;
-            btnAlterar.MouseLeave += Button_MouseLeave;
-            btnExcluir.MouseEnter += Button_MouseEnter;
-            btnExcluir.MouseLeave += Button_MouseLeave;
-            btnInserirImagem.MouseEnter += Button_MouseEnter;
-            btnInserirImagem.MouseLeave += Button_MouseLeave;
-            btnExcluirImagem.MouseEnter += Button_MouseEnter;
-            btnExcluirImagem.MouseLeave += Button_MouseLeave;
-            btnFechar.MouseEnter += Button_MouseEnter;
-            btnFechar.MouseLeave += Button_MouseLeave;
-            btnNovo.MouseEnter += Button_MouseEnter;
-            btnNovo.MouseLeave += Button_MouseLeave;
-            btnPesquisaCep.MouseEnter += Button_MouseEnter;
-            btnPesquisaCep.MouseLeave += Button_MouseLeave;
+            // Localizar o TabControl e a TabPage
+            var tabControl = Controls.Find("tabControlUsuarios", true).FirstOrDefault() as TabControl;
+            var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
+
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewUsuario.Click += ListViewUsuarios_Click;
-        }
-        private void Button_MouseEnter(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
+            txtPesquisaListView.Focus();
+            AdicionarToolTipsAosControles();
 
-            if (button != null)
-            {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
         }
-        private void Button_MouseLeave(object sender, EventArgs e)
+        private void AdicionarToolTipsAosControles()
         {
-            Button button = sender as Button;
-
-            if (button != null)
+            List<ControlToolTipPair> controlToolTipPairs = new List<ControlToolTipPair>
             {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
+                new ControlToolTipPair { Control = txtNome, ToolTipText = "Informe o Nome do Usuário" },
+                new ControlToolTipPair { Control = txtLogin, ToolTipText = "Informe um Login para o Usuário" },
+                new ControlToolTipPair { Control = txtSenha, ToolTipText = "Cadastre uma Senha pra o Usuário" },
+                new ControlToolTipPair { Control = txtConfirmaSenha, ToolTipText = "Confirme a Senha" },
+                new ControlToolTipPair { Control = txtEndereco, ToolTipText = "Informe o Endereço do Usuário" },
+                new ControlToolTipPair { Control = txtNumero, ToolTipText = "Informe o Numero do Endereço" },
+                new ControlToolTipPair { Control = txtBairro, ToolTipText = "Informe o Bairro" },
+                new ControlToolTipPair { Control = txtMunicipio, ToolTipText = "Informe o Municipio" },
+                new ControlToolTipPair { Control = txtUF, ToolTipText = "Informe o Estado" },
+                new ControlToolTipPair { Control = txtCep, ToolTipText = "Informe o CEP" },
+                new ControlToolTipPair { Control = txtFone_1, ToolTipText = "Informe o Celular de Contato " },
+                new ControlToolTipPair { Control = txtFone_2, ToolTipText = "Informe o Fixo de Contato" },
+                new ControlToolTipPair { Control = txtEmail, ToolTipText = "Informe um E-Mail de Contato" },
+                new ControlToolTipPair { Control = txtPesquisaListView, ToolTipText = "Inserir Informações para Pesquisa" } 
+            };
+            EventosUtils.AdicionarToolTips(this, controlToolTipPairs, tlpDicas);
         }
-        private void Evento1_KeyPress(object sender, KeyPressEventArgs e)
+        public override void ExecutaFuncaoEvento(Control control)
         {
-            // Permitir apenas dígitos e controle (como backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            if (control == txtNome && bNovo)
             {
-                e.Handled = true;
-            }
-        }
-        private void Evento1_Leave(object sender, EventArgs e)
-        {
-            if (escPressed)
-            {
-                return; // Sai do método sem fazer verificações
-            }
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                if (sender == txtEmail)
+                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                string nome = txtNome.Text;
+                // Verifica se o Usuário já está cadastrado
+                if (dbSetupBLL.VerificarSeCadastrado(nome, "DBUsuarios", "Nome"))
                 {
-                    tabControlUsuarios.SelectedTab = tabInformacoesAdicionais;
-                }
-                else if (sender == txtFone_1)
-                {
-                    txtFone_1.Text = StringUtils.FormatPhoneNumber(txtFone_1.Text);
-                }
-                else if (sender == txtFone_2)
-                {
-                    txtFone_2.Text = StringUtils.FormatPhoneNumber(txtFone_2.Text);
-                }
-                else if (sender == txtCep)
-                {
-                    txtCep.Text = StringUtils.SemFormatacao(txtCep.Text);
-                    txtCep.Text = StringUtils.FormatCEP(txtCep.Text);
-                }
-                else if (sender == txtSenha)
-                {
-                    if (txtSenha.Text != txtConfirmaSenha.Text)
-                    {
-                        MessageBox.Show("As senhas não Coincidem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        txtConfirmaSenha.Focus();
-                    }
+                    MessageBox.Show("Usuário já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtNome.Clear();
+                    txtNome.Focus();
+                    return;
                 }
             }
-        }
-        private void Evento1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
+            else if (control == txtLogin && bNovo)
             {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-
-                if (sender == txtLogin && bNovo)
+                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                string login = txtLogin.Text;
+                // Verifica se o Login já está cadastrado
+                if (dbSetupBLL.VerificarSeCadastrado(login, "DBUsuarios", "Login"))
                 {
-                    DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                    string login = txtLogin.Text;
-                    // Verifica se o Login já está cadastrado
-                    if (dbSetupBLL.VerificarSeCadastrado(login, "DBUsuarios", "Login"))
-                    {
-                        MessageBox.Show("Login já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtLogin.Clear();
-                        txtLogin.Focus();
-                        return;
-                    }
+                    MessageBox.Show("Login já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtLogin.Clear();
+                    txtLogin.Focus();
+                    return;
                 }
-
-                if (sender == txtNumero)
-                {
-                    if (string.IsNullOrWhiteSpace(txtNumero.Text))
-                    {
-                        txtNumero.Text = "S/N";
-                    }
-                }
-
-                this.SelectNextControl((Control)sender, true, true, true, true);
             }
-            else if (e.KeyCode == Keys.Escape)
+            else if (control == txtNumero)
             {
-                escPressed = true;
-                this.AutoValidate = AutoValidate.Disable;
-                CarregarRegistros();
-                LimparCampos();
-                this.AutoValidate = AutoValidate.EnablePreventFocusChange;
+                if (string.IsNullOrEmpty(txtNumero.Text))
+                {
+                    txtNumero.Text = "S/N";
+                }
+            }
+            else if (control == txtConfirmaSenha)
+            {
+                if (txtSenha.Text != txtConfirmaSenha.Text)
+                {
+                    MessageBox.Show("As senhas não Coincidem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtConfirmaSenha.Focus();
+                }
             }
         }
         private void ConfigurarTextBox()
@@ -372,8 +372,7 @@ namespace ProjetoTeste
             {
             (txtNome, "Nome"),
             (txtLogin, "Login"),
-            (txtCep, "Cep"),
-            (txtFone_1, "Celular"),
+            (txtSenha, "Senha"),
             };
 
             AdicionarValidacao(
@@ -381,10 +380,10 @@ namespace ProjetoTeste
                 camposObrigatorios
             );
         }
-        private void CarregarRegistros()
+        public override void CarregarRegistros()
         {
-            DesabilitarCampos();
-            DesabilitarBotoesAcoes();
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewUsuario.Items.Clear();
             listViewUsuario.Columns.Clear();
             InitializeListView(); // Adicionar colunas novamente, caso necessário
@@ -455,7 +454,6 @@ namespace ProjetoTeste
                 txtFone_2.Text = item.SubItems[10].Text;
                 txtEmail.Text = item.SubItems[11].Text;
                 txtDataCadastro.Text = item.SubItems[12].Text;
-
                 // Exibir a imagem no PictureBox
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
                 UsuarioInfo usuario = usuarioBLL.GetUsuario(Convert.ToInt32(item.SubItems[0].Text));
@@ -470,18 +468,17 @@ namespace ProjetoTeste
                 {
                     imgImagemUsuario.Image = null;
                 }
-                HabilitarBotoesAlterarExcluir();
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
             }
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             txtIDUsuario.Enabled = false;
             txtIDUsuario.Text = "0";
             bNovo = true;
-            HabilitarCampos("Novo");
-
+            HabilitarCamposDoFormulario("Novo");
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -561,9 +558,8 @@ namespace ProjetoTeste
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            HabilitarBotaoSalvar();
-            HabilitarCampos("Alterar");
-
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
+            HabilitarCamposDoFormulario("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -581,7 +577,7 @@ namespace ProjetoTeste
                 }
             }
             CarregarRegistros();
-            DesabilitarBotoesAcoes();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
@@ -596,96 +592,78 @@ namespace ProjetoTeste
                 this.Close();
             }
         }
-        private void DesabilitarCampos()
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            txtNome.Enabled = false;
-            txtLogin.Enabled = false;
-            txtSenha.Enabled = false;
-            txtConfirmaSenha.Enabled = false;
-            txtEndereco.Enabled = false;
-            txtNumero.Enabled = false;
-            txtBairro.Enabled = false;
-            txtMunicipio.Enabled = false;
-            txtUF.Enabled = false;
-            txtCep.Enabled = false;
-            txtFone_1.Enabled = false;
-            txtFone_2.Enabled = false;
-            txtEmail.Enabled = false;
-            btnPesquisaCep.Enabled = false;
+            CarregarRegistros();
+            LimparCampos();
+        }
+        private void DesabilitarCamposDoFormulario()
+        {
+            List<Control> controlesDesabilitar = new List<Control>
+            {
+                txtNome,
+                txtLogin,
+                txtSenha,
+                txtConfirmaSenha,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail,
+                btnPesquisaCep,
+                btnInserirImagem,
+                btnExcluirImagem
+            };
+
+            EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewUsuario.Enabled = true;
             txtPesquisaListView.Enabled = true;
         }
-        private void HabilitarCampos(string buttonPressed)
+        private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-
-            txtNome.Enabled = true;
-            txtLogin.Enabled = true;
-            txtEndereco.Enabled = true;
-            txtNumero.Enabled = true;
-            txtBairro.Enabled = true;
-            txtMunicipio.Enabled = true;
-            txtUF.Enabled = true;
-            txtCep.Enabled = true;
-            txtFone_1.Enabled = true;
-            txtFone_2.Enabled = true;
-            txtEmail.Enabled = true;
-            btnPesquisaCep.Enabled = true;
             listViewUsuario.Enabled = false;
             txtPesquisaListView.Enabled = false;
+            List<Control> controlesHabilitar = new List<Control>
+            {
+                txtNome,
+                txtLogin,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail,
+                btnPesquisaCep,
+                btnInserirImagem,
+                btnExcluirImagem
+            };
+
+            EventosUtils.HabilitarControles(controlesHabilitar, this);
             switch (buttonPressed)
             {
                 case "Novo":
-                    txtSenha.Enabled = true;
-                    txtConfirmaSenha.Enabled = true;
+                    List<Control> controlesHabilitarNovo = new List<Control>
+                     {
+                        txtSenha,
+                        txtConfirmaSenha
+                     };
+                    EventosUtils.HabilitarControles(controlesHabilitarNovo, this);
                     txtDataCadastro.Text = DateTime.Now.ToString();
-                    txtNome.Focus(); // Focar no rdbCpf para "Novo"
-                    break;
-                case "Salvar":
-                    // Adicionar ações específicas para "Salvar" se necessário
+                    txtNome.Focus(); // Focar no rdbCpf para 
                     break;
                 case "Alterar":
-                    // Adicionar ações específicas para "Alterar" se necessário
-                    txtNome.Focus(); // Focar no rdbCpf para "Novo"
-                    break;
-                case "Excluir":
-                    // Adicionar ações específicas para "Excluir" se necessário
-                    break;
-                default:
+                    txtNome.Focus();
                     break;
             }
-
         }
-        private void DesabilitarBotoesAcoes()
-        {
-            btnSalvar.Enabled = false;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnInserirImagem.Enabled = false;
-            btnExcluirImagem.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-            btnNovo.Focus();
-        }
-        private void HabilitarBotaoSalvar()
-        {
-            btnSalvar.Enabled = true;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = false;
-            btnNovo.Enabled = false;
-            btnInserirImagem.Enabled = true;
-            btnExcluirImagem.Enabled = true;
-        }
-        private void HabilitarBotoesAlterarExcluir()
-        {
-            btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-
-        }
-        private void LimparCampos()
+        public override void LimparCampos()
         {
             txtIDUsuario.Clear();
             txtNome.Clear();
@@ -748,22 +726,29 @@ namespace ProjetoTeste
         }
         private async void btnPesquisaCep_Click(object sender, EventArgs e)
         {
-            string cep = StringUtils.SemFormatacao(txtCep.Text);  // Supondo que o CEP é lido de um TextBox chamado txtCep
-            var resultado = await StringUtils.BuscarCEP(cep);
+            if (!string.IsNullOrEmpty(txtCep.Text))
+            {
+                string cep = StringUtils.SemFormatacao(txtCep.Text);  // Supondo que o CEP é lido de um TextBox chamado txtCep
+                var resultado = await StringUtils.BuscarCEP(cep);
 
-            if (!string.IsNullOrEmpty(resultado))
-            {
-                dynamic dados = JObject.Parse(resultado);
-                txtEndereco.Text = dados.logradouro ?? "";
-                txtNumero.Text = ""; // ViaCEP não fornece número
-                txtBairro.Text = dados.bairro ?? "";
-                txtMunicipio.Text = dados.localidade ?? "";
-                txtUF.Text = dados.uf ?? "";
+                if (!string.IsNullOrEmpty(resultado))
+                {
+                    dynamic dados = JObject.Parse(resultado);
+                    txtEndereco.Text = dados.logradouro ?? "";
+                    if (string.IsNullOrEmpty(txtNumero.Text))
+                    {
+                        txtNumero.Clear();
+                    }
+                    txtBairro.Text = dados.bairro ?? "";
+                    txtMunicipio.Text = dados.localidade ?? "";
+                    txtUF.Text = dados.uf ?? "";
+                }
+                else
+                {
+                    MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
-            {
-                MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            txtEndereco.Focus();
         }
         private void btnInserirImagem_Click(object sender, EventArgs e)
         {
@@ -819,12 +804,12 @@ namespace ProjetoTeste
                 };
 
                 // Adicionando eventos de mouse aos botões
-                btnLocal.MouseEnter += Button_MouseEnter;
-                btnLocal.MouseLeave += Button_MouseLeave;
-                btnWebcam.MouseEnter += Button_MouseEnter;
-                btnWebcam.MouseLeave += Button_MouseLeave;
-                btnFechar.MouseEnter += Button_MouseEnter;
-                btnFechar.MouseLeave += Button_MouseLeave;
+                btnLocal.MouseEnter += Button_MouseEnterImg;
+                btnLocal.MouseLeave += Button_MouseLeaveImg;
+                btnWebcam.MouseEnter += Button_MouseEnterImg;
+                btnWebcam.MouseLeave += Button_MouseLeaveImg;
+                btnFechar.MouseEnter += Button_MouseEnterImg;
+                btnFechar.MouseLeave += Button_MouseLeaveImg;
 
                 // Calculando a posição inicial para centralizar os botões
                 int totalButtonWidth = 3 * 98 + 20; // 3 botões de 98px cada e 10px de espaço entre eles
@@ -848,6 +833,24 @@ namespace ProjetoTeste
 
                 form.StartPosition = FormStartPosition.CenterParent;
                 form.ShowDialog(this);
+            }
+        }
+        private void Button_MouseEnterImg(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
+                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
+            }
+        }
+        private void Button_MouseLeaveImg(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor = buttonBackgroundColor; // Cor de fundo original
+                button.ForeColor = buttonFontColor; // Cor da fonte original
             }
         }
         private void BtnLocal_Click(object sender, EventArgs e)

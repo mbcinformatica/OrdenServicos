@@ -47,17 +47,21 @@ namespace ProjetoTeste.Forms
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
 
+        // Faz parte dos Formularios, EventosUtils, BaseFormFuncoes
+        // Inicio
 
+        public DateTime dataEmissaoControl { get; set; }
         public bool escPressed { get; set; }
         public bool bNovo { get; set; }
+        public bool CampoObrigatorio { get; set; }  
         public Control ControleAnterior { get; set; }
         public string TagFormato { get; set; }
         public string TagAction { get; set; }
         public virtual void CarregarRegistros() { }
         public virtual void LimparCampos() { }
-        public virtual void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox) { }
-        public virtual void ExecutaFuncaoEventoKeyDownTextBox(TextBox textBox) { }
+        public virtual void ExecutaFuncaoEvento(Control control) { }
 
+        //Final
 
         protected void LoadConfig() {CarregaDadosControles("config.xml");}
         protected void ApplyConfigToControls(Control.ControlCollection controls, XDocument config)
@@ -232,7 +236,6 @@ namespace ProjetoTeste.Forms
         private class GradientMenuRenderer : ToolStripProfessionalRenderer
         {
             private BaseForm baseForm;
-
             public GradientMenuRenderer(BaseForm form)
             {
                 baseForm = form;
@@ -240,74 +243,77 @@ namespace ProjetoTeste.Forms
         }
         protected void ValidarControle(object sender, System.ComponentModel.CancelEventArgs e, string campo, ErrorProvider errorProvider)
         {
-            if (sender is TextBox textBox)
+            if (!escPressed)
             {
-                if (string.IsNullOrWhiteSpace(textBox.Text))
+                if (sender is TextBox textBox)
                 {
-                    e.Cancel = true;
-                    errorProvider.SetError(textBox, $"{campo} é obrigatório.");
+                    if (string.IsNullOrWhiteSpace(textBox.Text))
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(textBox, $"{campo} é obrigatório.");
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+                        errorProvider.SetError(textBox, string.Empty);
+                    }
                 }
-                else
+                else if (sender is MaskedTextBox maskedTextBox)
                 {
-                    e.Cancel = false;
-                    errorProvider.SetError(textBox, string.Empty);
+                    if (string.IsNullOrWhiteSpace(maskedTextBox.Text.Replace(maskedTextBox.PromptChar.ToString(), "").Trim()))
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(maskedTextBox, $"{campo} é obrigatório.");
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+                        errorProvider.SetError(maskedTextBox, string.Empty);
+                    }
                 }
-            }
-            else if (sender is MaskedTextBox maskedTextBox)
-            {
-                if (string.IsNullOrWhiteSpace(maskedTextBox.Text.Replace(maskedTextBox.PromptChar.ToString(), "").Trim()))
+                else if (sender is RadioButton radioButton)
                 {
-                    e.Cancel = true;
-                    errorProvider.SetError(maskedTextBox, $"{campo} é obrigatório.");
+                    if (!radioButton.Checked)
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(radioButton, $"{campo} é obrigatório.");
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+                        errorProvider.SetError(radioButton, string.Empty);
+                    }
                 }
-                else
+                else if (sender is DateTimePicker dateTimePicker)
                 {
-                    e.Cancel = false;
-                    errorProvider.SetError(maskedTextBox, string.Empty);
+                    if (string.IsNullOrWhiteSpace(dateTimePicker.Text))
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(dateTimePicker, $"{campo} é obrigatório.");
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+                        errorProvider.SetError(dateTimePicker, string.Empty);
+                    }
                 }
-            }
-            else if (sender is RadioButton radioButton)
-            {
-                if (!radioButton.Checked)
+                else if (sender is ComboBox comboBox)
                 {
-                    e.Cancel = true;
-                    errorProvider.SetError(radioButton, $"{campo} é obrigatório.");
+                    if (string.IsNullOrWhiteSpace(comboBox.Text))
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(comboBox, $"{campo} é obrigatório.");
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+                        errorProvider.SetError(comboBox, string.Empty);
+                    }
                 }
-                else
+                if (e.Cancel)
                 {
-                    e.Cancel = false;
-                    errorProvider.SetError(radioButton, string.Empty);
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else if (sender is DateTimePicker dateTimePicker)
-            {
-                if (string.IsNullOrWhiteSpace(dateTimePicker.Text))
-                {
-                    e.Cancel = true;
-                    errorProvider.SetError(dateTimePicker, $"{campo} é obrigatório.");
-                }
-                else
-                {
-                    e.Cancel = false;
-                    errorProvider.SetError(dateTimePicker, string.Empty);
-                }
-            }
-            else if (sender is ComboBox comboBox)
-            {
-                if (string.IsNullOrWhiteSpace(comboBox.Text))
-                {
-                    e.Cancel = true;
-                    errorProvider.SetError(comboBox, $"{campo} é obrigatório.");
-                }
-                else
-                {
-                    e.Cancel = false;
-                    errorProvider.SetError(comboBox, string.Empty);
-                }
-            }
-            if (e.Cancel)
-            {
-                MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         protected void AdicionarValidacao(ErrorProvider errorProvider, params (Control, string)[] controlCampos)

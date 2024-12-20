@@ -214,6 +214,7 @@ namespace ProjetoTeste
                 txtValorTotalServico,
                 txtValorTotalMaterial
             });
+
             controlesLeave.AddRange(new Control[] {
                 txtValorTotalServico,
                 txtValorTotalMaterial,
@@ -223,6 +224,7 @@ namespace ProjetoTeste
                 cmbMarca,
                 cmbProduto
             });
+
             controlesEnter.AddRange(new Control[] {
                 txtDataConclusao,
                 txtValorTotalServico,
@@ -235,9 +237,11 @@ namespace ProjetoTeste
                 txtPesquisaListView,
                 txtIDOrdenServico
             });
+
             controlesMouseDown.AddRange(new Control[] {
                 txtIDOrdenServico
             });
+
             controlesKeyDown.AddRange(new Control[] {
                 txtDataEmissao,
                 txtDataConclusao,
@@ -251,11 +255,13 @@ namespace ProjetoTeste
                 txtPesquisaListView,
                 listViewLancamentoServicos
             });
+
             controlesBotoes.AddRange(new Control[] {
                 btnSalvar,
                 btnAlterar,
                 btnExcluir,
                 btnFechar,
+                btnCancelar,
                 btnNovo
             });
 
@@ -266,19 +272,17 @@ namespace ProjetoTeste
             txtValorTotalMaterial.Tag = new BaseForm { TagFormato = "FormatoMoeda", TagAction = "TabPage" }; // Formato de moeda e ação de TabPage
             txtValorTotalServico.Tag = new BaseForm { TagFormato = "FormatoMoeda" }; // Formato de moeda
 
-            txtNumeroSerie.Tag = new BaseForm { TagAction = "letters" }; // Permitir somente letras
+            txtNumeroSerie.Tag = new BaseForm { TagAction = "SomenteLetras" }; // Permitir somente letras
             txtDataEmissao.Tag = new BaseForm { TagAction = "data-inicial" }; // Tag específica para txtDataEmissao
             txtDataConclusao.Tag = new BaseForm { TagAction = "data-final" }; // Tag específica para txtDataConclusao
-
-
 
             // Localizar o TabControl e a TabPage
             var tabControl = Controls.Find("tabControlOrdenServico", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabDadosCliente"];
 
             // Inicializar eventos para os controles
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
-
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter,
+                                            controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             // Associar eventos SelectedIndexChanged e Click
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
@@ -288,7 +292,6 @@ namespace ProjetoTeste
             // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
             AdicionarToolTipsAosControles();
-
         }
         private void AdicionarToolTipsAosControles()
         {
@@ -306,7 +309,6 @@ namespace ProjetoTeste
             new ControlToolTipPair { Control = txtPesquisaListView, ToolTipText = "Inserir Informações para Pesquisa" }
 
         };
-
             EventosUtils.AdicionarToolTips(this, controlToolTipPairs, tlpDicas);
         }
         private void ConfigurarTabIndexControles()
@@ -502,9 +504,9 @@ namespace ProjetoTeste
                 }
             }
         }
-        public override void ExecutaFuncaoEventoLeaveComboBox(ComboBox comboBox)
+        public override void ExecutaFuncaoEvento(Control control)
         {
-            if (comboBox == cmbCliente)
+            if (control == cmbCliente)
             {
                 string clienteDigitado = cmbCliente.Text.ToUpper(); // Converte para maiúsculas
                 cmbCliente.Text = clienteDigitado; // Atualiza o texto no ComboBox
@@ -542,7 +544,7 @@ namespace ProjetoTeste
                     cmbCliente.Focus();
                 }
             }
-            else if (comboBox == cmbMarca)
+            else if (control == cmbMarca)
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
@@ -580,7 +582,7 @@ namespace ProjetoTeste
                     cmbMarca.Focus();
                 }
             }
-            else if (comboBox == cmbProduto)
+            else if (control == cmbProduto)
             {
                 string produtoDigitado = cmbProduto.Text.ToUpper(); // Converte para maiúsculas
                 cmbProduto.Text = produtoDigitado; // Atualiza o texto no ComboBox
@@ -753,6 +755,11 @@ namespace ProjetoTeste
         private void btnFechar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            CarregarRegistros();
+            LimparCampos();
         }
         private void DesabilitarCamposDoFormulario()
         {

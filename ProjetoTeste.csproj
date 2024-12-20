@@ -530,6 +530,7 @@
     <None Include="Resources\Salvar24x24.png" />
     <None Include="Resources\PapelParede.png" />
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
+    <None Include="Resources\Cancelar24X24.png" />
     <Content Include="XML\config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

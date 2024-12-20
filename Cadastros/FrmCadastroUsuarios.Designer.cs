@@ -32,6 +32,7 @@
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.listViewUsuario = new System.Windows.Forms.ListView();
             this.pnlBotoes = new System.Windows.Forms.Panel();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnAlterar = new System.Windows.Forms.Button();
@@ -128,6 +129,7 @@
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
@@ -139,6 +141,21 @@
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(1108, 49);
             this.pnlBotoes.TabIndex = 96;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(968, 2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
+            this.btnCancelar.TabIndex = 64;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnFechar
             // 
@@ -327,7 +344,6 @@
             // 
             this.txtFone_2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_2.Location = new System.Drawing.Point(419, 120);
-            this.txtFone_2.Mask = "(99) 9999-9999";
             this.txtFone_2.Name = "txtFone_2";
             this.txtFone_2.Size = new System.Drawing.Size(93, 22);
             this.txtFone_2.TabIndex = 150;
@@ -348,7 +364,6 @@
             // 
             this.txtFone_1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_1.Location = new System.Drawing.Point(304, 120);
-            this.txtFone_1.Mask = "(99) 99999-9999";
             this.txtFone_1.Name = "txtFone_1";
             this.txtFone_1.Size = new System.Drawing.Size(93, 22);
             this.txtFone_1.TabIndex = 149;
@@ -481,7 +496,6 @@
             this.txtCep.Culture = new System.Globalization.CultureInfo("");
             this.txtCep.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCep.Location = new System.Drawing.Point(8, 72);
-            this.txtCep.Mask = "99999-999";
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtCep.Size = new System.Drawing.Size(73, 22);
@@ -724,5 +738,6 @@
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnInserirImagem;
         private System.Windows.Forms.Button btnExcluirImagem;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
