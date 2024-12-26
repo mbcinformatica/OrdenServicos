@@ -11,6 +11,7 @@ namespace ProjetoTeste.Forms
         bool bNovo { get; set; }
         string TagFormato { get; set; }
         string TagAction { get; set; }
+        int TagMaxDigito { get; set; }
         Control ControleAnterior { get; set; }
         void CarregarRegistros();
         void LimparCampos();

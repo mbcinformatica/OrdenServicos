@@ -68,7 +68,7 @@ namespace ProjetoTeste.Utils
                 }
                 if (controle is Panel || controle is TabControl || controle is TabPage)
                 {
-                    InicializarEventos(controle.Controls, controlesKeyPress, 
+                    InicializarEventos(controle.Controls, controlesKeyPress,
                                        controlesLeave, controlesEnter, controlesMouseDown,
                                        controlesKeyDown, controlesBotoes, form, tabControl, tabPage);
                 }
@@ -99,7 +99,7 @@ namespace ProjetoTeste.Utils
         {
             if (e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
+                e.SuppressKeyPress = true;
                 ((Form)form).SelectNextControl((Control)sender, true, true, true, true);
             }
             else if (e.KeyCode == Keys.Escape)
@@ -112,7 +112,7 @@ namespace ProjetoTeste.Utils
             }
             else if (e.Shift && e.KeyCode == Keys.Tab)
             {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
+                e.SuppressKeyPress = true;
                 ((Form)form).SelectNextControl((Control)sender, false, true, true, true);
             }
         }
@@ -121,11 +121,14 @@ namespace ProjetoTeste.Utils
             if (sender is MaskedTextBox maskedTextBox)
             {
                 var customTag = controleEspecifico.Tag as BaseForm;
+                if (customTag != null && maskedTextBox.Text.Length >= customTag.TagMaxDigito && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
                 if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
                 {
                     e.Handled = true;
                 }
-                // Permitir somente uma vírgula decimal
                 if (e.KeyChar == ',' && maskedTextBox.Text.IndexOf(',') > -1)
                 {
                     e.Handled = true;
@@ -175,6 +178,15 @@ namespace ProjetoTeste.Utils
             else if (sender is ComboBox comboBox)
             {
                 form.ControleAnterior = comboBox;
+                comboBox.SelectAll();
+            }
+            else if (sender is RadioButton radioButton)
+            {
+                var customTag = controleEspecifico.Tag as BaseForm;
+                if (customTag != null && customTag.TagAction == "Checked")
+                {
+                    form.ControleAnterior = radioButton;
+                }
             }
             else if (sender is DateTimePicker dateTimePicker)
             {
@@ -243,15 +255,18 @@ namespace ProjetoTeste.Utils
                         }
                         else if (customTag.TagFormato == "FormataCep")
                         {
-                            maskedTextBox.Text = StringUtils.SemFormatacao(maskedTextBox.Text);
-                            maskedTextBox.Text = StringUtils.FormatCEP(maskedTextBox.Text);
+                            form.ExecutaFuncaoEvento(maskedTextBox);
                         }
                         else if (customTag.TagFormato == "FormataFone")
                         {
                             maskedTextBox.Text = StringUtils.FormatPhoneNumber(maskedTextBox.Text);
                         }
+                        else if (customTag.TagFormato == "FormataCpfCnpj")
+                        {
+                            form.ExecutaFuncaoEvento(maskedTextBox);
+                        }
+                        
                     }
-                    form.ExecutaFuncaoEvento(maskedTextBox);
                 }
             }
             else if (sender is TextBox textBox)
@@ -272,13 +287,6 @@ namespace ProjetoTeste.Utils
                         }
                     }
                     form.ExecutaFuncaoEvento(textBox);
-                }
-            }
-            else if (sender is RadioButton radioButton)
-            {
-                form.ControleAnterior = radioButton;
-                if (radioButton == nomeControles)
-                {
                 }
             }
             else if (sender is ComboBox comboBox)
@@ -455,6 +463,5 @@ namespace ProjetoTeste.Utils
                 }
             }
         }
-
     }
 }

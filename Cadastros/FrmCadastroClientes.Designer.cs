@@ -479,7 +479,6 @@
             this.btnPesquisarCnpj.Size = new System.Drawing.Size(37, 24);
             this.btnPesquisarCnpj.TabIndex = 111;
             this.btnPesquisarCnpj.UseVisualStyleBackColor = false;
-            this.btnPesquisarCnpj.Click += new System.EventHandler(this.btnPesquisarCnpj_Click);
             // 
             // btnPesquisaCep
             // 

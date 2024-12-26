@@ -29,23 +29,19 @@ namespace ProjetoTeste
         private List<Control> controlesMouseDown = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
+        private EventArgs e;
 
         public frmClientes()
         {
-
             InitializeComponent();
-
-            // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
-            InitializeTabControl(tabControlClientes); // Chama o método para inicializar o TabControl
+            InitializeTabControl(tabControlClientes);
             erpProvider = new ErrorProvider();
-            // Configurar eventos dos TextBoxes para maiúsculas
             ConfigurarTextBox();
-            // Configurando os Key para os TextBox
             CarregaKey();
+            ConfigurarTabIndexControles();
             CarregarRegistros();
-
         }
         private void InitializeListView()
         {
@@ -72,7 +68,7 @@ namespace ProjetoTeste
             listViewClientes.Columns.Add("CELULAR", 100, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("FIXO", 100, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("  EMAIL", 300, HorizontalAlignment.Left);
-            listViewClientes.Columns.Add("DATA CADASTRO",-1, HorizontalAlignment.Right);
+            listViewClientes.Columns.Add("DATA CADASTRO", -1, HorizontalAlignment.Right);
 
             listViewClientes.ColumnClick += new ColumnClickEventHandler(ListViewClientes_ColumnClick);
 
@@ -224,21 +220,21 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            // Adicionar controles às listas específicas com base no tipo de evento
             controlesKeyPress.AddRange(new Control[] {
                 txtCpfCnpj,
                 txtCep,
                 txtFone_1,
                 txtFone_2
             });
+
             controlesLeave.AddRange(new Control[] {
                 txtCpfCnpj,
                 txtCep,
                 txtNumero,
                 txtFone_1,
-                txtFone_2,
-                txtEmail
+                txtFone_2
             });
+
             controlesEnter.AddRange(new Control[] {
                 txtCpfCnpj,
                 txtNomeRazaoSocial,
@@ -258,9 +254,8 @@ namespace ProjetoTeste
                 listViewClientes
             });
 
-            controlesMouseDown.AddRange(new Control[] {
+            controlesMouseDown.AddRange(new Control[] { });
 
-            });
             controlesKeyDown.AddRange(new Control[] {
                 txtCpfCnpj,
                 txtNomeRazaoSocial,
@@ -291,29 +286,24 @@ namespace ProjetoTeste
                 btnPesquisarCnpj
             });
 
-            // Definir a propriedade Tag para comportamentos específicos
             this.Tag = "frmClientes";
 
-            txtCep.Tag = new BaseForm { TagFormato = "FormataCep" };
-            txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone" };
-            txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone" };
-            txtCpfCnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj" };
+            txtCep.Tag = new BaseForm { TagFormato = "FormataCep", TagMaxDigito = 8 };
+            txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 11 };
+            txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 10 };
+            txtCpfCnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj", TagMaxDigito = 14 };
 
-            txtEmail.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" }; // Tag específica para txtDataConclusao
+            txtEmail.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" };
 
-
-            // Localizar o TabControl e a TabPage
             var tabControl = Controls.Find("tabControlClientes", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-            // Inicializar eventos para os controles
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave,
+                                            controlesEnter, controlesMouseDown, controlesKeyDown,
+                                            controlesBotoes, this, tabControl, tabPage);
 
             listViewClientes.Click += ListViewClientes_Click;
-
-            // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
-
         }
         private void ConfigurarTextBox()
         {
@@ -330,6 +320,24 @@ namespace ProjetoTeste
                 camposObrigatorios
             );
         }
+        private void ConfigurarTabIndexControles()
+        {
+            rdbCpf.TabIndex = 0;
+            rdbCnpj.TabIndex = 1;
+            txtCpfCnpj.TabIndex = 2;
+            txtNomeRazaoSocial.TabIndex = 4;
+            txtCep.TabIndex = 5;
+            txtEndereco.TabIndex = 6;
+            txtNumero.TabIndex = 7;
+            txtBairro.TabIndex = 8;
+            txtMunicipio.TabIndex = 9;
+            txtUF.TabIndex = 10;
+            txtContato.TabIndex = 11;
+            txtFone_1.TabIndex = 12;
+            txtFone_2.TabIndex = 13;
+            txtEmail.TabIndex = 14;
+            btnSalvar.TabIndex = 15;
+        }
         public override void CarregarRegistros()
         {
             DesabilitarCamposDoFormulario();
@@ -337,7 +345,6 @@ namespace ProjetoTeste
             listViewClientes.Items.Clear();
             listViewClientes.Columns.Clear();
             InitializeListView(); // Adicionar colunas novamente, caso necessário
-
             try
             {
                 ClienteBLL clienteBLL = new ClienteBLL();
@@ -368,22 +375,14 @@ namespace ProjetoTeste
                     item.SubItems.Add(cliente.DataCadastro.ToString("dd/MM/yyyy"));
                     listViewClientes.Items.Add(item);
                 }
-
-
-                // Manter uma cópia dos itens originais
                 listaOriginalItens = listViewClientes.Items.Cast<ListViewItem>().ToList();
-
-                // Atualizar o Label com o total de registros
                 lbTotalRegistros.Text = "Total de Registros..:  " + listViewClientes.Items.Count;
-
-                // Ordenar pela coluna "NOME/RAZÃO SOCIAL" (index 3) em ordem crescente
                 sortColumn = 3;
                 sortAscending = true;
                 listViewClientes.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewClientes.Sort();
-                ajustaLarguraCabecalho();
+                ajustaLarguraCabecalho(listViewClientes);
                 tabControlClientes.SelectedTab = tabDadosClientes;
-
             }
             catch (Exception ex)
             {
@@ -397,7 +396,6 @@ namespace ProjetoTeste
             {
                 ListViewItem item = listViewClientes.SelectedItems[0];
                 txtIDCliente.Text = item.SubItems[0].Text;
-                // Carregar os RadioButton com base no valor do campo TipoPessoa
                 rdbCpf.Checked = item.SubItems[1].Text == "FÍSICA";
                 rdbCnpj.Checked = item.SubItems[1].Text == "JURÍDICA";
                 txtCpfCnpj.Text = item.SubItems[2].Text;
@@ -548,15 +546,14 @@ namespace ProjetoTeste
         }
         public override void ExecutaFuncaoEvento(Control control)
         {
-            if (control == txtCpfCnpj)
+            if (control == txtCpfCnpj && !string.IsNullOrEmpty(txtCpfCnpj.Text))
             {
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
                 string cpfCnpj = txtCpfCnpj.Text;
-                // Verifica se o CPF/CNPJ já está cadastrado
                 if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
                 {
-                    MessageBox.Show("Cliente já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Cliente já Cadastrado. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtCpfCnpj.Clear();
                     txtCpfCnpj.Focus();
                     return;
@@ -565,21 +562,31 @@ namespace ProjetoTeste
                 {
                     if (!ValidaCpf(cpfCnpj))
                     {
-                        MessageBox.Show("CPF informado está incorreto. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("CPF Informado está Incorreto. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtCpfCnpj.Clear();
                         txtCpfCnpj.Focus();
                         return;
                     }
+                    else
+                    {
+                        PesquisarCpf(cpfcnpj);
+                    }
+                    control.Text = StringUtils.FormatCPF(cpfCnpj);
                 }
                 else if (rdbCnpj.Checked)
                 {
                     if (!ValidaCnpj(cpfCnpj))
                     {
-                        MessageBox.Show("CNPJ informado está incorreto. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("CNPJ Informado está Incorreto. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtCpfCnpj.Clear();
                         txtCpfCnpj.Focus();
                         return;
                     }
+                    else
+                    {
+                        PesquisarCnpj(cpfcnpj);
+                    }
+                    control.Text = StringUtils.FormatCNPJ(cpfCnpj);
                 }
             }
             else if (control == txtNumero)
@@ -588,6 +595,12 @@ namespace ProjetoTeste
                 {
                     txtNumero.Text = "S/N";
                 }
+            }
+            else if (control == txtCep && !string.IsNullOrEmpty(txtCep.Text))
+            {
+                btnPesquisaCep_Click(control, e);
+                control.Text = StringUtils.SemFormatacao(control.Text);
+                control.Text = StringUtils.FormatCEP(control.Text);
             }
         }
         private void DesabilitarCamposDoFormulario()
@@ -608,8 +621,8 @@ namespace ProjetoTeste
                 txtEmail,
                 rdbCpf,
                 rdbCnpj,
-                btnPesquisarCnpj,
-                btnPesquisaCep
+                btnPesquisaCep,
+                btnPesquisarCnpj
             };
             EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewClientes.Enabled = true;
@@ -617,10 +630,6 @@ namespace ProjetoTeste
         }
         private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-            listViewClientes.Enabled = false;
-            txtPesquisaListView.Enabled = false;
-            btnPesquisarCnpj.Enabled = false;
-
             List<Control> controlesHabilitar = new List<Control>
             {
                 txtNomeRazaoSocial,
@@ -633,10 +642,11 @@ namespace ProjetoTeste
                 txtContato,
                 txtFone_1,
                 txtFone_2,
-                txtEmail,
-                btnPesquisaCep
+                txtEmail
             };
             EventosUtils.HabilitarControles(controlesHabilitar, this);
+            listViewClientes.Enabled = false;
+            txtPesquisaListView.Enabled = false;
             switch (buttonPressed)
             {
                 case "Novo":
@@ -644,8 +654,7 @@ namespace ProjetoTeste
                      {
                         rdbCpf,
                         rdbCnpj,
-                        txtCpfCnpj,
-                        btnPesquisarCnpj
+                        txtCpfCnpj
                      };
                     EventosUtils.HabilitarControles(controlesHabilitarNovo, this);
                     rdbCpf.Checked = false;
@@ -680,6 +689,7 @@ namespace ProjetoTeste
             txtPesquisaListView.Clear();
             rdbCpf.Checked = true;
             rdbCnpj.Checked = false;
+            escPressed = false;
         }
         static void InserirCliente(ClienteInfo Cliente)
         {
@@ -721,42 +731,16 @@ namespace ProjetoTeste
             }
 
         }
-        private async void btnPesquisarCnpj_Click(object sender, EventArgs e)
+        private async void PesquisarCnpj(String cnpj)
         {
-            string cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
-            DBSetupBLL dbSetupBLL = new DBSetupBLL();
-            string cpfCnpj = txtCpfCnpj.Text;
-            // Verifica se o CPF/CNPJ já está cadastrado
-            if (dbSetupBLL.VerificarSeCadastrado(cnpj, "DBClientes", "Cpf_Cnpj"))
-            {
-                MessageBox.Show("Cliente já cadastrado. Favor verificar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtCpfCnpj.Clear();
-                txtCpfCnpj.Focus();
-                return;
-            }
-            if (string.IsNullOrEmpty(cnpj))
-            {
-                MessageBox.Show("Favor, Insira um CNPJ.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (!ValidaCnpj(cnpj))
-            {
-                MessageBox.Show("CNPJ Informado esta Incorreto. Favor Verificar!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCpfCnpj.Clear();
-                txtCpfCnpj.Focus();
-                return;
-            }
             try
             {
-
-                Cursor.Current = Cursors.WaitCursor; // Mudar o cursor para ocupado
+                Cursor.Current = Cursors.WaitCursor;
                 CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cnpj);
-
                 if (info != null)
                 {
                     txtCpfCnpj.Text = info.Cpf_Cnpj;
                     txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
-                    //    txtNomeFantasia.Text = info.Nome_Fantasia;
                     txtEndereco.Text = info.Endereco;
                     txtNumero.Text = info.Numero;
                     txtBairro.Text = info.Bairro;
@@ -768,8 +752,6 @@ namespace ProjetoTeste
                     txtFone_2.Text = info.Fone_2;
                     txtEmail.Text = info.Email;
                     txtDataCadastro.Text = info.DataCadastro;
-                    // txtNatJuridica.Text = info.Nat_Juridica;
-                    // Atualize outros campos conforme necessário
                     txtNomeRazaoSocial.Focus();
                 }
                 else
@@ -781,40 +763,61 @@ namespace ProjetoTeste
             {
                 Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
             }
-            txtNomeRazaoSocial.Focus(); // Focar no rdbCpf para "Novo"
+        }
+        private async void PesquisarCpf(String cpf)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor; // Mudar o cursor para ocupado
+                CpfInfo info = await ReceitaFederalApi.PesquisarCpfAsync(cpf);
+                if (info != null)
+                {
+                    txtCpfCnpj.Text = info.Cpf_Cnpj;
+                    txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+                    txtEndereco.Text = info.Endereco;
+                    txtBairro.Text = info.Bairro;
+                    txtMunicipio.Text = info.Municipio;
+                    txtUF.Text = info.UF;
+                    txtCep.Text = info.Cep;
+                    txtContato.Text = info.Contato;
+                    txtEmail.Text = info.Email;
+                    txtNomeRazaoSocial.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("CPF não encontrado ou erro na pesquisa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
         private async void btnPesquisaCep_Click(object sender, EventArgs e)
         {
-            string cep = StringUtils.SemFormatacao(txtCep.Text);  // Supondo que o CEP é lido de um TextBox chamado txtCep
-            var resultado = await StringUtils.BuscarCEP(cep);
-
-            if (!string.IsNullOrEmpty(resultado))
+            if (!string.IsNullOrEmpty(txtCep.Text))
             {
-                dynamic dados = JObject.Parse(resultado);
-                txtEndereco.Text = dados.logradouro ?? "";
-                txtNumero.Text = ""; // ViaCEP não fornece número
-                txtBairro.Text = dados.bairro ?? "";
-                txtMunicipio.Text = dados.localidade ?? "";
-                txtUF.Text = dados.uf ?? "";
-            }
-            else
-            {
-                MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void ajustaLarguraCabecalho()
-        {
-            for (int i = 0; i < listViewClientes.Columns.Count; i++)
-            {
-                listViewClientes.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent);
-                int larguraConteudo = listViewClientes.Columns[i].Width;
+                string cep = StringUtils.SemFormatacao(txtCep.Text);
+                var resultado = await StringUtils.BuscarCEP(cep);
 
-                listViewClientes.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize);
-                int larguraCabecalho = listViewClientes.Columns[i].Width;
-
-                listViewClientes.Columns[i].Width = Math.Max(larguraConteudo, larguraCabecalho);
+                if (!string.IsNullOrEmpty(resultado))
+                {
+                    dynamic dados = JObject.Parse(resultado);
+                    txtEndereco.Text = dados.logradouro ?? "";
+                    if (string.IsNullOrEmpty(txtNumero.Text))
+                    {
+                        txtNumero.Clear();
+                    }
+                    txtBairro.Text = dados.bairro ?? "";
+                    txtMunicipio.Text = dados.localidade ?? "";
+                    txtUF.Text = dados.uf ?? "";
+                }
+                else
+                {
+                    MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            listViewClientes.Columns[listViewClientes.Columns.Count - 1].Width = -2;
+            txtEndereco.Focus();
         }
     }
 }

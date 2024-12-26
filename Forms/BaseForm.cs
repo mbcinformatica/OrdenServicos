@@ -57,7 +57,10 @@ namespace ProjetoTeste.Forms
         public Control ControleAnterior { get; set; }
         public string TagFormato { get; set; }
         public string TagAction { get; set; }
+        public int TagMaxDigito { get; set; }
+
         public virtual void CarregarRegistros() { }
+
         public virtual void LimparCampos() { }
         public virtual void ExecutaFuncaoEvento(Control control) { }
 

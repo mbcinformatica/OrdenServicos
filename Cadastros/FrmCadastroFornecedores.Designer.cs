@@ -532,7 +532,6 @@
             this.txtFone_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFone_2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_2.Location = new System.Drawing.Point(488, 120);
-            this.txtFone_2.Mask = "(99) 9999-9999";
             this.txtFone_2.Name = "txtFone_2";
             this.txtFone_2.Size = new System.Drawing.Size(96, 22);
             this.txtFone_2.TabIndex = 106;
@@ -554,7 +553,6 @@
             this.txtFone_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFone_1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFone_1.Location = new System.Drawing.Point(368, 120);
-            this.txtFone_1.Mask = "(99) 99999-9999";
             this.txtFone_1.Name = "txtFone_1";
             this.txtFone_1.Size = new System.Drawing.Size(96, 22);
             this.txtFone_1.TabIndex = 105;
@@ -578,7 +576,6 @@
             this.txtCep.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCep.Location = new System.Drawing.Point(968, 24);
             this.txtCep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtCep.Mask = "99999-999";
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtCep.Size = new System.Drawing.Size(73, 22);

@@ -31,23 +31,20 @@ namespace ProjetoTeste
         private List<Control> controlesMouseDown = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
+        private EventArgs e;
+
 
         public frmUsuarios()
         {
             InitializeComponent();
-
-            // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
-            InitializeTabControl(tabControlUsuarios); // Chama o método para inicializar o TabControl
-
+            InitializeTabControl(tabControlUsuarios);
             erpProvider = new ErrorProvider();
-            CarregarRegistros();
-
-            // Configurar eventos dos TextBoxes para maiúsculas
             ConfigurarTextBox();
-            // Configurando os Key para os TextBox
             CarregaKey();
+            ConfigurarTabIndexControles();
+            CarregarRegistros();
         }
         private void InitializeListView()
         {
@@ -221,12 +218,12 @@ namespace ProjetoTeste
         }
         private void CarregaKey()
         {
-            // Adicionar controles às listas específicas com base no tipo de evento
             controlesKeyPress.AddRange(new Control[] {
                 txtCep,
                 txtFone_1,
                 txtFone_2
             });
+
             controlesEnter.AddRange(new Control[] {
                 txtNome,
                 txtLogin,
@@ -242,7 +239,9 @@ namespace ProjetoTeste
                 txtFone_2,
                 txtEmail
             });
+
             controlesMouseDown.AddRange(new Control[] { });
+
             controlesLeave.AddRange(new Control[] {
                 txtNome,
                 txtLogin,
@@ -254,6 +253,7 @@ namespace ProjetoTeste
                 txtFone_2,
                 txtEmail
             });
+
             controlesKeyDown.AddRange(new Control[] {
                 txtNome,
                 txtLogin,
@@ -271,6 +271,7 @@ namespace ProjetoTeste
                 txtPesquisaListView,
                 listViewUsuario
             });
+
             controlesBotoes.AddRange(new Control[] {
                 btnSalvar,
                 btnAlterar,
@@ -285,21 +286,20 @@ namespace ProjetoTeste
 
             this.Tag = "frmCadastroUsuarios";
 
-            txtCep.Tag = new BaseForm { TagFormato = "FormataCep" };
-            txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone" };
-            txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone" };
+            txtCep.Tag = new BaseForm { TagFormato = "FormataCep", TagMaxDigito = 8 }; 
+            txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 11 };
+            txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 10 };
             txtEmail.Tag = new BaseForm { TagAction = "TabPage" };
 
-            // Localizar o TabControl e a TabPage
             var tabControl = Controls.Find("tabControlUsuarios", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter,
+                                            controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewUsuario.Click += ListViewUsuarios_Click;
             txtPesquisaListView.Focus();
             AdicionarToolTipsAosControles();
-
         }
         private void AdicionarToolTipsAosControles()
         {
@@ -328,7 +328,6 @@ namespace ProjetoTeste
             {
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
                 string nome = txtNome.Text;
-                // Verifica se o Usuário já está cadastrado
                 if (dbSetupBLL.VerificarSeCadastrado(nome, "DBUsuarios", "Nome"))
                 {
                     MessageBox.Show("Usuário já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -337,6 +336,18 @@ namespace ProjetoTeste
                     return;
                 }
             }
+            else if (control == txtSenha && bNovo)
+            {
+                string senha = control.Text;
+                if (senha.Length < 6)
+                {
+                    MessageBox.Show("A Senha deve Conter no Mínimo Seis Caracter. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtSenha.Clear();
+                    txtSenha.Focus();
+                    return;
+                }
+            }
+
             else if (control == txtLogin && bNovo)
             {
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
@@ -365,6 +376,12 @@ namespace ProjetoTeste
                     txtConfirmaSenha.Focus();
                 }
             }
+            else if (control == txtCep && !string.IsNullOrEmpty(txtCep.Text))
+            {
+                btnPesquisaCep_Click(control, e);
+                control.Text = StringUtils.SemFormatacao(control.Text);
+                control.Text = StringUtils.FormatCEP(control.Text);
+            }
         }
         private void ConfigurarTextBox()
         {
@@ -372,13 +389,30 @@ namespace ProjetoTeste
             {
             (txtNome, "Nome"),
             (txtLogin, "Login"),
-            (txtSenha, "Senha"),
+            (txtFone_1, "Celular"),
             };
 
             AdicionarValidacao(
                 erpProvider,
                 camposObrigatorios
             );
+        }
+        private void ConfigurarTabIndexControles()
+        {
+            txtNome.TabIndex = 0;
+            txtLogin.TabIndex = 1;
+            txtSenha.TabIndex = 2;
+            txtConfirmaSenha.TabIndex = 3;
+            txtCep.TabIndex = 4;
+            txtEndereco.TabIndex = 5;
+            txtNumero.TabIndex = 6;
+            txtBairro.TabIndex = 7;
+            txtMunicipio.TabIndex = 8;
+            txtUF.TabIndex = 9;
+            txtFone_1.TabIndex = 10;
+            txtFone_2.TabIndex = 11;
+            txtEmail.TabIndex = 12;
+            btnSalvar.TabIndex = 13;
         }
         public override void CarregarRegistros()
         {
@@ -408,13 +442,11 @@ namespace ProjetoTeste
                     item.SubItems.Add(usuario.Email);
                     item.SubItems.Add(usuario.DataCadastro.ToString("dd/MM/yyyy"));
 
-                    // Carregar a imagem (sem exibir na ListView)
                     if (usuario.Imagem != null && usuario.Imagem.Length > 0)
                     {
                         using (MemoryStream ms = new MemoryStream(usuario.Imagem))
                         {
                             Image imgImagemUsuario = Image.FromStream(ms);
-                            // A imagem é carregada, mas não exibida na ListView
                         }
                     }
                     listViewUsuario.Items.Add(item);
@@ -485,7 +517,6 @@ namespace ProjetoTeste
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
 
-            // Verificar se algum campo obrigatório está vazio
             if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
             {
                 MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -640,7 +671,6 @@ namespace ProjetoTeste
                 txtFone_1,
                 txtFone_2,
                 txtEmail,
-                btnPesquisaCep,
                 btnInserirImagem,
                 btnExcluirImagem
             };
@@ -728,7 +758,7 @@ namespace ProjetoTeste
         {
             if (!string.IsNullOrEmpty(txtCep.Text))
             {
-                string cep = StringUtils.SemFormatacao(txtCep.Text);  // Supondo que o CEP é lido de um TextBox chamado txtCep
+                string cep = StringUtils.SemFormatacao(txtCep.Text); 
                 var resultado = await StringUtils.BuscarCEP(cep);
 
                 if (!string.IsNullOrEmpty(resultado))

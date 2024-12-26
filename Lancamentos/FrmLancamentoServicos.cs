@@ -32,7 +32,6 @@ namespace ProjetoTeste
         public frmLancamentoServicos()
         {
             InitializeComponent();
-            // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlOrdenServico); // Chama o método para inicializar o TabControl
@@ -41,13 +40,9 @@ namespace ProjetoTeste
             ConfigurarComboBoxClientes();
             ConfigurarComboBoxProdutos();
             CarregarRegistros();
-            // Configurar eventos dos TextBoxes para maiúsculas
             ConfigurarTextBox();
-            // Configurar TabIndex dos Controles
             ConfigurarTabIndexControles();
-            // Configurando os Key para os TextBox
             CarregaKey();
-
         }
         private void InitializeListView()
         {
