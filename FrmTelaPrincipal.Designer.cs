@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste
+﻿namespace OrdenServicos
 {
     partial class frmTelaPrincipal
     {
@@ -219,7 +219,7 @@
             this.Controls.Add(this.mnSMenu);
             this.MainMenuStrip = this.mnSMenu;
             this.Name = "frmTelaPrincipal";
-            this.Text = "Projeto Teste";
+            this.Text = "Sistema Orden Serviços";
             this.mnSMenu.ResumeLayout(false);
             this.mnSMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -229,12 +229,6 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem cadastroToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lançamentosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem relatóriosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configuraçõesToolStripMenuItem;
         private System.Windows.Forms.MenuStrip mnSMenu;
         private System.Windows.Forms.ToolStripMenuItem cadastrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;

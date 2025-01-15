@@ -1,8 +1,8 @@
-﻿using ProjetoTeste.BLL;
-using ProjetoTeste.DAL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+﻿using OrdenServicos.BLL;
+using OrdenServicos.DAL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmLancamentoServicos : BaseForm
     {
@@ -19,7 +19,7 @@ namespace ProjetoTeste
         private bool sortAscending = true;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-        private int previousSortColumn = -1;
+
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private List<Control> controlesKeyPress = new List<Control>();

@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste
+﻿namespace OrdenServicos
 {
     partial class frmConfigFormulario
     {

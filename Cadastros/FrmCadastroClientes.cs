@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
-using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+using OrdenServicos.BLL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static ProjetoTeste.DAL.PesquisaWebDAL;
-using static ProjetoTeste.Model.PesquisaWebInfo;
+using static OrdenServicos.DAL.PesquisaWebDAL;
+using static OrdenServicos.Model.PesquisaWebInfo;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmClientes : BaseForm
     {
@@ -20,7 +20,7 @@ namespace ProjetoTeste
         private bool sortAscending = true;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-        private int previousSortColumn = -1;
+
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private List<Control> controlesKeyPress = new List<Control>();
@@ -29,7 +29,7 @@ namespace ProjetoTeste
         private List<Control> controlesMouseDown = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
-        private EventArgs e;
+        private readonly EventArgs e = new EventArgs();
 
         public frmClientes()
         {
@@ -819,5 +819,30 @@ namespace ProjetoTeste
             }
             txtEndereco.Focus();
         }
-    }
+
+		private void btnAlterar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnSalvar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnExcluir_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnFechar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnCancelar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+	}
 }

@@ -1,13 +1,13 @@
-﻿using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
+﻿using OrdenServicos.BLL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste.Utils
+namespace OrdenServicos.Utils
 {
 
     public static class EventosUtils

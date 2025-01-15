@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste
+﻿namespace OrdenServicos
 {
     partial class frmMarcas
     {
@@ -48,17 +48,25 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
             this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.tabDadosMarca.SuspendLayout();
             this.tabControlMarcas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabInformacoesAdicionais
-            // 
-            this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
+			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+			this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+			this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+
+			// 
+			// tabInformacoesAdicionais
+			// 
+			this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabInformacoesAdicionais.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabInformacoesAdicionais.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 22);
@@ -264,32 +272,17 @@
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
-            this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
             this.pnlBotoes.Controls.Add(this.btnExcluir);
             this.pnlBotoes.Controls.Add(this.btnNovo);
+            this.pnlBotoes.Controls.Add(this.btnFechar);
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Location = new System.Drawing.Point(14, 328);
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(776, 49);
             this.pnlBotoes.TabIndex = 72;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.AutoSize = true;
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(656, 2);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
-            this.btnCancelar.TabIndex = 68;
-            this.btnCancelar.Text = "     Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lbTotalRegistros
             // 
@@ -304,6 +297,21 @@
             this.lbTotalRegistros.TabIndex = 66;
             this.lbTotalRegistros.Tag = "naoAplicarAutoSize";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(656, 2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
+            this.btnCancelar.TabIndex = 68;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // frmMarcas
             // 

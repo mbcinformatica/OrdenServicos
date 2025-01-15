@@ -1,8 +1,8 @@
-﻿using ProjetoTeste.DAL;
-using ProjetoTeste.Model;
+﻿using OrdenServicos.DAL;
+using OrdenServicos.Model;
 using System.Collections.Generic;
 
-namespace ProjetoTeste.BLL
+namespace OrdenServicos.BLL
 {
     public class ModeloBLL
     {

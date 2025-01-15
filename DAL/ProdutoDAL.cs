@@ -1,10 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
-using ProjetoTeste.Model;
+using OrdenServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace ProjetoTeste.DAL
+namespace OrdenServicos.DAL
 {
     public class ProdutoDAL
     {

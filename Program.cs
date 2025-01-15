@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     internal static class Program
     {

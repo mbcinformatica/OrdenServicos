@@ -1,9 +1,9 @@
 ﻿using AForge.Video.DirectShow;
-using ProjetoTeste.BLL;
-using ProjetoTeste.DAL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+using OrdenServicos.BLL;
+using OrdenServicos.DAL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,20 +13,20 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 
 {
     public partial class frmProdutos : BaseForm
     {
         private int sortColumn = -1;
         private bool sortAscending = true;
-        private bool bNovo;
+
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-        private int previousSortColumn = -1;
+
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-        private bool escPressed = false;
+
         private VideoCaptureDevice videoSource;
         private FilterInfoCollection videoDevices;
 
@@ -528,7 +528,7 @@ namespace ProjetoTeste
             txtGarantia.TabIndex = 11;
             btnSalvar.TabIndex = 12;
         }
-        private void CarregarRegistros()
+        private new void CarregarRegistros()
         {
             DesabilitarCampos();
             DesabilitarBotoesAcoes();
@@ -940,16 +940,16 @@ namespace ProjetoTeste
             btnFechar.Enabled = true;
             btnNovo.Enabled = true;
         }
-        private void LimparCampos()
+        private new void LimparCampos()
         {
             txtIDProdutoInterno.Clear();
             txtIDProdutoFabricante.Clear();
             txtDescricao.Clear();
-            cmbFornecedor.Text = "";
-            cmbMarca.Text = "";
-            cmbModelo.Text = "";
-            cmbUnidade.Text = "";
-            txtPrecoCompra.Clear();
+			cmbFornecedor.SelectedIndex = -1;
+			cmbMarca.SelectedIndex = -1;
+			cmbModelo.SelectedIndex = -1;
+			cmbUnidade.SelectedIndex = -1;
+			txtPrecoCompra.Clear();
             txtPrecoVenda.Clear();
             txtEstoqueAtual.Clear();
             txtEstoqueMinimo.Clear();

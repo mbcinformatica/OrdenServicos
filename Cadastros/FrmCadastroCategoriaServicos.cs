@@ -1,14 +1,14 @@
-﻿using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+﻿using OrdenServicos.BLL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmCategoriaServicos : BaseForm
     {
@@ -16,7 +16,7 @@ namespace ProjetoTeste
         private bool sortAscending = true;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-        private int previousSortColumn = -1;
+
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
         private List<Control> controlesKeyPress = new List<Control>();
@@ -28,20 +28,16 @@ namespace ProjetoTeste
 
         public frmCategoriaServicos()
         {
-            InitializeComponent();
-            // Chama o método LoadConfig() para aplicar as configurações
-            LoadConfig();
-            Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
-            InitializeTabControl(tabControlCategoriaServicos); // Chama o método para inicializar o TabControl
-            erpProvider = new ErrorProvider();
-            CarregarRegistros();
-            // Configurar eventos dos TextBoxes para maiúsculas
-            ConfigurarTextBox();
-            // Configurar TabIndex dos Controles
-            ConfigurarTabIndexControles();
-            // Configurando os Key para os TextBox
-            CarregaKey();
-        }
+			InitializeComponent();
+			LoadConfig();
+			Paint += new PaintEventHandler(BaseForm_Paint);
+			InitializeTabControl(tabControlCategoriaServicos);
+			erpProvider = new ErrorProvider();
+			ConfigurarTextBox();
+			CarregaKey();
+			ConfigurarTabIndexControles();
+			CarregarRegistros();
+		}
         private void InitializeListView()
         {
             // Configurar a ListView

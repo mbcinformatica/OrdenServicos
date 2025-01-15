@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste.BLL
+﻿namespace OrdenServicos.BLL
 {
     public class PesquisaWebDAL
     {

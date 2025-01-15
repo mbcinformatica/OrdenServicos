@@ -24,6 +24,12 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>OrdenServicos.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TOOLS.ICO</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -31,8 +37,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CE5D20A6-6268-411E-932E-8B22B626AE30}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ProjetoTeste</RootNamespace>
-    <AssemblyName>ProjetoTeste</AssemblyName>
+    <RootNamespace>OrdenServiços</RootNamespace>
+    <AssemblyName>OrdenServiços</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -474,7 +480,6 @@
     <None Include=".editorconfig" />
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\ProjetoTeste.Model.FornecedorInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -531,8 +536,10 @@
     <None Include="Resources\Sair24x24.png" />
     <None Include="Resources\Salvar24x24.png" />
     <None Include="Resources\PapelParede.png" />
+    <Content Include="icone.ico" />
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
     <None Include="Resources\Cancelar24X24.png" />
+    <Content Include="TOOLS.ICO" />
     <Content Include="XML\config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

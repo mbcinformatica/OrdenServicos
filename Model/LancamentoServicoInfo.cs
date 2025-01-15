@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjetoTeste.Model
+namespace OrdenServicos.Model
 {
     public class LancamentoServicoInfo
     {

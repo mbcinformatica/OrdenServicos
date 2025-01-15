@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste.Forms
+﻿namespace OrdenServicos.Forms
 {
     partial class BaseForm
     {

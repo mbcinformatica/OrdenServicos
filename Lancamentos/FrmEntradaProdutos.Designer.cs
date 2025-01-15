@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste.Lancamentos
+﻿namespace OrdenServicos.Lancamentos
 {
     partial class FrmEntradaProdutos
     {

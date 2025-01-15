@@ -1,6 +1,6 @@
-﻿using ProjetoTeste.DAL;
+﻿using OrdenServicos.DAL;
 
-namespace ProjetoTeste.BLL
+namespace OrdenServicos.BLL
 {
     public class DBSetupBLL
     {

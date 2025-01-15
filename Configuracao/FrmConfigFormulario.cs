@@ -1,4 +1,4 @@
-﻿using ProjetoTeste.Forms;
+﻿using OrdenServicos.Forms;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmConfigFormulario : BaseForm
     {

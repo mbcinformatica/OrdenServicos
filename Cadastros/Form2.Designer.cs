@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste.Cadastros
+﻿namespace OrdenServicos.Cadastros
 {
     partial class Form2
     {

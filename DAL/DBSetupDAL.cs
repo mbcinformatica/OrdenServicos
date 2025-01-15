@@ -3,7 +3,7 @@ using System;
 using System.Configuration;
 using System.Windows.Forms;
 
-namespace ProjetoTeste.DAL
+namespace OrdenServicos.DAL
 {
     public class DBSetupDAL
     {
@@ -64,19 +64,19 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBClientes", new string[]
             {
                 "IDCliente int NOT NULL AUTO_INCREMENT",
-                "TipoPessoa varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Cpf_Cnpj varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Nome_RazaoSocial varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Contato varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
+                "TipoPessoa varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Cpf_Cnpj varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Nome_RazaoSocial varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Contato varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
                 "DataCadastro datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
                 "PRIMARY KEY (IDCliente)",
                 "UNIQUE KEY Cpf_Cnpj_UNIQUE (Cpf_Cnpj)"
@@ -86,19 +86,19 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBFornecedores", new string[]
             {
                 "IDFornecedor int NOT NULL AUTO_INCREMENT",
-                "TipoPessoa varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Cpf_Cnpj varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Nome_RazaoSocial varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Contato varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
+                "TipoPessoa varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Cpf_Cnpj varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Nome_RazaoSocial varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Contato varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
                 "DataCadastro datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
                 "PRIMARY KEY (IDFornecedor)",
                 "UNIQUE KEY Cpf_Cnpj_UNIQUE (Cpf_Cnpj)"
@@ -108,7 +108,7 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBMarcas", new string[]
             {
                 "IDMarca int NOT NULL AUTO_INCREMENT",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "PRIMARY KEY (IDMarca)",
                 "UNIQUE KEY Descricao_UNIQUE (Descricao)"
 
@@ -119,7 +119,7 @@ namespace ProjetoTeste.DAL
             {
                 "IDModelo int NOT NULL AUTO_INCREMENT",
                 "IDMarca int NOT NULL",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "PRIMARY KEY (IDModelo)",
                 "UNIQUE KEY Descricao_UNIQUE (Descricao)"
 
@@ -129,9 +129,9 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBProdutos", new string[]
             {
                 "IDProduto int NOT NULL AUTO_INCREMENT",
-                "IDProdutoInterno varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "IDProdutoFabricante varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "IDProdutoInterno varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "IDProdutoFabricante varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "IDFornecedor int DEFAULT NULL",
                 "IDMarca int DEFAULT NULL",
                 "IDModelo int DEFAULT NULL",
@@ -141,7 +141,7 @@ namespace ProjetoTeste.DAL
                 "EstoqueAtual decimal(10,4) DEFAULT NULL",
                 "EstoqueMinimo decimal(10,4) DEFAULT NULL",
                 "DataUltimaCompra datetime DEFAULT NULL",
-                "Garantia varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
+                "Garantia varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
                 "Imagem longblob",
                 "PRIMARY KEY (IDProduto)",
                 "UNIQUE KEY CodInternoProduto_UNIQUE (IDProdutoInterno)",
@@ -154,7 +154,7 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBUnidades", new string[]
             {
                 "IDUnidade int NOT NULL AUTO_INCREMENT",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "PRIMARY KEY (IDUnidade)",
                 "UNIQUE KEY Descricao_UNIQUE (Descricao)"
 
@@ -164,18 +164,18 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBUsuarios", new string[]
             {
                 "IDUsuario int NOT NULL AUTO_INCREMENT",
-                "Nome varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Login varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Senha varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
+                "Nome varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Login varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Senha varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+                "Endereco varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Numero varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Bairro varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Municipio varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "UF varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Cep varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_1 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Fone_2 varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "Email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
                 "DataCadastro datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
                 "Imagem longblob",
                 "PRIMARY KEY (IDUsuario)",
@@ -187,9 +187,9 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBServicos", new string[]
             {
                 "IDServico int NOT NULL AUTO_INCREMENT",
-                "IDCodigoBase varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "IDCodigoBase varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "IDCategoriaServico int NOT NULL",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
                 "ValorServico decimal(10,2) DEFAULT NULL",
                 "PRIMARY KEY (IDServico)",
                 "UNIQUE KEY IDCodigoBase_UNIQUE (IDCodigoBase)",
@@ -200,8 +200,8 @@ namespace ProjetoTeste.DAL
             VerifyAndCreateTable(connection, "DBCategoriaServicos", new string[]
             {
                 "IDCategoriaServico int NOT NULL AUTO_INCREMENT",
-                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL",
-                "PRIMARY KEY (IDCategoria)",
+                "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
+				"PRIMARY KEY (IDCategoriaServico)",
                 "UNIQUE KEY Descricao_UNIQUE (Descricao)"
             });
 
@@ -214,10 +214,10 @@ namespace ProjetoTeste.DAL
                 "IDCliente int DEFAULT NULL",
                 "IDMarca int DEFAULT NULL",
                 "IDProduto int DEFAULT NULL",
-                "NumeroSerie varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "DescricaoDefeito text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "GarantiaServico varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
-                "GarantiaMaterial varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL",
+                "NumeroSerie varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "DescricaoDefeito text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "GarantiaServico varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
+                "GarantiaMaterial varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL",
                 "ValorTotalServico decimal(10,2) DEFAULT NULL",
                 "ValorTotalMaterial decimal(10,2) DEFAULT NULL",
                 "Imagem longblob",
@@ -234,7 +234,7 @@ namespace ProjetoTeste.DAL
                 if (!tableExists)
                 {
                     // Cria a tabela se não existir
-                    var createTableQuery = $"CREATE TABLE {tableName} ({string.Join(", ", columns)}) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+                    var createTableQuery = $"CREATE TABLE {tableName} ({string.Join(", ", columns)}) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
                     using (var createTableCommand = new MySqlCommand(createTableQuery, connection))
                     {
                         createTableCommand.ExecuteNonQuery();

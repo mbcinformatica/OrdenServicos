@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ProjetoTeste.Utils
+namespace OrdenServicos.Utils
 {
     public static class StringUtils
     {

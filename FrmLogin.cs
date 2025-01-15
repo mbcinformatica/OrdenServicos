@@ -1,19 +1,18 @@
 ﻿using MySql.Data.MySqlClient;
-using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+using OrdenServicos.Forms;
+using OrdenServicos.Utils;
+using System.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmLogin : BaseForm
     {
-        private static readonly string connectionString = "Server=192.168.1.198;Port=3306;Database=DBOrdenServicos;User ID=root;Password=password;";
-        private (Control, string)[] camposObrigatorios;
+        private static readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+
+		private (Control, string)[] camposObrigatorios;
         private int nTentativasLogin = 0;
         private List<Control> controlesKeyPress = new List<Control>();
         private List<Control> controlesLeave = new List<Control>();
@@ -92,9 +91,9 @@ namespace ProjetoTeste
             AdicionarValidacao(
                 erpProvider,
                 camposObrigatorios
-            );
+			);
         }
-        private void LimparCampos()
+        private new void LimparCampos()
         {
             txtLogin.Clear();
             txtSenha.Clear();

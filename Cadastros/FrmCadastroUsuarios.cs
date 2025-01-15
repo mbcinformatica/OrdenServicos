@@ -1,9 +1,9 @@
 ﻿using AForge.Video.DirectShow;
 using Newtonsoft.Json.Linq;
-using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
-using ProjetoTeste.Utils;
+using OrdenServicos.BLL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmUsuarios : BaseForm
     {
@@ -31,10 +31,8 @@ namespace ProjetoTeste
         private List<Control> controlesMouseDown = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
-        private EventArgs e;
-
-
-        public frmUsuarios()
+		private readonly EventArgs e = new EventArgs();
+		public frmUsuarios()
         {
             InitializeComponent();
             LoadConfig();

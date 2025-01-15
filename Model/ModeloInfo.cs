@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste.Model
+﻿namespace OrdenServicos.Model
 {
     public class ModeloInfo
     {

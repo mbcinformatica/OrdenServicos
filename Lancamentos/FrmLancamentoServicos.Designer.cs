@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste
+﻿namespace OrdenServicos
 {
     partial class frmLancamentoServicos
     {
@@ -595,7 +595,7 @@
             this.btnCancelar.AutoSize = true;
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(971, 2);
             this.btnCancelar.Name = "btnCancelar";

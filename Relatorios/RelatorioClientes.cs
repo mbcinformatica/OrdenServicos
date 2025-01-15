@@ -1,12 +1,13 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using ProjetoTeste.BLL;
-using ProjetoTeste.Model;
+using OrdenServicos.BLL;
+using OrdenServicos.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public class RelatorioClientes
     {
@@ -16,8 +17,15 @@ namespace ProjetoTeste
             ClienteBLL clienteBLL = new ClienteBLL();
             List<ClienteInfo> clientes = clienteBLL.Listar();
 
-            // Configurar documento para A4 paisagem com margens
-            Document doc = new Document(PageSize.A4.Rotate());
+			// Verificar se a lista de clientes está vazia
+			if (clientes.Count == 0)
+			{
+				MessageBox.Show("Nenhum dado de cliente disponível para gerar o relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			// Configurar documento para A4 paisagem com margens
+			Document doc = new Document(PageSize.A4.Rotate());
             doc.SetMargins(20f, 20f, 80f, 40f);
             PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(caminhoArquivo, FileMode.Create));
 
@@ -75,7 +83,10 @@ namespace ProjetoTeste
             // Fechar documento
             doc.Close();
             Process.Start(new ProcessStartInfo(caminhoArquivo) { UseShellExecute = true });
-        }
+
+			// Exiba uma mensagem de confirmação
+			MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
 
         private void AdicionarCelulaCabecalho(PdfPTable tabela, string texto)
         {

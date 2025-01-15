@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace ProjetoTeste.Model
+namespace OrdenServicos.Model
 {
     public class ControlToolTipPair
     {

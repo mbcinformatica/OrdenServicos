@@ -1,4 +1,4 @@
-﻿namespace ProjetoTeste
+﻿namespace OrdenServicos
 {
     partial class frmModelos
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmModelos));
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tabDadosModelo = new System.Windows.Forms.TabPage();
@@ -41,25 +42,33 @@
             this.lbIDModelo = new System.Windows.Forms.Label();
             this.txtIDModelo = new System.Windows.Forms.TextBox();
             this.tabControlModelos = new System.Windows.Forms.TabControl();
-            this.btnAlterar = new System.Windows.Forms.Button();
-            this.btnExcluir = new System.Windows.Forms.Button();
             this.listViewModelos = new System.Windows.Forms.ListView();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnFechar = new System.Windows.Forms.Button();
             this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.lbTotalRegistros = new System.Windows.Forms.Label();
+            this.btnFechar = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
+            this.btnAlterar = new System.Windows.Forms.Button();
+            this.btnExcluir = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.tabDadosModelo.SuspendLayout();
             this.tabControlModelos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabInformacoesAdicionais
-            // 
-            this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
+			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+			this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+			this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+
+			// 
+			// tabInformacoesAdicionais
+			// 
+			this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabInformacoesAdicionais.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabInformacoesAdicionais.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 22);
@@ -191,37 +200,6 @@
             this.tabControlModelos.Size = new System.Drawing.Size(776, 136);
             this.tabControlModelos.TabIndex = 73;
             // 
-            // btnAlterar
-            // 
-            this.btnAlterar.AutoSize = true;
-            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAlterar.Image = global::ProjetoTeste.Properties.Resources.Editar24x24;
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(344, 2);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
-            this.btnAlterar.TabIndex = 60;
-            this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = false;
-            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
-            // 
-            // btnExcluir
-            // 
-            this.btnExcluir.AutoSize = true;
-            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcluir.Image = global::ProjetoTeste.Properties.Resources.Excluir24x24;
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(552, 2);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
-            this.btnExcluir.TabIndex = 62;
-            this.btnExcluir.Text = "     Excluir";
-            this.btnExcluir.UseVisualStyleBackColor = false;
-            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
-            // 
             // listViewModelos
             // 
             this.listViewModelos.CausesValidation = false;
@@ -239,65 +217,20 @@
             // 
             this.erpProvider.ContainerControl = this;
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.AutoSize = true;
-            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Image = global::ProjetoTeste.Properties.Resources.Salvar24x24;
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(448, 2);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
-            this.btnSalvar.TabIndex = 61;
-            this.btnSalvar.Text = "      Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = false;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AutoSize = true;
-            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Image = global::ProjetoTeste.Properties.Resources.Sair24x24;
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(656, 2);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(98, 40);
-            this.btnFechar.TabIndex = 63;
-            this.btnFechar.Text = "     Fechar";
-            this.btnFechar.UseVisualStyleBackColor = false;
-            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
-            // 
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
             this.pnlBotoes.Controls.Add(this.btnExcluir);
             this.pnlBotoes.Controls.Add(this.btnNovo);
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
+            this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Location = new System.Drawing.Point(14, 328);
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(776, 49);
             this.pnlBotoes.TabIndex = 72;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.AutoSize = true;
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Image = global::ProjetoTeste.Properties.Resources.Cancelar24X24;
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(656, 2);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
-            this.btnCancelar.TabIndex = 69;
-            this.btnCancelar.Text = "     Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lbTotalRegistros
             // 
@@ -313,20 +246,90 @@
             this.lbTotalRegistros.Tag = "naoAplicarAutoSize";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnFechar
+            // 
+            this.btnFechar.AutoSize = true;
+            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
+            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFechar.Location = new System.Drawing.Point(658, 2);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(98, 40);
+            this.btnFechar.TabIndex = 71;
+            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.UseVisualStyleBackColor = false;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.AutoSize = true;
+            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Location = new System.Drawing.Point(450, 2);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
+            this.btnSalvar.TabIndex = 69;
+            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = false;
+            // 
+            // btnAlterar
+            // 
+            this.btnAlterar.AutoSize = true;
+            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
+            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAlterar.Location = new System.Drawing.Point(346, 2);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
+            this.btnAlterar.TabIndex = 68;
+            this.btnAlterar.Tag = "";
+            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = false;
+            // 
+            // btnExcluir
+            // 
+            this.btnExcluir.AutoSize = true;
+            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
+            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExcluir.Location = new System.Drawing.Point(554, 2);
+            this.btnExcluir.Name = "btnExcluir";
+            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
+            this.btnExcluir.TabIndex = 70;
+            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.UseVisualStyleBackColor = false;
+            // 
             // btnNovo
             // 
             this.btnNovo.AutoSize = true;
             this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNovo.Image = global::ProjetoTeste.Properties.Resources.Novo24x24;
+            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
             this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(240, 2);
+            this.btnNovo.Location = new System.Drawing.Point(242, 2);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(98, 40);
-            this.btnNovo.TabIndex = 59;
+            this.btnNovo.TabIndex = 67;
             this.btnNovo.Text = "     Novo";
             this.btnNovo.UseVisualStyleBackColor = false;
-            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(658, 2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
+            this.btnCancelar.TabIndex = 72;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
             // 
             // frmModelos
             // 
@@ -361,17 +364,17 @@
         private System.Windows.Forms.Label lbIDModelo;
         private System.Windows.Forms.TextBox txtIDModelo;
         private System.Windows.Forms.TabControl tabControlModelos;
-        private System.Windows.Forms.Button btnAlterar;
-        private System.Windows.Forms.Button btnExcluir;
-        private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.ErrorProvider erpProvider;
         private System.Windows.Forms.ListView listViewModelos;
         private System.Windows.Forms.Panel pnlBotoes;
-        private System.Windows.Forms.Button btnFechar;
-        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label lbTotalRegistros;
         private System.Windows.Forms.ComboBox cmbMarca;
         private System.Windows.Forms.Label lbMarcaProduto;
-        private System.Windows.Forms.Button btnCancelar;
-    }
+		private System.Windows.Forms.Button btnFechar;
+		private System.Windows.Forms.Button btnSalvar;
+		private System.Windows.Forms.Button btnAlterar;
+		private System.Windows.Forms.Button btnExcluir;
+		private System.Windows.Forms.Button btnNovo;
+		private System.Windows.Forms.Button btnCancelar;
+	}
 }

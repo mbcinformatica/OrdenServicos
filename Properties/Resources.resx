@@ -154,10 +154,10 @@
   <data name="Impressora24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Impressora24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CadeadoFechado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CadeadoFechado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Cancelar24X24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cancelar24X24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CadeadoFechado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CadeadoFechado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

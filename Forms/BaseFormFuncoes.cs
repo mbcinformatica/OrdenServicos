@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ProjetoTeste.Forms
+namespace OrdenServicos.Forms
 {
     public interface BaseFormFuncoes
     {

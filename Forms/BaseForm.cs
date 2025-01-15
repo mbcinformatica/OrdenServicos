@@ -7,9 +7,9 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace ProjetoTeste.Forms
+namespace OrdenServicos.Forms
 {
-    public partial class BaseForm : Form, BaseFormFuncoes
+	public partial class BaseForm : Form, BaseFormFuncoes
     {
         protected Color gradientStartColor { get; set; }
         protected Color gradientEndColor { get; set; }

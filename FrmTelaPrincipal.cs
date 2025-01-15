@@ -1,17 +1,18 @@
-﻿using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
+﻿using OrdenServicos.BLL;
+using OrdenServicos.Forms;
 using System;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {
-        private readonly string connectionString;
-        public frmTelaPrincipal()
+        private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+
+		public frmTelaPrincipal()
         {
             InitializeComponent();
 
@@ -20,7 +21,6 @@ namespace ProjetoTeste
             Paint += new PaintEventHandler(BaseForm_Paint);
             Load += frmTelaPrincipal_Load;
 
-            connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
             DBSetupBLL dbsetupBLL = new DBSetupBLL();
             if (dbsetupBLL.CheckAndSetupDatabase())
             {
@@ -33,7 +33,7 @@ namespace ProjetoTeste
                         string mensagem = "Não existe Usuário Cadastrado.\n\nAntes de continuar a usar o sistema, \nFavor Cadastrar um Usuario com Direitos Administrativo.\n\nCadastre um novo usuário.";
                         MessageBox.Show(mensagem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         AbrirFormularioUsuarios();
-                        Application.Exit();
+						Application.Exit();
                     }
                 }
                 catch (Exception ex)
@@ -194,66 +194,109 @@ namespace ProjetoTeste
         private void cadastroDeClientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirRelatorioClientes();
-
         }
-        private void AbrirRelatorioClientes()
-        {
-            // Defina o caminho base onde o relatório será salvo
-            string caminhoBase = @"D:\ProjetoCSharp\ProjetoTeste\RelatorioPDF\RelatorioClientes.pdf"; // Você pode ajustar este caminho conforme necessário
-            string caminhoArquivo = caminhoBase;
+		private void AbrirRelatorioClientes()
+		{
+			// Defina o caminho base onde o relatório será salvo
+			string diretorioBase = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
+			string diretorioRelatorio = Path.Combine(diretorioBase, "RelatorioPDF");
 
-            // Verifique se o arquivo já existe e gere um novo nome se necessário
-            int contador = 1;
-            while (File.Exists(caminhoArquivo))
-            {
-                string diretorio = Path.GetDirectoryName(caminhoBase);
-                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-                string extensao = Path.GetExtension(caminhoBase);
-                caminhoArquivo = Path.Combine(diretorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-                contador++;
-            }
+			// Verifique se o diretório existe, se não, crie-o
+			if (!Directory.Exists(diretorioRelatorio))
+			{
+				Directory.CreateDirectory(diretorioRelatorio);
+			}
 
-            // Crie uma instância da classe RelatorioClientes
-            RelatorioClientes relatorio = new RelatorioClientes();
+			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioClientes.pdf");
+			string caminhoArquivo = caminhoBase;
 
-            // Gere o relatório
-            relatorio.GerarRelatorioClientes(caminhoArquivo);
+			// Verifique se o arquivo já existe e gere um novo nome se necessário
+			int contador = 1;
+			while (File.Exists(caminhoArquivo))
+			{
+				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+				string extensao = Path.GetExtension(caminhoBase);
+				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+				contador++;
+			}
 
-            // Exiba uma mensagem de confirmação
-            MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
+			// Crie uma instância da classe RelatorioClientes
+			RelatorioClientes relatorio = new RelatorioClientes();
+
+			// Gere o relatório
+			relatorio.GerarRelatorioClientes(caminhoArquivo);
+		}
+		private void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirRelatorioFornecedores();
-
         }
-        private void AbrirRelatorioFornecedores()
-        {
-            // Defina o caminho base onde o relatório será salvo
-            string caminhoBase = @"D:\ProjetoCSharp\ProjetoTeste\RelatorioPDF\RelatorioFornecedores.pdf"; // Você pode ajustar este caminho conforme necessário
-            string caminhoArquivo = caminhoBase;
+		private void AbrirRelatorioFornecedores()
+		{
+			// Defina o caminho base onde o relatório será salvo
+			string diretorioBase = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
+			string diretorioRelatorio = Path.Combine(diretorioBase, "RelatorioPDF");
 
-            // Verifique se o arquivo já existe e gere um novo nome se necessário
-            int contador = 1;
-            while (File.Exists(caminhoArquivo))
-            {
-                string diretorio = Path.GetDirectoryName(caminhoBase);
-                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-                string extensao = Path.GetExtension(caminhoBase);
-                caminhoArquivo = Path.Combine(diretorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-                contador++;
-            }
+			// Verifique se o diretório existe, se não, crie-o
+			if (!Directory.Exists(diretorioRelatorio))
+			{
+				Directory.CreateDirectory(diretorioRelatorio);
+			}
 
-            // Crie uma instância da classe RelatorioClientes
-            RelatorioFornecedores relatorio = new RelatorioFornecedores();
+			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioFornecedores.pdf");
+			string caminhoArquivo = caminhoBase;
 
-            // Gere o relatório
-            relatorio.GerarRelatorioFornecedores(caminhoArquivo);
+			// Verifique se o arquivo já existe e gere um novo nome se necessário
+			int contador = 1;
+			while (File.Exists(caminhoArquivo))
+			{
+				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+				string extensao = Path.GetExtension(caminhoBase);
+				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+				contador++;
+			}
 
-            // Exiba uma mensagem de confirmação
-            MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void ProdutosToolStripMenuItem_Click(object sender, EventArgs e)
+			// Crie uma instância da classe RelatorioFornecedores
+			RelatorioFornecedores relatorio = new RelatorioFornecedores();
+
+			// Gere o relatório
+			relatorio.GerarRelatorioFornecedores(caminhoArquivo);
+		}
+		private void cadastroDeUsuáriosToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			AbrirRelatorioUsuarios();
+		}
+		private void AbrirRelatorioUsuarios()
+		{
+			// Defina o caminho base onde o relatório será salvo
+			string diretorioBase = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
+			string diretorioRelatorio = Path.Combine(diretorioBase, "RelatorioPDF");
+
+			// Verifique se o diretório existe, se não, crie-o
+			if (!Directory.Exists(diretorioRelatorio))
+			{
+				Directory.CreateDirectory(diretorioRelatorio);
+			}
+
+			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioUsuarios.pdf");
+			string caminhoArquivo = caminhoBase;
+
+			// Verifique se o arquivo já existe e gere um novo nome se necessário
+			int contador = 1;
+			while (File.Exists(caminhoArquivo))
+			{
+				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+				string extensao = Path.GetExtension(caminhoBase);
+				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+				contador++;
+			}
+
+			// Crie uma instância da classe RelatorioUsuarios
+			RelatorioUsuarios relatorio = new RelatorioUsuarios();
+
+			// Gere o relatório
+			relatorio.GerarRelatorioUsuarios(caminhoArquivo);
+		}
+		private void ProdutosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioProdutos();
         }
@@ -273,36 +316,6 @@ namespace ProjetoTeste
                 Location.Y + (Height - formularioProdutos.Height) / 2);
 
             formularioProdutos.ShowDialog();
-        }
-        private void cadastroDeUsuáriosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AbrirRelatorioUsuarios();
-        }
-        private void AbrirRelatorioUsuarios()
-        {
-            // Defina o caminho base onde o relatório será salvo
-            string caminhoBase = @"D:\ProjetoCSharp\ProjetoTeste\RelatorioPDF\RelatorioUsuarios.pdf"; // Você pode ajustar este caminho conforme necessário
-            string caminhoArquivo = caminhoBase;
-
-            // Verifique se o arquivo já existe e gere um novo nome se necessário
-            int contador = 1;
-            while (File.Exists(caminhoArquivo))
-            {
-                string diretorio = Path.GetDirectoryName(caminhoBase);
-                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-                string extensao = Path.GetExtension(caminhoBase);
-                caminhoArquivo = Path.Combine(diretorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-                contador++;
-            }
-
-            // Crie uma instância da classe RelatorioClientes
-            RelatorioUsuarios relatorio = new RelatorioUsuarios();
-
-            // Gere o relatório
-            relatorio.GerarRelatorioUsuarios(caminhoArquivo);
-
-            // Exiba uma mensagem de confirmação
-            MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void formularioToolStripMenuItem_Click(object sender, EventArgs e)
         {

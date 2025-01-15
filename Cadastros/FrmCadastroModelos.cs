@@ -1,6 +1,6 @@
-﻿using ProjetoTeste.BLL;
-using ProjetoTeste.Forms;
-using ProjetoTeste.Model;
+﻿using OrdenServicos.BLL;
+using OrdenServicos.Forms;
+using OrdenServicos.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,19 +8,19 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjetoTeste
+namespace OrdenServicos
 {
     public partial class frmModelos : BaseForm
     {
         private int sortColumn = -1;
         private bool sortAscending = true;
-        private bool bNovo;
+
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-        private int previousSortColumn = -1;
+
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-        private bool escPressed = false;
+
 
 
         public frmModelos()
@@ -328,7 +328,7 @@ namespace ProjetoTeste
                 camposObrigatorios
             );
         }
-        private void CarregarRegistros()
+        private new void CarregarRegistros()
         {
             DesabilitarCampos();
             DesabilitarBotoesAcoes();
@@ -534,11 +534,11 @@ namespace ProjetoTeste
             btnFechar.Enabled = true;
             btnNovo.Enabled = true;
         }
-        private void LimparCampos()
+        private new void LimparCampos()
         {
             txtIDModelo.Clear();
-            cmbMarca.Text = "";
-            txtDescricao.Clear();
+            cmbMarca.SelectedIndex = -1;
+			txtDescricao.Clear();
             txtPesquisaListView.Clear();
             bNovo = false;
         }
