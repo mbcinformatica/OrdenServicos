@@ -1,46 +1,43 @@
 ﻿using OrdenServicos.BLL;
 using OrdenServicos.Forms;
 using OrdenServicos.Model;
+using OrdenServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
 namespace OrdenServicos
 {
     public partial class frmModelos : BaseForm
     {
-        private int sortColumn = -1;
-        private bool sortAscending = true;
+		private int sortColumn = -1;
+		private bool sortAscending = true;
+		private Color defaultHeaderBackColor = Color.DarkTurquoise;
+		private Color clickedHeaderBackColor = Color.CadetBlue;
 
-        private Color defaultHeaderBackColor = Color.DarkTurquoise;
-        private Color clickedHeaderBackColor = Color.CadetBlue;
+		private (Control, string)[] camposObrigatorios;
+		private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
+		private List<Control> controlesKeyPress = new List<Control>();
+		private List<Control> controlesLeave = new List<Control>();
+		private List<Control> controlesEnter = new List<Control>();
+		private List<Control> controlesMouseDown = new List<Control>();
+		private List<Control> controlesBotoes = new List<Control>();
+		private List<Control> controlesKeyDown = new List<Control>();
 
-        private (Control, string)[] camposObrigatorios;
-        private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-
-
-
-        public frmModelos()
+		public frmModelos()
         {
-            InitializeComponent();
-            // Chama o método LoadConfig() para aplicar as configurações
-            LoadConfig();
-            Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
-            InitializeTabControl(tabControlModelos); // Chama o método para inicializar o TabControl
-            erpProvider = new ErrorProvider();
-            ConfigurarComboBoxMarcas();
-            // Configurar eventos dos TextBoxes para maiúsculas
-            ConfigurarTextBox();
-            // Configurar TabIndex dos Controles
-            ConfigurarTabIndexControles();
-            // Configurando os Key para os TextBox
-            CarregaKey();
-            CarregarRegistros();
-
-        }
+			InitializeComponent();
+			LoadConfig();
+			Paint += new PaintEventHandler(BaseForm_Paint);
+			InitializeTabControl(tabControlModelos);
+			erpProvider = new ErrorProvider();
+			ConfigurarTextBox();
+			CarregaKey();
+			ConfigurarTabIndexControles();
+			CarregarRegistros();
+		}
         private void InitializeListView()
         {
             // Configurar a ListView

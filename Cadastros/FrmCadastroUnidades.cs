@@ -28,7 +28,6 @@ namespace OrdenServicos
 
 		public frmUnidades()
 		{
-
 			InitializeComponent();
 			LoadConfig();
 			Paint += new PaintEventHandler(BaseForm_Paint);
@@ -38,7 +37,6 @@ namespace OrdenServicos
 			CarregaKey();
 			ConfigurarTabIndexControles();
 			CarregarRegistros();
-
 		}
 		private void InitializeListView()
 		{
@@ -241,7 +239,6 @@ namespace OrdenServicos
 				}
 			}
 		}
-
 		private void ConfigurarTextBox()
 		{
 			camposObrigatorios = new (Control, string)[]
