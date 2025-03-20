@@ -70,15 +70,16 @@
             this.lbCodigoFabricante = new System.Windows.Forms.Label();
             this.lbCodigoIntProduto = new System.Windows.Forms.Label();
             this.txtIDProdutoInterno = new System.Windows.Forms.TextBox();
+            this.listViewProdutos = new System.Windows.Forms.ListView();
+            this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.pnlBotoes = new System.Windows.Forms.Panel();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
             this.btnAlterar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
-            this.listViewProdutos = new System.Windows.Forms.ListView();
-            this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
-            this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemProduto)).BeginInit();
             this.tabInformacoesAdicionais.SuspendLayout();
             this.tabControlProdutos.SuspendLayout();
@@ -584,49 +585,6 @@
             this.txtIDProdutoInterno.TabIndex = 64;
             this.txtIDProdutoInterno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // btnAlterar
-            // 
-            this.btnAlterar.AutoSize = true;
-            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(659, 2);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
-            this.btnAlterar.TabIndex = 60;
-            this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = false;
-            // 
-            // btnExcluir
-            // 
-            this.btnExcluir.AutoSize = true;
-            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(867, 2);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
-            this.btnExcluir.TabIndex = 62;
-            this.btnExcluir.Text = "     Excluir";
-            this.btnExcluir.UseVisualStyleBackColor = false;
-            // 
-            // btnNovo
-            // 
-            this.btnNovo.AutoSize = true;
-            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(555, 2);
-            this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(98, 40);
-            this.btnNovo.TabIndex = 59;
-            this.btnNovo.Text = "     Novo";
-            this.btnNovo.UseVisualStyleBackColor = false;
-            // 
             // listViewProdutos
             // 
             this.listViewProdutos.CausesValidation = false;
@@ -644,43 +602,16 @@
             // 
             this.erpProvider.ContainerControl = this;
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.AutoSize = true;
-            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(763, 2);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
-            this.btnSalvar.TabIndex = 61;
-            this.btnSalvar.Text = "      Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = false;
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AutoSize = true;
-            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(971, 2);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(98, 40);
-            this.btnFechar.TabIndex = 63;
-            this.btnFechar.Text = "     Fechar";
-            this.btnFechar.UseVisualStyleBackColor = false;
-            // 
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
             this.pnlBotoes.Controls.Add(this.btnExcluir);
             this.pnlBotoes.Controls.Add(this.btnNovo);
+            this.pnlBotoes.Controls.Add(this.btnFechar);
+            this.pnlBotoes.Controls.Add(this.button1);
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Location = new System.Drawing.Point(14, 452);
             this.pnlBotoes.Name = "pnlBotoes";
@@ -692,14 +623,98 @@
             this.btnCancelar.AutoSize = true;
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-			this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(400, 8);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(99, 40);
             this.btnCancelar.TabIndex = 65;
             this.btnCancelar.Text = "     Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.AutoSize = true;
+            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Location = new System.Drawing.Point(784, 2);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
+            this.btnSalvar.TabIndex = 73;
+            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = false;
+            // 
+            // btnAlterar
+            // 
+            this.btnAlterar.AutoSize = true;
+            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
+            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAlterar.Location = new System.Drawing.Point(680, 2);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
+            this.btnAlterar.TabIndex = 72;
+            this.btnAlterar.Tag = "";
+            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = false;
+            // 
+            // btnExcluir
+            // 
+            this.btnExcluir.AutoSize = true;
+            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
+            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExcluir.Location = new System.Drawing.Point(888, 2);
+            this.btnExcluir.Name = "btnExcluir";
+            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
+            this.btnExcluir.TabIndex = 74;
+            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.UseVisualStyleBackColor = false;
+            // 
+            // btnNovo
+            // 
+            this.btnNovo.AutoSize = true;
+            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
+            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNovo.Location = new System.Drawing.Point(576, 2);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(98, 40);
+            this.btnNovo.TabIndex = 71;
+            this.btnNovo.Text = "     Novo";
+            this.btnNovo.UseVisualStyleBackColor = false;
+            // 
+            // btnFechar
+            // 
+            this.btnFechar.AutoSize = true;
+            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
+            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFechar.Location = new System.Drawing.Point(992, 2);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(98, 40);
+            this.btnFechar.TabIndex = 75;
+            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(992, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 40);
+            this.button1.TabIndex = 76;
+            this.button1.Text = "     Cancelar";
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -769,11 +784,12 @@
         private System.Windows.Forms.TextBox txtIDProdutoInterno;
         private System.Windows.Forms.ListView listViewProdutos;
         private System.Windows.Forms.Panel pnlBotoes;
-        private System.Windows.Forms.Button btnFechar;
-        private System.Windows.Forms.Button btnSalvar;
-        private System.Windows.Forms.Button btnAlterar;
-        private System.Windows.Forms.Button btnExcluir;
-        private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnCancelar;
-    }
+		private System.Windows.Forms.Button btnSalvar;
+		private System.Windows.Forms.Button btnAlterar;
+		private System.Windows.Forms.Button btnExcluir;
+		private System.Windows.Forms.Button btnNovo;
+		private System.Windows.Forms.Button btnFechar;
+		private System.Windows.Forms.Button button1;
+	}
 }
