@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -822,11 +823,11 @@ namespace OrdenServicos
             }
             txtEndereco.Focus();
         }
-
         private async void btnCarregaArquivo_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+
                 openFileDialog.InitialDirectory = "E:\\ProjetosCSharp\\OrdenServiços\\Documentos";
                 openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
@@ -844,11 +845,10 @@ namespace OrdenServicos
 
                         foreach (string line in lines)
                         {
-                            txtCpfCnpj.Text = line.Trim();
-                            if (!string.IsNullOrEmpty(txtCpfCnpj.Text))
+                            string txtCNPJ = line.Trim();
+                            if (!string.IsNullOrEmpty(txtCNPJ))
                             {
-                                ExecutaCarregaArquivo();
-                                Task.Delay(1000); // Pausa de 1 segundo entre as pesquisas
+                                ExecutaCarregaArquivo(txtCNPJ);
                             }
                         }
                     }
@@ -859,62 +859,38 @@ namespace OrdenServicos
                 }
             }
         }
-
-        private async void ExecutaCarregaArquivo()
+        private async void ExecutaCarregaArquivo(string txtCNPJ)
         {
+            string cpfcnpj = StringUtils.SemFormatacao(txtCNPJ);
 
-            string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
-            DBSetupBLL dbSetupBLL = new DBSetupBLL();
-            string cpfCnpj = txtCpfCnpj.Text;
-            if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
+            if (!ValidaCnpj(cpfcnpj))
             {
                 return;
             }
             else
             {
-                if (!ValidaCnpj(cpfCnpj))
+                try
                 {
-                    return;
-                }
-                else
-                {
-
-                    try
+                    Cursor.Current = Cursors.WaitCursor;
+                    CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cpfcnpj);
+                    if (info != null)
                     {
+                        // Caminho do arquivo onde as informações serão gravadas
+                        string filePath = "E:\\ProjetosCSharp\\OrdenServiços\\Documentos\\CnpjInfo.txt";
 
-                        Cursor.Current = Cursors.WaitCursor;
-                        CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cpfcnpj);
-                        if (info != null)
+                        // Criar um novo arquivo e gravar as informações
+                        using (StreamWriter writer = new StreamWriter(filePath, true))
                         {
-                            txtCpfCnpj.Text = info.Cpf_Cnpj;
-                            txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
-                            txtEndereco.Text = info.Endereco;
-                            txtNumero.Text = info.Numero;
-                            txtBairro.Text = info.Bairro;
-                            txtMunicipio.Text = info.Municipio;
-                            txtUF.Text = info.UF;
-                            txtCep.Text = info.Cep;
-                            txtContato.Text = info.Contato;
-                            txtFone_1.Text = info.Fone_1;
-                            txtFone_2.Text = info.Fone_2;
-                            txtEmail.Text = info.Email;
-                            txtDataCadastro.Text = info.DataCadastro;
-                            txtIDCliente.Text = "0";
-                            rdbCnpj.Checked = true;
-                            rdbCpf.Checked = false;
-
-                            btnSalvar_Click(this, e);
+                            writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{info.DataCadastro:dd/MM/yyyy HH:mm:ss}\"");
                         }
                     }
-                    finally
-                    {
-                        Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
-                    }
-
-
                 }
-
+                finally
+                {
+                    Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
+                }
             }
         }
+
     }
 }
