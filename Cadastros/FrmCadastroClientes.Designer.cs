@@ -77,6 +77,7 @@
             this.lbCpfCnpj = new System.Windows.Forms.Label();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
+            this.btnCarregaArquivo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlClientes.SuspendLayout();
@@ -249,6 +250,7 @@
             // tabDadosClientes
             // 
             this.tabDadosClientes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabDadosClientes.Controls.Add(this.btnCarregaArquivo);
             this.tabDadosClientes.Controls.Add(this.lblEmail);
             this.tabDadosClientes.Controls.Add(this.txtIDCliente);
             this.tabDadosClientes.Controls.Add(this.txtPesquisaListView);
@@ -661,6 +663,20 @@
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "   Informações Adicionais   ";
             // 
+            // btnCarregaArquivo
+            // 
+            this.btnCarregaArquivo.AutoSize = true;
+            this.btnCarregaArquivo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCarregaArquivo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCarregaArquivo.Location = new System.Drawing.Point(451, 150);
+            this.btnCarregaArquivo.Name = "btnCarregaArquivo";
+            this.btnCarregaArquivo.Size = new System.Drawing.Size(130, 40);
+            this.btnCarregaArquivo.TabIndex = 121;
+            this.btnCarregaArquivo.Text = "Carrega Arquivo";
+            this.btnCarregaArquivo.UseVisualStyleBackColor = false;
+            this.btnCarregaArquivo.Click += new System.EventHandler(this.btnCarregaArquivo_Click);
+            // 
             // frmClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -732,5 +748,6 @@
 		private System.Windows.Forms.Button btnNovo;
 		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnCancelar;
+		private System.Windows.Forms.Button btnCarregaArquivo;
 	}
 }

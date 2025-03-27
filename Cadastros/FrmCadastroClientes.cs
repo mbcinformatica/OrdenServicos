@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static OrdenServicos.DAL.PesquisaWebDAL;
 using static OrdenServicos.Model.PesquisaWebInfo;
@@ -309,10 +310,10 @@ namespace OrdenServicos
         {
             camposObrigatorios = new (Control, string)[]
             {
-                (txtCpfCnpj, "Cpf_Cnpj"),
-                (txtNomeRazaoSocial, "Nome"),
-                (txtCep, "Cep"),
-                (txtFone_1, "Celular"),
+   //             (txtCpfCnpj, "Cpf_Cnpj"),
+    //            (txtNomeRazaoSocial, "Nome"),
+    //            (txtCep, "Cep"),
+    //            (txtFone_1, "Celular"),
             };
 
             AdicionarValidacao(
@@ -427,14 +428,14 @@ namespace OrdenServicos
         {
 
             ClienteBLL clienteBLL = new ClienteBLL();
-
+/*
             // Verificar se algum campo obrigatório está vazio
             if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
             {
                 MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
-
+*/
             bool isAtualizacao = false;
 
             if (!string.IsNullOrEmpty(txtIDCliente.Text))
@@ -445,9 +446,10 @@ namespace OrdenServicos
 
             if (!isAtualizacao)
             {
+                
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                // Verifica se o CPF/CNPJ já está cadastrado
+                /* Verifica se o CPF/CNPJ já está cadastrado
                 if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
                 {
                     MessageBox.Show("Cliente já cadastrado. Favor verificar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -455,7 +457,8 @@ namespace OrdenServicos
                     txtCpfCnpj.Focus();
                     return;
                 }
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                */
+                DialogResult result = DialogResult.Yes; // MessageBox.Show("Tem Certeza que Deseja Incluir Esse Cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
 
@@ -697,7 +700,7 @@ namespace OrdenServicos
             {
                 ClienteBLL clienteBLL = new ClienteBLL();
                 clienteBLL.InserirCliente(Cliente);
-                MessageBox.Show("Cliente inserido com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           //     MessageBox.Show("Cliente inserido com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -756,7 +759,7 @@ namespace OrdenServicos
                 }
                 else
                 {
-                    MessageBox.Show("CNPJ não encontrado ou erro na pesquisa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(cnpj + "CNPJ não encontrado ou erro na pesquisa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             finally
@@ -820,29 +823,98 @@ namespace OrdenServicos
             txtEndereco.Focus();
         }
 
-		private void btnAlterar_Click_1( object sender, EventArgs e )
-		{
+        private async void btnCarregaArquivo_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "E:\\ProjetosCSharp\\OrdenServiços\\Documentos";
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
 
-		}
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Obtenha o caminho completo do arquivo selecionado
+                    string filePath = openFileDialog.FileName;
 
-		private void btnSalvar_Click_1( object sender, EventArgs e )
-		{
+                    try
+                    {
+                        // Ler todas as linhas do arquivo
+                        string[] lines = System.IO.File.ReadAllLines(filePath);
 
-		}
+                        foreach (string line in lines)
+                        {
+                            txtCpfCnpj.Text = line.Trim();
+                            if (!string.IsNullOrEmpty(txtCpfCnpj.Text))
+                            {
+                                ExecutaCarregaArquivo();
+                                Task.Delay(1000); // Pausa de 1 segundo entre as pesquisas
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro ao ler o arquivo: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
 
-		private void btnExcluir_Click_1( object sender, EventArgs e )
-		{
+        private async void ExecutaCarregaArquivo()
+        {
 
-		}
+            string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
+            DBSetupBLL dbSetupBLL = new DBSetupBLL();
+            string cpfCnpj = txtCpfCnpj.Text;
+            if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
+            {
+                return;
+            }
+            else
+            {
+                if (!ValidaCnpj(cpfCnpj))
+                {
+                    return;
+                }
+                else
+                {
 
-		private void btnFechar_Click_1( object sender, EventArgs e )
-		{
+                    try
+                    {
 
-		}
+                        Cursor.Current = Cursors.WaitCursor;
+                        CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cpfcnpj);
+                        if (info != null)
+                        {
+                            txtCpfCnpj.Text = info.Cpf_Cnpj;
+                            txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+                            txtEndereco.Text = info.Endereco;
+                            txtNumero.Text = info.Numero;
+                            txtBairro.Text = info.Bairro;
+                            txtMunicipio.Text = info.Municipio;
+                            txtUF.Text = info.UF;
+                            txtCep.Text = info.Cep;
+                            txtContato.Text = info.Contato;
+                            txtFone_1.Text = info.Fone_1;
+                            txtFone_2.Text = info.Fone_2;
+                            txtEmail.Text = info.Email;
+                            txtDataCadastro.Text = info.DataCadastro;
+                            txtIDCliente.Text = "0";
+                            rdbCnpj.Checked = true;
+                            rdbCpf.Checked = false;
 
-		private void btnCancelar_Click_1( object sender, EventArgs e )
-		{
+                            btnSalvar_Click(this, e);
+                        }
+                    }
+                    finally
+                    {
+                        Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
+                    }
 
-		}
-	}
+
+                }
+
+            }
+        }
+    }
 }
