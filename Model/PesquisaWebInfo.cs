@@ -1,4 +1,7 @@
-﻿namespace OrdenServicos.Model
+﻿using System.Dynamic;
+using System.Net;
+
+namespace OrdenServicos.Model
 {
     public class PesquisaWebInfo
     {
@@ -32,5 +35,16 @@
             public string Contato { get; set; }
             public string Email { get; set; }
         }
+    
+        public class GenericoResponse<T> where T : class
+        {
+
+            public HttpStatusCode CodHttp { get; set; }
+            public T DadosRetorno { get; set; }
+            public ExpandoObject ErroRetorno { get; set; }
+
+        }
+
     }
 }
+

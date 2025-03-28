@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MySqlX.XDevAPI;
+using Newtonsoft.Json.Linq;
 using OrdenServicos.BLL;
 using OrdenServicos.Forms;
 using OrdenServicos.Model;
@@ -7,9 +8,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text.Json;
 using System.Windows.Forms;
 using static OrdenServicos.DAL.PesquisaWebDAL;
 using static OrdenServicos.Model.PesquisaWebInfo;
@@ -429,14 +433,14 @@ namespace OrdenServicos
         {
 
             ClienteBLL clienteBLL = new ClienteBLL();
-/*
-            // Verificar se algum campo obrigatório está vazio
-            if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-            {
-                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
-*/
+            /*
+                        // Verificar se algum campo obrigatório está vazio
+                        if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
+                        {
+                            MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
+                        }
+            */
             bool isAtualizacao = false;
 
             if (!string.IsNullOrEmpty(txtIDCliente.Text))
@@ -447,7 +451,7 @@ namespace OrdenServicos
 
             if (!isAtualizacao)
             {
-                
+
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
                 /* Verifica se o CPF/CNPJ já está cadastrado
@@ -701,7 +705,7 @@ namespace OrdenServicos
             {
                 ClienteBLL clienteBLL = new ClienteBLL();
                 clienteBLL.InserirCliente(Cliente);
-           //     MessageBox.Show("Cliente inserido com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //     MessageBox.Show("Cliente inserido com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -861,35 +865,60 @@ namespace OrdenServicos
         }
         private async void ExecutaCarregaArquivo(string txtCNPJ)
         {
-            string cpfcnpj = StringUtils.SemFormatacao(txtCNPJ);
-
-            if (!ValidaCnpj(cpfcnpj))
+            if (!ValidaCnpj(txtCNPJ))
             {
                 return;
             }
             else
             {
-                try
-                {
-                    Cursor.Current = Cursors.WaitCursor;
-                    CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cpfcnpj);
-                    if (info != null)
-                    {
-                        // Caminho do arquivo onde as informações serão gravadas
-                        string filePath = "E:\\ProjetosCSharp\\OrdenServiços\\Documentos\\CnpjInfo.txt";
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://receitaws.com.br/v1/cnpj/" + txtCNPJ);
+                var response = new GenericoResponse<CnpjInfo>();
 
-                        // Criar um novo arquivo e gravar as informações
-                        using (StreamWriter writer = new StreamWriter(filePath, true))
-                        {
-                            writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{info.DataCadastro:dd/MM/yyyy HH:mm:ss}\"");
-                        }
-                    }
-                }
-                finally
-                {
-                    Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
-                }
-            }
+                using (var cliente = new HttpClient())
+				{
+					HttpResponseMessage httpResponseMessage = await cliente.SendAsync(request);
+					using (var resposta = httpResponseMessage)
+					{
+						var ConteudoResposta = await resposta.Content.ReadAsStringAsync();
+
+						if (resposta.IsSuccessStatusCode)
+						{
+							JObject json = JObject.Parse(ConteudoResposta);
+							CnpjInfo info = new CnpjInfo
+							{
+								Cpf_Cnpj = json["cnpj"].ToString(),
+								Nome_RazaoSocial = json["nome"].ToString(),
+								Endereco = json["logradouro"].ToString(),
+								Numero = json["numero"].ToString(),
+								Bairro = json["bairro"].ToString(),
+								Municipio = json["municipio"].ToString(),
+								UF = json["uf"].ToString(),
+								Cep = json["cep"].ToString(),
+								Contato = json["telefone"].ToString(),
+								Fone_1 = json["telefone"].ToString(),
+								Fone_2 = json["telefone"].ToString(),
+								Email = json["email"].ToString(),
+								DataCadastro = json["ultima_atualizacao"].ToString(),
+							};
+							response.DadosRetorno = info; // Adicione esta linha
+
+							if (info != null)
+							{
+								string filePath = "E:\\ProjetosCSharp\\OrdenServiços\\Documentos\\CnpjInfo.txt";
+								using (StreamWriter writer = new StreamWriter(filePath, true))
+								{
+									writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{info.DataCadastro:dd/MM/yyyy HH:mm:ss}\"");
+								}
+							}
+						}
+						else
+						{
+							// Tratar a resposta de erro
+							Console.WriteLine($"Erro: {resposta.ReasonPhrase}");
+						}
+					}
+				}
+			}
         }
 
     }
