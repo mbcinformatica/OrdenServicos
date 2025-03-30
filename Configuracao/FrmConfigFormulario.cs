@@ -27,8 +27,6 @@ namespace OrdenServicos
             CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAtual, lbConfiguracaoAtual);
             CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAlterada, lbConfiguracaoAlterada);
 
-
-
             // Definindo o tamanho e a posição dos Panels
             Size panelSize = new Size(388, 192); // Exemplo de tamanho
             Point panelLocation = new Point(692, 16); // Exemplo de posição
@@ -60,7 +58,6 @@ namespace OrdenServicos
             pnlOpcaoCampos.Visible = true;
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = false;
-
         }
         private void lnkConfiguracaoFormulario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -91,7 +88,6 @@ namespace OrdenServicos
         }
         private void lnkOpcaoCorFormulario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ;
             cldCores.Color = gradientStartColor;
             if (cldCores.ShowDialog() == DialogResult.OK)
             {
@@ -107,7 +103,6 @@ namespace OrdenServicos
         private void lnkOpcaoCorFundoMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             mnsStripExemploAlterado.Visible = false;
-
             cldCores.Color = menuStripBackgroundColor;
             if (cldCores.ShowDialog() == DialogResult.OK)
             {
