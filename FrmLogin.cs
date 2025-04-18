@@ -5,6 +5,10 @@ using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using OrdenServicos.BLL;
+using OrdenServicos.Model;
+using System.IO;
+using System.Drawing;
 
 namespace OrdenServicos
 {
@@ -101,6 +105,7 @@ namespace OrdenServicos
             txtLogin.Focus();
             imgCadeadoAberto.Visible = false;
             imgCadeadoFechado.Visible = true;
+            imgImagemUsuario.Image = null;
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
@@ -136,7 +141,7 @@ namespace OrdenServicos
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Nome FROM DBUsuarios WHERE Login = @Login";
+                string query = "SELECT Nome, Imagem FROM DBUsuarios WHERE Login = @Login";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Login", Login);
 
@@ -146,6 +151,21 @@ namespace OrdenServicos
                     {
                         // Carrega o nome do usuário na variável global
                         BaseForm.UsuarioLogado = reader["Nome"].ToString();
+
+                        // Verifica se o campo Imagem não é nulo
+                        if (reader["Imagem"] != DBNull.Value)
+                        {
+                            byte[] imagemBytes = (byte[])reader["Imagem"];
+                            using (MemoryStream ms = new MemoryStream(imagemBytes))
+                            {
+                                imgImagemUsuario.Image = Image.FromStream(ms); // Exibe a imagem no PictureBox
+                            }
+                        }
+                        else
+                        {
+                            imgImagemUsuario.Image = null; // Define como nulo caso não haja imagem
+                        }
+
                         return false; // Usuário encontrado
                     }
                 }

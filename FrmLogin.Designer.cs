@@ -41,9 +41,11 @@
             this.lblSenha = new System.Windows.Forms.Label();
             this.imgCadeadoAberto = new System.Windows.Forms.PictureBox();
             this.imgCadeadoFechado = new System.Windows.Forms.PictureBox();
+            this.imgImagemUsuario = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoAberto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoFechado)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgImagemUsuario)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSenha
@@ -84,7 +86,7 @@
             // txtSenhaHash
             // 
             this.txtSenhaHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenhaHash.Location = new System.Drawing.Point(0, 192);
+            this.txtSenhaHash.Location = new System.Drawing.Point(0, 349);
             this.txtSenhaHash.Name = "txtSenhaHash";
             this.txtSenhaHash.Size = new System.Drawing.Size(505, 20);
             this.txtSenhaHash.TabIndex = 10;
@@ -156,12 +158,26 @@
             this.imgCadeadoFechado.TabIndex = 9;
             this.imgCadeadoFechado.TabStop = false;
             // 
+            // imgImagemUsuario
+            // 
+            this.imgImagemUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgImagemUsuario.BackColor = System.Drawing.Color.Transparent;
+            this.imgImagemUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgImagemUsuario.Location = new System.Drawing.Point(280, 174);
+            this.imgImagemUsuario.Name = "imgImagemUsuario";
+            this.imgImagemUsuario.Size = new System.Drawing.Size(136, 158);
+            this.imgImagemUsuario.TabIndex = 90;
+            this.imgImagemUsuario.TabStop = false;
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnSair;
-            this.ClientSize = new System.Drawing.Size(505, 216);
+            this.ClientSize = new System.Drawing.Size(505, 370);
+            this.Controls.Add(this.imgImagemUsuario);
             this.Controls.Add(this.imgCadeadoAberto);
             this.Controls.Add(this.txtSenhaHash);
             this.Controls.Add(this.imgCadeadoFechado);
@@ -181,6 +197,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoAberto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoFechado)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgImagemUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,6 +216,7 @@
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.TextBox txtSenhaHash;
         private System.Windows.Forms.PictureBox imgCadeadoAberto;
-    }
+		private System.Windows.Forms.PictureBox imgImagemUsuario;
+	}
 }
 
