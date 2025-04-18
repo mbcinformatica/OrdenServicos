@@ -12,10 +12,9 @@ namespace OrdenServicos
     {
         private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
 
-		public frmTelaPrincipal()
+        public frmTelaPrincipal()
         {
             InitializeComponent();
-
             // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
@@ -48,6 +47,7 @@ namespace OrdenServicos
                 Application.Exit();
             }
             AbrirFormularioLogin();
+            this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
         }
         private void frmTelaPrincipal_Load(object sender, EventArgs e)
         {

@@ -58,6 +58,8 @@ namespace OrdenServicos.Forms
         public string TagFormato { get; set; }
         public string TagAction { get; set; }
         public int TagMaxDigito { get; set; }
+        public static string UsuarioLogado { get; set; }
+
 
         public virtual void CarregarRegistros() { }
 

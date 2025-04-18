@@ -555,7 +555,7 @@ namespace OrdenServicos
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
                 string cpfCnpj = txtCpfCnpj.Text;
-                if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
+                if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBFornecedores", "Cpf_Cnpj"))
                 {
                     MessageBox.Show("Fornecedor já Cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtCpfCnpj.Clear();

@@ -113,6 +113,7 @@ namespace OrdenServicos
                 Close();
                 return;
             }
+
             nTentativasLogin++;
             if (nTentativasLogin >= 4)
             {
@@ -135,12 +136,21 @@ namespace OrdenServicos
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM DBUsuarios WHERE Login = @Login";
+                string query = "SELECT Nome FROM DBUsuarios WHERE Login = @Login";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Login", Login);
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count == 0;
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        // Carrega o nome do usuário na variável global
+                        BaseForm.UsuarioLogado = reader["Nome"].ToString();
+                        return false; // Usuário encontrado
+                    }
+                }
             }
+            return true; // Usuário não encontrado
         }
         private void PegaSenhaHansDB()
         {
